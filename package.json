@@ -1,6 +1,7 @@
 {
   "name": "venue-booking-app",
   "version": "0.1.0",
+  "author": "Girish Digge",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
