@@ -39,7 +39,6 @@ export const authOptions = {
         if (!isMatch) {
           throw new Error('Incorrect password.');
         }
-        console.log(user);
 
         return user;
       },
@@ -55,6 +54,7 @@ export const authOptions = {
         token.name = `${user.firstName} ${user.lastName}`;
         token.image = user.image;
       }
+
       return token;
     },
     async session({ session, token }) {
@@ -67,6 +67,7 @@ export const authOptions = {
           image: token.image ?? null,
         };
       }
+
       return session;
     },
   },
