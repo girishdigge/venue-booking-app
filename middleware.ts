@@ -8,8 +8,8 @@ const publicPaths = ['/login'];
 // Paths that require specific roles
 const roleRestrictedPaths = {
   '/admin': ['ADMIN'],
-  '/dashboard/admin': ['ADMIN'],
-  '/user-management': ['ADMIN'],
+  // '/dashboard/admin': ['ADMIN'],
+  // '/user-management': ['ADMIN'],
 };
 
 export async function middleware(request: NextRequest) {
