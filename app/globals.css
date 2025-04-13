@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -39,6 +39,13 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-lamaSky: #c3ebfa;
+  --color-lamaSkyLight: #edf9fd;
+  --color-lamaPurple: #cfceff;
+  --color-lamaPurpleLight: #f1f0ff;
+  --color-lamaYellow: #fae27c;
+  --color-lamaYellowLight: #fefce8;
 }
 
 :root {
