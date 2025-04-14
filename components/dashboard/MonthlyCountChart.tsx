@@ -76,7 +76,7 @@ const data = [
 
 const MonthlyCountChart = () => {
   return (
-    <div className='bg-gray-100 rounded-xl w-full h-full p-4'>
+    <div className='bg-white rounded-xl w-full h-full p-4'>
       <div className='flex justify-between items-center'>
         <h1 className='font-semibold text-lg'>Monthly Booking</h1>
       </div>

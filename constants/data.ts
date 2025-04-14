@@ -40,3 +40,31 @@ export const MenuItems = [
     ],
   },
 ];
+export const eventsData = [
+  {
+    id: 1,
+    title: 'Lake Trip',
+    class: '1A',
+    date: '2025-04-04',
+    startTime: '10:00',
+    endTime: '11:00',
+  },
+];
+
+export const announcementsData = [
+  {
+    id: 1,
+    title: 'About 4A Math Test',
+    class: '4A',
+    date: '2025-04-04',
+  },
+];
+
+export const calendarEvents = [
+  {
+    title: 'Math',
+    allDay: false,
+    start: new Date(2025, 4, 4, 8, 0),
+    end: new Date(2025, 4, 4, 8, 45),
+  },
+];

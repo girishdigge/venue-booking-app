@@ -1,4 +1,5 @@
 // import CountChart from '@/components/dashboard/CountChart';
+import EventCalendar from '@/components/dashboard/EventCalendar';
 import MonthlyCountChart from '@/components/dashboard/MonthlyCountChart';
 import UserCard from '@/components/dashboard/UserCard';
 
@@ -23,7 +24,9 @@ const AdminPage = () => {
           <MonthlyCountChart />
         </div>
       </div>
-      <div className='w-full lg:w-2/3'>r</div>
+      <div className='w-full lg:w-1/3 flex flex-col gap-8'>
+        <EventCalendar />
+      </div>
     </div>
   );
 };
