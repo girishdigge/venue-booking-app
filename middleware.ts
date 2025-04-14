@@ -7,7 +7,7 @@ const publicPaths = ['/login'];
 
 // Paths that require specific roles
 const roleRestrictedPaths = {
-  '/admin': ['ADMIN'],
+  '/admin1': ['ADMIN'],
   // '/dashboard/admin': ['ADMIN'],
   // '/user-management': ['ADMIN'],
 };
