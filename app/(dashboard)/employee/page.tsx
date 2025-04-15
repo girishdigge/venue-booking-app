@@ -1,3 +1,4 @@
+import FormModal from '@/components/dashboard/FormModal';
 import Pagination from '@/components/dashboard/Pagination';
 import Table from '@/components/dashboard/Table';
 import TableSearch from '@/components/dashboard/TableSearch';
@@ -80,9 +81,10 @@ const page = () => {
             </button>
           </Link>
           {/* {role ==='admin'&&()} */}
-          <button className='w-7 h-7 flex items-center justify-center rounded-full bg-lamaPurple'>
+          {/* <button className='w-7 h-7 flex items-center justify-center rounded-full bg-lamaPurple'>
             <Image src='/delete.png' alt='delete' width={16} height={16} />
-          </button>
+          </button> */}
+          <FormModal table='employee' type='delete' id={item.id} />
         </div>
       </td>
     </tr>
@@ -100,6 +102,7 @@ const page = () => {
             <button className='w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow'>
               <Image src='/sort.png' alt='filter' width={14} height={14} />
             </button>
+            <FormModal table='employee' type='create' />
           </div>
         </div>
       </div>

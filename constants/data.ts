@@ -5,12 +5,17 @@ export const MenuItems = [
       {
         icon: '/home.png',
         label: 'Home',
-        href: '/',
+        href: '/dashboard',
       },
       {
         icon: '/admin.png',
         label: 'Admin',
         href: '/admin',
+      },
+      {
+        icon: '/admin.png',
+        label: 'Booking',
+        href: '/booking',
       },
       {
         icon: '/manager.png',

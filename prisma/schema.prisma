@@ -23,6 +23,26 @@ model User {
 
   Session Session[]
 }
+model Event {
+  id          Int   @id @default(autoincrement())
+  name        String  
+  date        DateTime
+  startTime   DateTime?
+  endTime     DateTime?
+  email       String?
+  contact     String? 
+  address     String?    
+  event       String
+  hall        String
+  details     String?
+  amount      Int   @default(0)
+  advance     Int   @default(0)
+  balance     Int   @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
 
 enum Role {
   ROOT
