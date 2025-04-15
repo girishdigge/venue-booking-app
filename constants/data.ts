@@ -7,30 +7,35 @@ export const MenuItems = [
         label: 'Home',
         href: '/dashboard',
       },
+      // {
+      //   icon: '/admin.png',
+      //   label: 'Admin',
+      //   href: '/admin',
+      // },
       {
-        icon: '/admin.png',
-        label: 'Admin',
-        href: '/admin',
-      },
-      {
-        icon: '/admin.png',
+        icon: '/book.png',
         label: 'Booking',
         href: '/booking',
       },
       {
-        icon: '/manager.png',
-        label: 'Manager',
-        href: '/manager',
+        icon: '/calendar.png',
+        label: 'Calendar',
+        href: '/calendar',
       },
     ],
   },
   {
-    title: 'Others',
+    title: 'PANEL',
     items: [
       {
         icon: '/profile.png',
         label: 'Profile',
         href: '/profile',
+      },
+      {
+        icon: '/employee.png',
+        label: 'Employee',
+        href: '/employee',
       },
       {
         icon: '/settings.png',
@@ -222,11 +227,23 @@ export const announcementsData = [
   },
 ];
 
-export const calendarEvents = [
+export type BookingEvent = {
+  title: string;
+  hall: 'mainHall' | 'secondHall';
+  start: Date;
+  end: Date;
+};
+export const calendarEvents: BookingEvent[] = [
   {
-    title: 'Math',
-    allDay: false,
-    start: new Date(2025, 4, 4, 8, 0),
-    end: new Date(2025, 4, 4, 8, 45),
+    title: 'Wedding',
+    hall: 'mainHall',
+    start: new Date(2025, 3, 15, 8, 0),
+    end: new Date(2025, 3, 15, 12, 45),
+  },
+  {
+    title: 'Farewell',
+    hall: 'secondHall',
+    start: new Date(2025, 3, 15, 18, 0),
+    end: new Date(2025, 3, 15, 22, 45),
   },
 ];

@@ -5,7 +5,15 @@ import { calendarEvents } from '@/constants/data';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useState } from 'react';
 
+// Start week from Monday
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+});
+
 const localizer = momentLocalizer(moment);
+
 const BigCalendar = () => {
   const [view, setView] = useState<View>(Views.MONTH);
   const handleOnChangeView = (selectedView: View) => {

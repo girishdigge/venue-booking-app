@@ -75,7 +75,7 @@ const page = () => {
       <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>
       <td>
         <div className='flex items-center gap-2'>
-          <Link href={`/list/${item.id}`}>
+          <Link href={`/booking/${item.id}`}>
             <button className='w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky'>
               <Image src='/view.png' alt='view' width={16} height={16} />
             </button>
