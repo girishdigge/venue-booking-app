@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-   output   = "./node_modules/@prisma/client"
+     output   = "../app/generated/prisma/client"
 }
 
 datasource db {
@@ -9,59 +9,43 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  username        String  @unique
-  firstName       String
-  middleName      String?
-  lastName        String
-  contact         String? @unique
-  hashedPassword  String
-  image           String?
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  Session Session[]
+  id             String    @id @default(cuid())
+  username       String    @unique
+  firstName      String
+  middleName     String?
+  lastName       String
+  contact        String?   @unique
+  hashedPassword String
+  image          String?
+  role           Role      @default(USER)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  Session        Session[]
 }
 
-enum Hall{
-  MainHall
-  secondHall
-}
 model Event {
-  id              Int   @id @default(autoincrement())
-  client_name     String  
-  date            DateTime
-  start_time      String?
-  end_time        String?
-  email           String?
-  contact         String? 
-  address         String?    
-  event_name      String
-  hall            Hall
-  details         String?
-  amount          Int   @default(0)
-  advance         Int   @default(0)
-  balance         Int   @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-}
-
-
-
-enum Role {
-  ROOT
-  ADMIN
-  MANAGER
-  USER
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  email       String?
+  contact     String?
+  address     String?
+  hall        Hall
+  details     String?
+  amount      Int      @default(0)
+  advance     Int      @default(0)
+  balance     Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  client_name String
+  end_time    String?
+  event_name  String
+  start_time  String?
 }
 
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String   @unique
+  userId       String
   expires      DateTime
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -70,8 +54,20 @@ model Session {
 
 model VerificationToken {
   identifier String
-  token      String   
+  token      String
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Hall {
+  mainHall
+  secondHall
+}
+
+enum Role {
+  ROOT
+  ADMIN
+  MANAGER
+  USER
 }

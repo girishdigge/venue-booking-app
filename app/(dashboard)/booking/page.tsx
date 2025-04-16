@@ -5,7 +5,7 @@ import TableSearch from '@/components/dashboard/TableSearch';
 import { eventsData } from '@/constants/data';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import prisma from '@/lib/db';
 export type Client = {
   id: number;
   client_name: string;
@@ -60,7 +60,10 @@ const columns = [
     accessor: 'action',
   },
 ];
-const page = () => {
+const page = async () => {
+  // const bookings=await prisma.
+  console.log('prisma test', prisma);
+
   const renderRow = (item: Client) => (
     <tr
       key={item.id}
