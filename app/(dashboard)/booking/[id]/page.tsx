@@ -1,140 +1,11 @@
-// 'use client';
-
-// import { EventSchema } from '@/schema/schema';
-
-// const mockEvents: EventSchema[] = [
-//   {
-//     id: 1,
-//     client_name: "John's Wedding",
-//     date: '2025-05-20',
-//     start_time: '14:30',
-//     end_time: '20:00',
-//     email: 'john@example.com',
-//     contact: '123-456-7890',
-//     address: '123 Wedding Street, Cityville, Country',
-//     event_name: 'Wedding',
-//     hall: 'Grand Ballroom',
-//     details: 'Reception will follow the ceremony in the Grand Ballroom.',
-//     amount: 10000,
-//     advance: 2000,
-//     balance: 8000,
-//     createdAt: new Date('2025-04-15'),
-//     updatedAt: new Date('2025-04-15'),
-//   },
-// ];
-
-// // interface EventViewProps {
-// //   data: EventSchema;
-// // }
-
-// // const EventView = ({ data }: EventViewProps) => {
-// const EventView = () => {
-//   const data = mockEvents[0];
-//   return (
-//     <div className='w-full max-w-4xl bg-white shadow-xl rounded-2xl p-8 space-y-8'>
-//       {/* Header */}
-//       <div className='border-b pb-4'>
-//         <h1 className='text-3xl font-bold text-gray-800'>{data.client_name}</h1>
-//         <p className='text-sm text-gray-500 mt-2'>Event Details</p>
-//       </div>
-
-//       {/* Basic Information */}
-//       <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Event Type</h2>
-//           <p className='text-gray-800'>{data.event_name}</p>
-//         </div>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Date</h2>
-//           <p className='text-gray-800'>
-//             {new Date(data.date).toLocaleDateString(undefined, {
-//               year: 'numeric',
-//               month: 'long',
-//               day: 'numeric',
-//             })}
-//           </p>
-//         </div>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Hall</h2>
-//           <p className='text-gray-800'>{data.hall}</p>
-//         </div>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Address</h2>
-//           <p className='text-gray-800'>{data.address || '-'}</p>
-//         </div>
-//       </div>
-
-//       {/* Time Information */}
-//       <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Start Time</h2>
-//           <p className='text-gray-800'>{data.start_time || '-'}</p>
-//         </div>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>End Time</h2>
-//           <p className='text-gray-800'>{data.end_time || '-'}</p>
-//         </div>
-//       </div>
-
-//       {/* Contact Information */}
-//       <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Email</h2>
-//           <p className='text-gray-800'>{data.email || '-'}</p>
-//         </div>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>
-//             Contact Number
-//           </h2>
-//           <p className='text-gray-800'>{data.contact || '-'}</p>
-//         </div>
-//       </div>
-
-//       {/* Financial Information */}
-//       <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Total Amount</h2>
-//           <p className='text-gray-800'>{data.amount}</p>
-//         </div>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>
-//             Advance Payment
-//           </h2>
-//           <p className='text-gray-800'>{data.advance}</p>
-//         </div>
-//         <div>
-//           <h2 className='text-xl font-semibold text-gray-700'>Balance</h2>
-//           <p className='text-gray-800'>{data.balance}</p>
-//         </div>
-//       </div>
-
-//       {/* Additional Details */}
-//       {data.details && (
-//         <div className='space-y-2'>
-//           <h2 className='text-xl font-semibold text-gray-700'>
-//             Additional Details
-//           </h2>
-//           <p className='text-gray-800'>{data.details}</p>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default EventView;
-
-// src/components/EventView.tsx (Example file path)
-
 'use client';
-
 import React from 'react';
-// import { useRouter } from 'next/navigation'; // Uncomment if using Next.js App Router for navigation
 
 // Define the structure of an event
 interface EventSchema {
   id: number;
   client_name: string; // Client Name (used for Mr/Mrs)
-  date: string; // Venue Date
+  date: Date; // Venue Date
   start_time?: string; // Event Start Time
   end_time?: string; // Event End Time
   email?: string; // Client Email
@@ -156,7 +27,7 @@ const mockEvents: EventSchema[] = [
   {
     id: 101, // Example ID
     client_name: 'Priya Sharma',
-    date: '2025-07-22',
+    date: new Date('2025-04-18'),
     start_time: '18:00', // 6:00 PM
     end_time: '23:00', // 11:00 PM
     email: 'priya.s@example.com',
@@ -173,28 +44,6 @@ const mockEvents: EventSchema[] = [
     updatedAt: new Date('2025-04-15T11:00:00'),
   },
 ];
-// -----------------------------------------------------------
-
-// --- Helper Functions ---
-const formatDate = (dateInput: string | Date | undefined): string => {
-  if (!dateInput) return '-';
-  try {
-    const date =
-      typeof dateInput === 'string'
-        ? new Date(dateInput + 'T00:00:00Z')
-        : dateInput;
-    // Using IST for display as per location context
-    return date.toLocaleDateString('en-IN', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      timeZone: 'Asia/Kolkata',
-    });
-  } catch (e) {
-    console.error('Error formatting date:', dateInput, e);
-    return String(dateInput);
-  }
-};
 
 const formatTime12hr = (timeString: string | undefined): string => {
   if (!timeString || !timeString.includes(':')) return '-';
@@ -252,7 +101,7 @@ const EventView = () => {
 
   const handleEdit = () => {
     console.log(`Edit button clicked for event ID: ${data.id}`);
-    //   <FormModal table='booking' type='create' />
+    // <FormModal table='booking' type='create' />
     // Placeholder action: Show an alert or navigate
     alert(`Edit functionality for Event ID ${data.id} is not implemented yet.`);
     // Example navigation (if using Next.js App Router):
@@ -338,7 +187,13 @@ const EventView = () => {
               <span className='font-semibold text-gray-600 block print:inline'>
                 Booking Date:{' '}
               </span>
-              <span>{formatDate(data.createdAt)}</span>
+              <span>
+                {data.createdAt.toLocaleDateString('en-IN', {
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'long',
+                })}
+              </span>
             </div>
           </div>
 
@@ -365,7 +220,13 @@ const EventView = () => {
               <span className='font-semibold text-gray-600 block print:inline'>
                 Venue Date:{' '}
               </span>
-              <span>{formatDate(data.date)}</span>
+              <span>
+                {data.date.toLocaleDateString('en-IN', {
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'long',
+                })}
+              </span>
             </div>
             <div>
               <span className='font-semibold text-gray-600 block print:inline'>

@@ -31,9 +31,7 @@ export const eventSchema = z.object({
       },
       { message: 'Invalid email format' }
     ),
-  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid date format',
-  }),
+  date: z.coerce.date(),
   start_time: z
     .string()
     .optional()
