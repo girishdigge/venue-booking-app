@@ -8,14 +8,14 @@ import Link from 'next/link';
 
 export type Client = {
   id: number;
-  name: string;
+  client_name: string;
   email?: string;
   phone: string;
   phoneAlt?: string;
   address: string;
   date: string;
   hall: string;
-  event: string;
+  event_name: string;
   balance: string;
   amount: string;
 };
@@ -27,7 +27,7 @@ const columns = [
   },
   {
     header: 'Name',
-    accessor: 'name',
+    accessor: 'client_name',
     className: '',
   },
   {
@@ -37,7 +37,7 @@ const columns = [
   },
   {
     header: 'Event',
-    accessor: 'event',
+    accessor: 'event_name',
     className: 'hidden md:table-cell',
   },
   {
@@ -67,9 +67,9 @@ const page = () => {
       className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight'
     >
       <td className='pt-3 pb-2 '>{item.id}</td>
-      <td className='pt-3 pb-2 '>{item.name}</td>
+      <td className='pt-3 pb-2 '>{item.client_name}</td>
       <td className='pt-3 pb-2 '>{item.date}</td>
-      <td className='pt-3 pb-2 hidden md:table-cell'>{item.event}</td>
+      <td className='pt-3 pb-2 hidden md:table-cell'>{item.event_name}</td>
       <td className='pt-3 pb-2 hidden md:table-cell'>{item.hall}</td>
       <td className='pt-3 pb-2 hidden lg:table-cell'>{item.balance}</td>
       <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>

@@ -42,15 +42,15 @@
 //       <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
 //         <InputField
 //           label='Name'
-//           name='name'
+//           name='client_name'
 //           register={register}
-//           error={errors.name}
+//           error={errors.client_name}
 //         />
 //         <InputField
 //           label='Event Type'
-//           name='event'
+//           name='event_name'
 //           register={register}
-//           error={errors.event}
+//           error={errors.event_name}
 //         />
 //         <InputField
 //           label='Date'
@@ -80,17 +80,17 @@
 //         />
 //         <InputField
 //           label='Start Time'
-//           name='startTime'
+//           name='start_time'
 //           type='time'
 //           register={register}
-//           error={errors.startTime}
+//           error={errors.start_time}
 //         />
 //         <InputField
 //           label='End Time'
-//           name='endTime'
+//           name='end_time'
 //           type='time'
 //           register={register}
-//           error={errors.endTime}
+//           error={errors.end_time}
 //         />
 //         <InputField
 //           label='Amount'
@@ -214,17 +214,17 @@ const EventForm = ({
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
           <InputField
             label='Event Name'
-            name='name'
+            name='client_name'
             register={register}
-            error={errors.name}
+            error={errors.client_name}
             placeholder='Enter event name'
             required
           />
           <InputField
             label='Event Type'
-            name='event'
+            name='event_name'
             register={register}
-            error={errors.event}
+            error={errors.event_name}
             placeholder='Wedding, Birthday, etc.'
             required
           />
@@ -257,18 +257,18 @@ const EventForm = ({
           />
           <InputField
             label='Start Time'
-            name='startTime'
+            name='start_time'
             type='time'
             register={register}
-            error={errors.startTime}
+            error={errors.start_time}
             helperText='Format: HH:MM (24-hour)'
           />
           <InputField
             label='End Time'
-            name='endTime'
+            name='end_time'
             type='time'
             register={register}
-            error={errors.endTime}
+            error={errors.end_time}
             helperText='Format: HH:MM (24-hour)'
           />
         </div>

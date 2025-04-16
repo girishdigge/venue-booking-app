@@ -5,14 +5,14 @@
 // const mockEvents: EventSchema[] = [
 //   {
 //     id: 1,
-//     name: "John's Wedding",
+//     client_name: "John's Wedding",
 //     date: '2025-05-20',
-//     startTime: '14:30',
-//     endTime: '20:00',
+//     start_time: '14:30',
+//     end_time: '20:00',
 //     email: 'john@example.com',
 //     contact: '123-456-7890',
 //     address: '123 Wedding Street, Cityville, Country',
-//     event: 'Wedding',
+//     event_name: 'Wedding',
 //     hall: 'Grand Ballroom',
 //     details: 'Reception will follow the ceremony in the Grand Ballroom.',
 //     amount: 10000,
@@ -34,7 +34,7 @@
 //     <div className='w-full max-w-4xl bg-white shadow-xl rounded-2xl p-8 space-y-8'>
 //       {/* Header */}
 //       <div className='border-b pb-4'>
-//         <h1 className='text-3xl font-bold text-gray-800'>{data.name}</h1>
+//         <h1 className='text-3xl font-bold text-gray-800'>{data.client_name}</h1>
 //         <p className='text-sm text-gray-500 mt-2'>Event Details</p>
 //       </div>
 
@@ -42,7 +42,7 @@
 //       <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
 //         <div>
 //           <h2 className='text-xl font-semibold text-gray-700'>Event Type</h2>
-//           <p className='text-gray-800'>{data.event}</p>
+//           <p className='text-gray-800'>{data.event_name}</p>
 //         </div>
 //         <div>
 //           <h2 className='text-xl font-semibold text-gray-700'>Date</h2>
@@ -68,11 +68,11 @@
 //       <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
 //         <div>
 //           <h2 className='text-xl font-semibold text-gray-700'>Start Time</h2>
-//           <p className='text-gray-800'>{data.startTime || '-'}</p>
+//           <p className='text-gray-800'>{data.start_time || '-'}</p>
 //         </div>
 //         <div>
 //           <h2 className='text-xl font-semibold text-gray-700'>End Time</h2>
-//           <p className='text-gray-800'>{data.endTime || '-'}</p>
+//           <p className='text-gray-800'>{data.end_time || '-'}</p>
 //         </div>
 //       </div>
 
@@ -133,14 +133,14 @@ import React from 'react';
 // Define the structure of an event
 interface EventSchema {
   id: number;
-  name: string; // Client Name (used for Mr/Mrs)
+  client_name: string; // Client Name (used for Mr/Mrs)
   date: string; // Venue Date
-  startTime?: string; // Event Start Time
-  endTime?: string; // Event End Time
+  start_time?: string; // Event Start Time
+  end_time?: string; // Event End Time
   email?: string; // Client Email
   contact?: string; // Client Contact Number
   address: string; // Client Address
-  event: string; // Event Type (e.g., Wedding)
+  event_name: string; // Event Type (e.g., Wedding)
   hall?: string; // Specific Hall/Venue Area
   details: string; // Additional Details
   amount: number; // Total Amount
@@ -155,14 +155,14 @@ interface EventSchema {
 const mockEvents: EventSchema[] = [
   {
     id: 101, // Example ID
-    name: 'Priya Sharma',
+    client_name: 'Priya Sharma',
     date: '2025-07-22',
-    startTime: '18:00', // 6:00 PM
-    endTime: '23:00', // 11:00 PM
+    start_time: '18:00', // 6:00 PM
+    end_time: '23:00', // 11:00 PM
     email: 'priya.s@example.com',
     contact: '9876543210',
     address: 'Flat 101, Harmony Bldg, Kothrud, Pune, Maharashtra 411038',
-    event: 'Wedding Reception',
+    event_name: 'Wedding Reception',
     hall: 'Jasmine Hall',
     details:
       'Approx 200 guests. Includes basic decoration, DJ, and sound system. Dinner service starts at 8:00 PM. Full vegetarian menu.',
@@ -252,7 +252,7 @@ const EventView = () => {
 
   const handleEdit = () => {
     console.log(`Edit button clicked for event ID: ${data.id}`);
-    <FormModal table='booking' type='create' />;
+    //   <FormModal table='booking' type='create' />
     // Placeholder action: Show an alert or navigate
     alert(`Edit functionality for Event ID ${data.id} is not implemented yet.`);
     // Example navigation (if using Next.js App Router):
@@ -313,7 +313,7 @@ const EventView = () => {
                 Client Name:{' '}
               </span>
               <span className='text-base print:text-sm'>
-                {data.name || '-'}
+                {data.client_name || '-'}
               </span>
             </div>
             <div>
@@ -353,7 +353,7 @@ const EventView = () => {
               <span className='font-semibold text-gray-600 block print:inline'>
                 Event Type:{' '}
               </span>
-              <span>{data.event || '-'}</span>
+              <span>{data.event_name || '-'}</span>
             </div>
             <div>
               <span className='font-semibold text-gray-600 block print:inline'>
@@ -371,13 +371,13 @@ const EventView = () => {
               <span className='font-semibold text-gray-600 block print:inline'>
                 Start Time:{' '}
               </span>
-              <span>{formatTime12hr(data.startTime)}</span>
+              <span>{formatTime12hr(data.start_time)}</span>
             </div>
             <div>
               <span className='font-semibold text-gray-600 block print:inline'>
                 End Time:{' '}
               </span>
-              <span>{formatTime12hr(data.endTime)}</span>
+              <span>{formatTime12hr(data.end_time)}</span>
             </div>
           </div>
 
@@ -436,7 +436,7 @@ const EventView = () => {
         <button
           onClick={handleEdit}
           className='bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out'
-          aria-label={`Edit event ${data.id}`}
+          aria-label={`Edit event_name ${data.id}`}
         >
           Edit
         </button>

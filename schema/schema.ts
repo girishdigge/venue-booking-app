@@ -19,7 +19,7 @@ export const signUpSchema = z.object({
 
 export const eventSchema = z.object({
   id: z.number().int().optional(),
-  name: z.string().min(3, 'name is required, min 3 characters long.'),
+  client_name: z.string().min(3, 'name is required, min 3 characters long.'),
   email: z
     .string()
     .optional()
@@ -34,13 +34,13 @@ export const eventSchema = z.object({
   date: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: 'Invalid date format',
   }),
-  startTime: z
+  start_time: z
     .string()
     .optional()
     .refine((val) => (val ? /^([01]\d|2[0-3]):([0-5]\d)$/.test(val) : true), {
       message: 'Invalid time format, expected HH:MM',
     }),
-  endTime: z
+  end_time: z
     .string()
     .optional()
     .refine((val) => (val ? /^([01]\d|2[0-3]):([0-5]\d)$/.test(val) : true), {
@@ -48,7 +48,9 @@ export const eventSchema = z.object({
     }),
   contact: z.string().optional(),
   address: z.string().optional(),
-  event: z.string().min(1, 'Event type is required (e.g., Wedding, Birthday)'),
+  event_name: z
+    .string()
+    .min(1, 'Event type is required (e.g., Wedding, Birthday)'),
   hall: z.string().min(1, 'Hall/Venue name is required'),
   details: z.string().optional(),
   amount: z.preprocess(
