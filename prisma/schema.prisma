@@ -1,6 +1,12 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
-     output   = "../app/generated/prisma/client"
+  output   = "../lib/generated/prisma"
 }
 
 datasource db {
@@ -25,10 +31,14 @@ model User {
 
 model Event {
   id          Int      @id @default(autoincrement())
+  client_name String
   date        DateTime
+  start_time  String?
+  end_time    String?
   email       String?
   contact     String?
   address     String?
+  event_name  String
   hall        Hall
   details     String?
   amount      Int      @default(0)
@@ -36,10 +46,6 @@ model Event {
   balance     Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  client_name String
-  end_time    String?
-  event_name  String
-  start_time  String?
 }
 
 model Session {

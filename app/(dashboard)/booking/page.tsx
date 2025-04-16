@@ -61,8 +61,10 @@ const columns = [
   },
 ];
 const page = async () => {
-  // const bookings=await prisma.
-  console.log('prisma test', prisma);
+  const bookings = await prisma.event.findMany();
+  console.log(bookings);
+
+  // console.log('prisma test', prisma);
 
   const renderRow = (item: Client) => (
     <tr
