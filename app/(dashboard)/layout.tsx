@@ -6,10 +6,13 @@ import Link from 'next/link';
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='h-screen flex'>
-      <div className='w-[14%] md:w-[8%] lg:w-[16%] xl:w-[14%] '>
+      <div className='w-[14%] md:w-[8%] lg:w-[16%] xl:w-[14%] p-2'>
         <Link href='/' className='flex items-center justify-center gap-2'>
-          <Image src='/logo.png' alt='logo' height={32} width={32} />
-          <span className='hidden lg:block'>Venue Booking</span>
+          <Image src='/logo_water.png' alt='logo' width={200} height={100} />
+          {/* <div>
+            <h1 className='hidden lg:block font-bold text-xl'>VENUE</h1>
+            <h1 className='hidden lg:block font-bold text-xl'>BOOKING</h1>
+          </div> */}
         </Link>
         <Menu />
       </div>

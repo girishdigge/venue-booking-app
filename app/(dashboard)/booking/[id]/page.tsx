@@ -1,49 +1,7 @@
 'use client';
+import { EventSchema } from '@/schema/schema';
 import Image from 'next/image';
-import React from 'react';
-
-// Define the structure of an event
-interface EventSchema {
-  id: number;
-  client_name: string; // Client Name (used for Mr/Mrs)
-  date: Date; // Venue Date
-  start_time?: string; // Event Start Time
-  end_time?: string; // Event End Time
-  email?: string; // Client Email
-  contact?: string; // Client Contact Number
-  address: string; // Client Address
-  event_name: string; // Event Type (e.g., Wedding)
-  hall?: string; // Specific Hall/Venue Area
-  details: string; // Additional Details
-  amount: number; // Total Amount
-  advance: number; // Advance Payment
-  balance: number; // Balance Due
-  createdAt: Date; // Booking Date
-  updatedAt: Date; // Internal timestamp, not usually displayed
-}
-
-// --- Sample Data Defined Directly in the Component File ---
-const mockEvents: EventSchema[] = [
-  {
-    id: 101, // Example ID
-    client_name: 'Priya Sharma',
-    date: new Date('2025-04-18'),
-    start_time: '18:00', // 6:00 PM
-    end_time: '23:00', // 11:00 PM
-    email: 'priya.s@example.com',
-    contact: '9876543210',
-    address: 'Flat 101, Harmony Bldg, Kothrud, Pune, Maharashtra 411038',
-    event_name: 'Wedding Reception',
-    hall: 'Jasmine Hall',
-    details:
-      'Approx 200 guests. Includes basic decoration, DJ, and sound system. Dinner service starts at 8:00 PM. Full vegetarian menu.',
-    amount: 75000,
-    advance: 25000,
-    balance: 50000,
-    createdAt: new Date('2025-04-15T10:30:00'), // Booking Date
-    updatedAt: new Date('2025-04-15T11:00:00'),
-  },
-];
+import React, { useEffect, useState } from 'react';
 
 // --- Helper Functions ---
 const formatTime12hr = (timeString: string | undefined): string => {
@@ -74,150 +32,238 @@ const formatCurrency = (amount: number | undefined): string => {
   });
 };
 
-// --- Revamped Event Snapshot Component ---
-// (Defined within the same file for simplicity, could be moved to its own file)
-interface ElegantEventSnapshotProps {
+// --- Improved Event Snapshot Component ---
+interface ModernEventSnapshotProps {
   data: EventSchema;
   formatTime12hr: (time: string | undefined) => string;
   formatCurrency: (amount: number | undefined) => string;
 }
 
-function ElegantEventSnapshot({
+function ModernEventSnapshot({
   data,
   formatTime12hr,
   formatCurrency,
-}: ElegantEventSnapshotProps) {
-  // Basic check for data existence (already handled in parent, but good practice)
-  if (!data) {
-    return null; // Or some placeholder
-  }
+}: ModernEventSnapshotProps) {
+  if (!data) return null;
 
-  // Prepare date/time data carefully, handling potential nulls
-  const eventDate =
-    data.date instanceof Date
-      ? data.date.toLocaleDateString('en-IN', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
-        })
-      : '-';
+  // Format date and time
+  const eventDate = new Date(data.date).toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+  const weekday = new Date(data.date).toLocaleDateString('en-IN', {
+    weekday: 'long',
+  });
 
   const startTime = data.start_time ? formatTime12hr(data.start_time) : '-';
   const endTime = data.end_time ? formatTime12hr(data.end_time) : '-';
 
-  // Prepare payment data carefully
-  const totalAmount = data.amount != null ? formatCurrency(data.amount) : '-';
-  const advancePaid = data.advance != null ? formatCurrency(data.advance) : '-';
-  const balanceDue = data.balance != null ? formatCurrency(data.balance) : '-';
+  // Format payment data
+  const totalAmount = formatCurrency(data.amount);
+  const advancePaid = formatCurrency(data.advance);
+  const balanceDue = formatCurrency(data.balance);
 
-  const eventInfoItems = [
-    { label: 'Date', value: eventDate },
-    { label: 'Start Time', value: startTime },
-    { label: 'End Time', value: endTime },
-  ];
+  // Calculate percentage paid
+  const percentPaid = Math.round((data.advance / data.amount) * 100);
 
   return (
-    // This is the self-contained snapshot card
-    <div className='bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 mb-6 print:shadow-none print:border-none print:rounded-none print:mb-4'>
+    <div className='bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 mb-8 print:shadow-none print:border print:border-gray-300 print:rounded-none print:mb-4'>
+      {/* Event Type Banner - Improved with more elegant gradient */}
+      <div className='bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 px-6 py-5'>
+        <div className='flex justify-between items-center'>
+          <div>
+            <h3 className='text-xl font-bold text-white print:text-lg'>
+              {data.event_name || 'Event'}
+            </h3>
+          </div>
+          <div className='flex items-center justify-center gap-2 border-2 border-amber-900 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold tracking-widest px-4 py-2 rounded-lg text-md shadow-md backdrop-blur-sm'>
+            <span className='flex items-center justify-center rounded-full w-2 h-2'>
+              <span className='border-2 border-amber-900 bg-amber-900 rounded-full w-2 h-2'></span>
+            </span>
+            {data.hall || 'Main Hall'}
+          </div>
+        </div>
+      </div>
+
+      {/* Event Details */}
       <div className='p-6 print:p-4'>
-        <h3 className='text-xl font-semibold text-gray-800 mb-5 print:text-lg print:mb-3'>
-          {' '}
-          {/* Changed h2 to h3 for better hierarchy within the page */}
-          Event Snapshot
-        </h3>
-
-        {/* Key Information Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6 print:mb-4 print:grid-cols-2'>
-          {' '}
-          {/* Added print:grid-cols-2 */}
-          <div>
-            <dt className='text-sm font-medium text-gray-500 print:text-xs'>
-              Type
-            </dt>
-            <dd className='mt-1 text-base font-semibold text-gray-900 print:text-sm print:font-medium print:mt-0'>
-              {data.event_name || '-'}
-            </dd>
-          </div>
-          <div>
-            <dt className='text-sm font-medium text-gray-500 print:text-xs'>
-              Hall
-            </dt>
-            <dd className='mt-1 text-base font-semibold text-gray-900 print:text-sm print:font-medium print:mt-0'>
-              {data.hall || '-'}
-            </dd>
-          </div>
-        </div>
-
-        {/* Date & Time Grid */}
-        <div className='grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 mb-8 border-t border-gray-200 pt-6 print:mb-5 print:pt-4 print:border-t print:border-gray-300 print:grid-cols-3'>
-          {' '}
-          {/* Added print:grid-cols-3 and print border */}
-          {eventInfoItems.map((item) => (
-            <div key={item.label}>
-              <dt className='text-sm font-medium text-gray-500 print:text-xs'>
-                {item.label}
-              </dt>
-              <dd className='mt-1 text-base font-semibold text-gray-900 print:text-sm print:font-medium print:mt-0'>
-                {item.value}
-              </dd>
+        {/* Date & Time - Redesigned with better visual elements */}
+        <div className='flex flex-wrap md:flex-nowrap print:flex-nowrap gap-4 mb-6 '>
+          <div className='w-full md:w-1/3 print:w-3/5 bg-indigo-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300'>
+            <div className='h-12 w-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4 '>
+              <svg
+                className='h-6 w-6 text-indigo-600 '
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
+                />
+              </svg>
             </div>
-          ))}
+            <div>
+              <p className='text-md font-medium text-indigo-600 mb-1 '>Date</p>
+              <p className='font-bold text-gray-900 text-lg'>{eventDate}</p>
+              <p className='text-gray-800 text-sm  font-semibold tracking-wider'>
+                {weekday}
+              </p>
+            </div>
+          </div>
+
+          <div className='w-full md:w-2/3 flex gap-4'>
+            <div className='flex-1 bg-purple-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300 print:bg-purple-50 print:p-3'>
+              <div className='h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4 print:h-10 print:w-10'>
+                <svg
+                  className='h-6 w-6 text-purple-600 print:h-5 print:w-5'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+                  />
+                </svg>
+              </div>
+              <div>
+                <p className='text-xs font-medium text-purple-600 mb-1 print:text-xs'>
+                  Start Time
+                </p>
+                <p className='font-semibold text-gray-800 print:text-sm'>
+                  {startTime}
+                </p>
+              </div>
+            </div>
+
+            <div className='flex-1 bg-pink-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300 print:bg-pink-50 print:p-3'>
+              <div className='h-12 w-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4 print:h-10 print:w-10'>
+                <svg
+                  className='h-6 w-6 text-pink-600 print:h-5 print:w-5'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4'
+                  />
+                </svg>
+              </div>
+              <div>
+                <p className='text-xs font-medium text-pink-600 mb-1 print:text-xs'>
+                  End Time
+                </p>
+                <p className='font-semibold text-gray-800 print:text-sm'>
+                  {endTime}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Details Section */}
-        <div className='mb-8 print:mb-5'>
-          <h4 className='text-base font-semibold text-gray-700 mb-2 print:text-sm print:mb-1'>
-            {' '}
-            {/* Changed h3 to h4 */}
-            Details & Requirements
+        {/* Details Section - Improved with more visual interest */}
+        <div className='mb-8 print:mb-4'>
+          <h4 className='text-base font-semibold text-gray-700 mb-3 flex items-center print:text-sm print:mb-2'>
+            <svg
+              className='h-5 w-5 mr-2 text-indigo-600 print:h-4 print:w-4'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+              />
+            </svg>
+            Event Details
           </h4>
-          <p className='text-gray-600 text-sm leading-relaxed print:text-xs print:leading-normal'>
-            {data.details || 'No additional details provided.'}
-          </p>
+          <div className='bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 hover:shadow-md transition-all duration-300 print:bg-gray-50 print:border print:border-gray-200 print:p-3'>
+            <p className='text-gray-700 text-sm leading-relaxed print:text-xs print:leading-normal'>
+              {data.details || 'No additional details provided.'}
+            </p>
+          </div>
         </div>
 
-        {/* Payment Information - Refined Style */}
-        <div className='bg-gray-50 rounded-lg p-5 border border-gray-200 print:bg-transparent print:border-t print:border-b print:border-gray-300 print:p-0 print:pt-4 print:pb-4 print:mt-4 print:rounded-none'>
-          <h4 className='text-base font-semibold text-gray-700 mb-4 print:text-sm print:mb-2'>
-            {' '}
-            {/* Changed h3 to h4 */}
+        {/* Payment Summary - Enhanced with interactive elements */}
+      </div>
+      <div className='bg-white w-full rounded-xl border border-gray-100 shadow-lg overflow-hidden print:border print:border-gray-300 print:shadow-none'>
+        <div className='bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 px-5 py-4 text-white print:bg-gradient-to-r print:from-emerald-600 print:to-teal-600'>
+          <h4 className='text-base font-bold flex items-center print:text-sm'>
+            <svg
+              className='h-5 w-5 mr-2 print:h-4 print:w-4'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z'
+              />
+            </svg>
             Payment Summary
           </h4>
-          <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 print:gap-3 print:grid-cols-3'>
-            {/* Total Amount */}
-            <div className='bg-white rounded-md p-4 border border-gray-200 shadow-sm print:p-2 print:border-0 print:shadow-none print:bg-transparent'>
-              <span className='font-medium text-gray-500 text-xs block mb-1 print:text-2xs print:mb-0'>
+        </div>
+
+        <div className='p-6 print:p-3'>
+          {/* Progress Bar - Enhanced with animation */}
+          <div className='mb-6 print:mb-3'>
+            <div className='flex justify-between items-center mb-2 print:mb-0.5'>
+              <span className='text-xs font-medium text-gray-600 print:text-2xs'>
+                Payment Progress
+              </span>
+              <span className='text-sm font-semibold text-emerald-600 print:text-2xs'>
+                {percentPaid}% Paid
+              </span>
+            </div>
+            <div className='w-full bg-gray-200 rounded-full h-3 print:h-2 overflow-hidden'>
+              <div
+                className='bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-500 h-3 rounded-full transition-all duration-700 ease-out print:bg-gradient-to-r print:from-emerald-500 print:to-teal-500 print:h-2'
+                style={{ width: `${percentPaid}%` }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Payment Details - Enhanced with hover effects */}
+          <div className='grid grid-cols-3 gap-4 print:gap-3'>
+            <div className='bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 border border-gray-100 transition-all duration-300 hover:shadow-md print:p-3 print:border print:border-gray-200'>
+              <p className='text-xs font-medium text-gray-500 mb-1 print:text-2xs print:mb-0.5'>
                 Total Amount
-              </span>
-              <span className='text-lg font-bold text-blue-700 print:text-base print:font-semibold print:text-black'>
-                {' '}
-                {/* Adjusted print text color */}
+              </p>
+              <p className='text-xl font-bold text-gray-800 print:text-base'>
                 {totalAmount}
-              </span>
+              </p>
             </div>
 
-            {/* Advance Paid */}
-            <div className='bg-white rounded-md p-4 border border-gray-200 shadow-sm print:p-2 print:border-0 print:shadow-none print:bg-transparent'>
-              <span className='font-medium text-gray-500 text-xs block mb-1 print:text-2xs print:mb-0'>
+            <div className='bg-gradient-to-br from-emerald-50 to-white rounded-xl p-5 border border-emerald-100 transition-all duration-300 hover:shadow-md print:p-3 print:border print:border-gray-200'>
+              <p className='text-xs font-medium text-emerald-600 mb-1 print:text-2xs print:mb-0.5'>
                 Advance Paid
-              </span>
-              <span className='text-lg font-bold text-green-600 print:text-base print:font-semibold print:text-black'>
-                {' '}
-                {/* Adjusted print text color */}
+              </p>
+              <p className='text-xl font-bold text-emerald-600 print:text-base'>
                 {advancePaid}
-              </span>
+              </p>
             </div>
 
-            {/* Balance Due */}
-            <div className='bg-white rounded-md p-4 border border-gray-200 shadow-sm print:p-2 print:border-0 print:shadow-none print:bg-transparent'>
-              <span className='font-medium text-gray-500 text-xs block mb-1 print:text-2xs print:mb-0'>
+            <div className='bg-gradient-to-br from-amber-50 to-white rounded-xl p-5 border border-amber-100 transition-all duration-300 hover:shadow-md print:p-3 print:border print:border-gray-200'>
+              <p className='text-xs font-medium text-amber-600 mb-1 print:text-2xs print:mb-0.5'>
                 Balance Due
-              </span>
-              <span className='text-lg font-bold text-orange-600 print:text-base print:font-semibold print:text-black'>
-                {' '}
-                {/* Adjusted print text color */}
+              </p>
+              <p className='text-xl font-bold text-amber-600 print:text-base'>
                 {balanceDue}
-              </span>
+              </p>
+              <p className='text-xs text-amber-500 mt-1'>Due before event</p>
             </div>
           </div>
         </div>
@@ -228,19 +274,72 @@ function ElegantEventSnapshot({
 
 // --- Main Component Definition ---
 const EventView = () => {
-  // Use the first mock event. In a real app, this would come from props or state.
-  const data = mockEvents[0];
+  const [data, setData] = useState<EventSchema>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Basic safety check
-  if (!data) {
+  useEffect(() => {
+    setLoading(true);
+    fetch(`/api/event/id`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch event data');
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching event:', err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
     return (
-      <div className='text-center text-red-500 p-10'>
-        Error: Event data not found.
+      <div className='flex items-center justify-center min-h-96'>
+        <div className='animate-pulse flex flex-col items-center'>
+          <div className='h-16 w-16 bg-amber-200 rounded-full mb-4'></div>
+          <div className='h-4 w-48 bg-gray-200 rounded mb-2'></div>
+          <div className='h-3 w-36 bg-gray-200 rounded'></div>
+        </div>
       </div>
     );
   }
 
-  // --- Event Handlers ---
+  if (error || !data) {
+    return (
+      <div className='text-center p-10 bg-red-50 rounded-xl border border-red-100 shadow-md'>
+        <svg
+          className='h-12 w-12 text-red-500 mx-auto mb-4'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+          />
+        </svg>
+        <h3 className='text-xl font-bold text-red-700 mb-2'>
+          Event Data Not Found
+        </h3>
+        <p className='text-red-600 mb-4'>
+          {error || 'Unable to load event information.'}
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className='bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-lg shadow transition duration-150'
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
   const handlePrint = () => {
     window.print();
   };
@@ -251,82 +350,105 @@ const EventView = () => {
   };
 
   return (
-    // Main container for the component view
     <div className='w-full max-w-4xl mx-auto p-4 md:p-6 space-y-6 print:p-0 print:m-0'>
-      {' '}
-      {/* Added max-w-4xl for better readability on wide screens */}
-      {/* --- Printable Receipt Area --- */}
+      {/* Action Bar */}
+      <div className='bg-white shadow-md rounded-xl p-4 flex justify-between items-center print:hidden'>
+        <div className='flex items-center'>
+          <div className='h-10 w-10 bg-amber-100 rounded-lg flex items-center justify-center'>
+            <svg
+              className='h-6 w-6 text-amber-700'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'
+              />
+            </svg>
+          </div>
+          <div className='ml-3'>
+            <h2 className='font-semibold text-gray-800'>Event #{data.id}</h2>
+            <p className='text-sm text-gray-500'>Manage booking details</p>
+          </div>
+        </div>
+        <div className='flex space-x-2'>
+          <button
+            onClick={() => window.history.back()}
+            className='bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition duration-150'
+          >
+            Back
+          </button>
+        </div>
+      </div>
+
+      {/* Printable Receipt Area */}
       <div
         id='receipt-content'
-        className='relative overflow-hidden bg-white shadow-xl rounded-lg border border-gray-200 p-6 md:p-8 space-y-6 text-gray-800 font-sans print:shadow-none print:border-none print:p-0 print:m-0 print:space-y-3'
+        className='relative overflow-hidden bg-white shadow-xl rounded-2xl border border-gray-100 p-6 md:p-8 space-y-6 text-gray-800 font-sans print:shadow-none print:border-none print:p-0 print:m-0 print:space-y-3'
       >
-        {/* --- Watermark (Centered) --- */}
+        {/* Watermark */}
         <div
           aria-hidden='true'
-          className='absolute inset-0 flex items-center justify-center z-0 pointer-events-none print:flex' // z-0 to be behind content
-          // Keep original watermark styles
+          className='absolute inset-0  flex items-center justify-center z-100 pointer-events-none'
           style={{
-            fontSize: 'clamp(6rem, 20vw, 12rem)', // Larger font for more impact
-            color: 'rgba(184, 134, 11, 0.04)', // Gold-toned with subtle opacity
+            color: 'rgba(79, 70, 229, 0.03)',
             fontWeight: 'bold',
             userSelect: 'none',
           }}
         >
           <Image
-            src='/logo.png' // Ensure this path is correct
+            src='/logo_water.png'
             alt='logo watermark'
-            height={300}
-            width={300}
-            className='opacity-10 print:opacity-10'
+            height={400}
+            width={600}
+            className='opacity-30'
           />
         </div>
-        {/* --- Receipt Content Wrapper (Above Watermark) --- */}
+
+        {/* Receipt Content */}
         <div className='relative z-10 space-y-6 print:space-y-3'>
-          {' '}
-          {/* Use z-10 to be above watermark */}
-          {/* Enhanced Header with Gold Gradient, Emblem and GST */}
-          <div className='bg-gradient-to-r from-yellow-900 via-yellow-700 to-yellow-600 text-yellow-50 p-6 rounded-lg shadow-lg print:bg-gradient-to-r print:from-yellow-900 print:via-yellow-700 print:to-yellow-600 print:shadow-none print:text-yellow-50 print:rounded-none print:p-4'>
-            {' '}
-            {/* Adjusted print padding/rounding */}
+          {/* Modern Header with Gradient */}
+          <div className='bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white p-2 rounded-xl shadow-lg'>
             <div className='flex items-center justify-between'>
               <div className='flex items-center'>
-                <div className='w-16 h-16 flex items-center justify-center bg-gradient-to-br from-yellow-100 to-yellow-300 rounded-full shadow-inner mr-4 print:w-12 print:h-12 print:mr-3'>
+                <div className='w-32 h-32 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-xl shadow-inner mr-4 border border-amber-600'>
                   <Image
-                    src='/logo.png'
+                    src='/logo.jpg'
                     alt='logo'
-                    height={40}
-                    width={40}
-                    className='print:w-8 print:h-8'
-                  />{' '}
-                  {/* Adjusted size */}
+                    height={120}
+                    width={120}
+                    className='transform rounded-xl hover:scale-105 transition-transform duration-300'
+                  />
                 </div>
                 <div>
-                  <h1 className='text-3xl font-bold text-yellow-50 print:text-2xl'>
+                  <h1 className='text-3xl font-bold text-white print:text-2xl'>
                     KOHINOOR
                   </h1>
-                  <p className='text-yellow-200 text-sm mt-1 print:text-xs'>
+                  <p className='text-amber-100 text-sm mt-1 print:text-xs'>
                     Mangal Karyalay & Open Lawn
                   </p>
-                  <p className='text-yellow-100 text-xs mt-1 font-semibold print:text-2xs'>
-                    {' '}
-                    {/* Adjusted print size */}
+                  <p className='text-amber-200 text-xs mt-1 font-semibold print:text-2xs'>
                     GST No: 27AALFK2963D1ZQ
                   </p>
                 </div>
               </div>
-              <div className='text-right text-sm text-yellow-100 print:text-xs print:text-yellow-100'>
+              <div className='text-right text-sm text-amber-100 print:text-xs bg-amber-900/40 p-3 rounded-lg backdrop-blur-sm'>
                 <p className='font-semibold'>Ph: 7588203811</p>
                 <p>Bastegav Road, Akkalkot Dist.</p>
                 <p>Solapur, Maharashtra 413216</p>
               </div>
             </div>
           </div>
+
           {/* Enhanced Receipt Title with Ornamental Design */}
           <div className='text-center my-8 print:my-4'>
             <div className='flex items-center justify-center'>
-              <div className='flex-grow h-px bg-gradient-to-r from-transparent via-yellow-600 to-transparent max-w-xs print:via-yellow-600'></div>
+              <div className='flex-grow h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent max-w-xs print:via-amber-600'></div>
               <svg
-                className='h-8 w-8 mx-2 text-yellow-700 print:h-6 print:w-6'
+                className='h-8 w-8 mx-3 text-amber-700 print:h-6 print:w-6'
                 viewBox='0 0 24 24'
                 fill='none'
                 stroke='currentColor'
@@ -334,11 +456,11 @@ const EventView = () => {
               >
                 <path d='M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z' />
               </svg>
-              <h2 className='text-2xl font-semibold mx-3 text-yellow-800 print:text-xl'>
-                Venue Booking Confirmation
+              <h2 className='text-2xl font-semibold mx-3 text-amber-800 print:text-xl'>
+                Venue Booking Receipt
               </h2>
               <svg
-                className='h-8 w-8 mx-2 text-yellow-700 print:h-6 print:w-6'
+                className='h-8 w-8 mx-3 text-amber-700 print:h-6 print:w-6'
                 viewBox='0 0 24 24'
                 fill='none'
                 stroke='currentColor'
@@ -346,123 +468,91 @@ const EventView = () => {
               >
                 <path d='M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z' />
               </svg>
-              <div className='flex-grow h-px bg-gradient-to-r from-transparent via-yellow-600 to-transparent max-w-xs print:via-yellow-600'></div>
+              <div className='flex-grow h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent max-w-xs print:via-amber-600'></div>
             </div>
-            <p className='text-gray-500 text-sm mt-2 italic print:text-xs'>
-              Official Receipt #{data.id}-{data.date.getFullYear()}
-            </p>
           </div>
-          {/* --- NEW: Render the Elegant Event Snapshot Component --- */}
-          <ElegantEventSnapshot
+
+          {/* Render the Modern Event Snapshot Component */}
+          <ModernEventSnapshot
             data={data}
             formatTime12hr={formatTime12hr}
             formatCurrency={formatCurrency}
           />
-          {/* Client Information Section - Kept Styling */}
-          <div className='bg-gradient-to-br from-yellow-50 to-white rounded-lg p-5 border border-yellow-200 shadow-sm space-y-4 print:bg-white print:border print:border-gray-300 print:p-4 print:space-y-2 print:shadow-none'>
-            {' '}
-            {/* Simplified print background/border */}
-            <div className='flex items-center border-b border-yellow-200 pb-2 print:pb-1 print:border-b print:border-gray-300'>
-              <svg
-                className='h-5 w-5 mr-2 text-yellow-700 print:h-4 print:w-4 print:text-black'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-              >
-                <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2' />
-                <circle cx='12' cy='7' r='4' />
-              </svg>
-              <h3 className='text-lg font-semibold text-yellow-900 print:text-base print:text-black'>
-                Client Information
+
+          {/* Client Information Section - Enhanced with better spacing and layout */}
+          <div className='bg-gradient-to-r from-indigo-50 to-white rounded-xl p-6 border border-indigo-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300 print:bg-indigo-50 print:border print:border-gray-300 print:p-4 print:space-y-2 print:shadow-none'>
+            <div className='flex items-center border-b border-indigo-200 pb-3 print:pb-2 print:border-b print:border-gray-300'>
+              <div className='bg-indigo-100 p-2 rounded-lg mr-3 print:p-1.5'>
+                <svg
+                  className='h-5 w-5 text-indigo-600 print:h-4 print:w-4'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+                  />
+                </svg>
+              </div>
+              <h3 className='text-lg font-semibold text-indigo-900 print:text-base print:text-black'>
+                <span className='text-base font-medium text-gray-800 print:text-sm'>
+                  {data.client_name.toUpperCase() || '—'}
+                </span>
               </h3>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 print:gap-4 print:grid-cols-2'>
-              <div className='space-y-3 print:space-y-1'>
+
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-8 print:gap-4 print:grid-cols-2'>
+              <div className='space-y-5 print:space-y-2'>
                 <div>
-                  <span className='font-medium text-gray-500 text-xs block print:text-xs'>
-                    Client Name
-                  </span>
-                  <span className='text-base font-medium print:text-sm'>
-                    {data.client_name || '-'}
-                  </span>
-                </div>
-                <div>
-                  <span className='font-medium text-gray-500 text-xs block print:text-xs'>
+                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
                     Contact Number
                   </span>
-                  <span className='print:text-sm'>{data.contact || '-'}</span>
+                  <span className='text-gray-700 print:text-sm'>
+                    {data.contact || '—'}
+                  </span>
                 </div>
                 <div>
-                  <span className='font-medium text-gray-500 text-xs block print:text-xs'>
+                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
                     Email Address
                   </span>
-                  <span className='print:text-sm'>{data.email || '-'}</span>
+                  <span className='text-gray-700 print:text-sm'>
+                    {data.email || '—'}
+                  </span>
                 </div>
               </div>
-              <div className='space-y-3 print:space-y-1'>
+
+              <div className='space-y-5 print:space-y-2'>
                 <div>
-                  <span className='font-medium text-gray-500 text-xs block print:text-xs'>
-                    Address
-                  </span>
-                  <span className='text-sm print:text-xs'>
-                    {data.address || '-'}
-                  </span>
-                </div>
-                <div>
-                  <span className='font-medium text-gray-500 text-xs block print:text-xs'>
+                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
                     Booking Date
                   </span>
-                  <span className='print:text-sm'>
-                    {data.createdAt.toLocaleDateString('en-IN', {
+                  <span className='text-gray-700 print:text-sm'>
+                    {new Date(data?.createdAt)?.toLocaleDateString('en-IN', {
                       day: 'numeric',
                       year: 'numeric',
                       month: 'long',
                     })}
                   </span>
                 </div>
+                <div>
+                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                    Address
+                  </span>
+                  <span className='text-sm text-gray-700 print:text-xs'>
+                    {data.address || '—'}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-          {/* Terms & Conditions with Improved Styling */}
-          <div className='bg-gray-50 rounded-lg p-4 border border-gray-200 print:bg-transparent print:border print:border-gray-300 print:p-3 print:mt-4'>
-            <h4 className='text-sm font-semibold text-gray-700 mb-2 flex items-center print:mb-1 print:text-xs print:text-black'>
-              <svg
-                className='h-4 w-4 mr-1 text-gray-600 print:text-black'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-              >
-                <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7' />
-                <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' />
-              </svg>
-              Terms & Conditions
-            </h4>
-            <ul className='text-xs text-gray-600 space-y-1 pl-5 list-disc print:text-2xs print:space-y-0.5 print:pl-4'>
-              {' '}
-              {/* Adjusted print text size */}
-              <li>Full payment must be made 24 hours before the event.</li>
-              <li>
-                Cancellation charges: 25% if cancelled 7 days before, 50% if
-                cancelled within 7 days.
-              </li>
-              <li>Additional time will be charged at standard hourly rates.</li>
-              <li>Timing to be strictly followed as mentioned above.</li>
-              <li>
-                Any damage to venue property will be charged extra as assessed.
-              </li>
-            </ul>
-          </div>
-          {/* Footer with Signature and Receipt Information */}
+
+          {/* Footer with Signature */}
           <div className='flex flex-col md:flex-row justify-between items-end border-t border-gray-200 pt-4 print:pt-3 print:border-t print:border-gray-300 print:flex-row'>
-            {' '}
-            {/* Ensure flex-row for print */}
             <div className='flex flex-col items-start mb-4 md:mb-0 print:mb-0'>
               <div className='text-xs text-gray-500 print:text-2xs'>
-                <p className='font-medium text-gray-600 print:text-black'>
-                  Receipt #KH-{data.id}-{data.date.getFullYear()}
-                </p>
                 <p>
                   Generated:{' '}
                   {new Date().toLocaleDateString('en-IN', {
@@ -470,33 +560,39 @@ const EventView = () => {
                     month: 'short',
                     year: 'numeric',
                     hour: 'numeric',
-                    minute: '2-digit', // Added time
+                    minute: '2-digit',
                   })}
                 </p>
               </div>
 
-              {/* QR Code Placeholder */}
-              <div className='mt-2 bg-gray-200 h-16 w-16 flex items-center justify-center rounded print:h-12 print:w-12 print:bg-gray-100'>
-                <span className='text-xs text-gray-500 text-center print:text-2xs'>
-                  QR Code
-                </span>
+              {/* Modern QR Code Placeholder */}
+              <div className='mt-2 bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
+                <svg
+                  className='h-10 w-10 text-gray-400 print:h-8 print:w-8'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={1.5}
+                    d='M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z'
+                  />
+                </svg>
               </div>
             </div>
             <div className='text-right'>
-              <div className='border-t-2 border-black px-16 py-1 mb-1 print:border-t print:border-gray-400 print:px-12 print:pt-0 print:pb-1'>
-                {' '}
-                {/* Adjusted print border */}
-                <span className='block h-6 print:h-4'></span>{' '}
-                {/* Space for signature */}
+              <div className='border-t-2 border-black px-16 py-1 mb-1 print:border-t print:border-gray-600 print:px-12 print:pt-0 print:pb-1'>
+                <span className='block h-6 print:h-4'></span>
               </div>
               <span className='font-medium text-gray-600 text-sm print:text-xs print:text-black'>
                 Authorized Signature with Stamp
               </span>
             </div>
           </div>
-        </div>{' '}
-        {/* End of z-10 content wrapper */}
-      </div>{' '}
+        </div>
+      </div>
       {/* --- End of receipt-content --- */}
       {/* --- Action Buttons (Edit and Print) --- */}
       <div className='flex justify-center items-center space-x-4 mt-6 print:hidden'>
@@ -595,18 +691,6 @@ const EventView = () => {
             overflow: visible !important; /* Show all content */
           }
 
-          /* Ensure watermark is behind content and centered */
-          #receipt-content > div[aria-hidden='true'] {
-            display: flex !important;
-            opacity: 0.04 !important; /* Make sure it's subtle */
-            position: fixed !important; /* Use fixed to center relative to page */
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            z-index: 0 !important; /* Ensure it's behind */
-            max-width: 80%; /* Prevent excessive size */
-            max-height: 80%;
-          }
           #receipt-content > div[aria-hidden='true'] img {
             max-width: 100%;
             max-height: 100%;

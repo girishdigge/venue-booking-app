@@ -213,11 +213,11 @@ const EventForm = ({
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
           <InputField
-            label='Event Name'
+            label='Client name'
             name='client_name'
             register={register}
             error={errors.client_name}
-            placeholder='Enter event name'
+            placeholder='Enter client name'
             required
           />
           <InputField
