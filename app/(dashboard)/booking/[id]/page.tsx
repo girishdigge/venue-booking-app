@@ -2,35 +2,10 @@
 import { EventSchema } from '@/schema/schema';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-
-// --- Helper Functions ---
-const formatTime12hr = (timeString: string | undefined): string => {
-  if (!timeString || !timeString.includes(':')) return '-';
-  try {
-    const [hours, minutes] = timeString.split(':');
-    const date = new Date();
-    date.setHours(parseInt(hours, 10));
-    date.setMinutes(parseInt(minutes, 10));
-    return date.toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    });
-  } catch (e) {
-    console.error('Error formatting time:', timeString, e);
-    return timeString;
-  }
-};
-
-const formatCurrency = (amount: number | undefined): string => {
-  if (amount === undefined || amount === null) return '-';
-  return amount.toLocaleString('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  });
-};
+import { useParams } from 'next/navigation';
+import FormModal from '@/components/dashboard/FormModal';
+import { useSession } from 'next-auth/react';
+import { formatCurrency, formatTime12hr } from '@/lib/validate';
 
 // --- Improved Event Snapshot Component ---
 interface ModernEventSnapshotProps {
@@ -276,11 +251,15 @@ function ModernEventSnapshot({
 const EventView = () => {
   const [data, setData] = useState<EventSchema>();
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const { id } = useParams();
+  const { data: session } = useSession();
 
   useEffect(() => {
+    setRole(session?.user?.role || '');
     setLoading(true);
-    fetch(`/api/event/id`)
+    fetch(`/api/event/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch event data');
         return res.json();
@@ -345,8 +324,11 @@ const EventView = () => {
   };
 
   const handleEdit = () => {
-    console.log(`Edit button clicked for event ID: ${data.id}`);
-    alert(`Edit functionality for Event ID ${data.id} is not implemented yet.`);
+    console.log(`Edit button clicked for event ID: ${data}`);
+    const a = (
+      <FormModal table='booking' type='update' data={data} id={data.id} />
+    );
+    console.log(a);
   };
 
   return (
@@ -370,7 +352,9 @@ const EventView = () => {
             </svg>
           </div>
           <div className='ml-3'>
-            <h2 className='font-semibold text-gray-800'>Event #{data.id}</h2>
+            <h2 className='font-semibold text-gray-800'>
+              {data.id} : {data.client_name}
+            </h2>
             <p className='text-sm text-gray-500'>Manage booking details</p>
           </div>
         </div>
@@ -599,27 +583,29 @@ const EventView = () => {
         {' '}
         {/* Added print:hidden */}
         {/* Edit Button */}
-        <button
-          onClick={handleEdit}
-          className='bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out flex items-center'
-          aria-label={`Edit event ${data.id}`}
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='h-5 w-5 mr-2'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
+        {(role === 'ADMIN' || role === 'ROOT') && (
+          <button
+            onClick={handleEdit}
+            className='bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out flex items-center'
+            aria-label={`Edit event ${data.id}`}
           >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
-            />
-          </svg>
-          Edit Details
-        </button>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-5 w-5 mr-2'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+              />
+            </svg>
+            Edit Details
+          </button>
+        )}
         {/* Print Button */}
         <button
           onClick={handlePrint}

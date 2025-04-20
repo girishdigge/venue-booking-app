@@ -24,3 +24,31 @@ export const parseDDMMYYYY = (dateString: string): Date => {
   // Month is 0-indexed in JavaScript Date constructor
   return new Date(year, month - 1, day);
 };
+
+export const formatTime12hr = (timeString: string | undefined): string => {
+  if (!timeString || !timeString.includes(':')) return '-';
+  try {
+    const [hours, minutes] = timeString.split(':');
+    const date = new Date();
+    date.setHours(parseInt(hours, 10));
+    date.setMinutes(parseInt(minutes, 10));
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  } catch (e) {
+    console.error('Error formatting time:', timeString, e);
+    return timeString;
+  }
+};
+
+export const formatCurrency = (amount: number | undefined): string => {
+  if (amount === undefined || amount === null) return '-';
+  return amount.toLocaleString('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+};

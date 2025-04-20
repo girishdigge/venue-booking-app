@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
-import SignInViewPage from '@/components/auth/signin-view';
 import { authOptions } from '@/lib/auth';
+import SignInViewPage from '@/components/auth/signin-view';
 
 export const metadata: Metadata = {
   title: 'Venue Booking | Sign In',

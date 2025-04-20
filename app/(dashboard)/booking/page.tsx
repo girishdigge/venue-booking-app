@@ -8,6 +8,9 @@ import prisma from '@/lib/db';
 import { EventSchema } from '@/schema/schema';
 import { ITEM_PER_PAGE } from '@/lib/settings';
 import { Hall, Prisma } from '@/lib/generated/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
 const columns = [
   {
@@ -50,45 +53,51 @@ const columns = [
   },
 ];
 
-const renderRow = (item: EventSchema) => (
-  <tr
-    key={item.id}
-    className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight'
-  >
-    <td className='pt-3 pb-2 '>{item.id}</td>
-    <td className='pt-3 pb-2 '>{item.client_name}</td>
-    <td className='pt-3 pb-2 '>
-      {item.date.toLocaleDateString('en-IN', {
-        day: 'numeric',
-        year: 'numeric',
-        month: 'long',
-      })}
-    </td>
-    <td className='pt-3 pb-2 hidden md:table-cell'>{item.event_name}</td>
-    <td className='pt-3 pb-2 hidden md:table-cell'>{item.hall}</td>
-    <td className='pt-3 pb-2 hidden lg:table-cell'>{item.balance}</td>
-    <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>
-    <td>
-      <div className='flex items-center gap-2'>
-        <Link href={`/booking/${item.id}`}>
-          <button className='w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky'>
-            <Image src='/view.png' alt='view' width={16} height={16} />
-          </button>
-        </Link>
-        {/* {role ==='admin'&&()} */}
-        {/* <button className='w-7 h-7 flex items-center justify-center rounded-full bg-lamaPurple'>
-          <Image src='/delete.png' alt='delete' width={16} height={16} />
-        </button> */}
-        <FormModal table='booking' type='delete' id={item.id} />
-      </div>
-    </td>
-  </tr>
-);
 const page = async ({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
+  const session = await getServerSession(authOptions);
+  // Redirect if not authenticated
+  if (!session?.user) {
+    redirect('/login');
+  }
+  const role = session.user.role;
+
+  const renderRow = (item: EventSchema) => (
+    <tr
+      key={item.id}
+      className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight'
+    >
+      <td className='pt-3 pb-2 '>{item.id}</td>
+      <td className='pt-3 pb-2 '>{item.client_name}</td>
+      <td className='pt-3 pb-2 '>
+        {item.date.toLocaleDateString('en-IN', {
+          day: 'numeric',
+          year: 'numeric',
+          month: 'long',
+        })}
+      </td>
+      <td className='pt-3 pb-2 hidden md:table-cell'>{item.event_name}</td>
+      <td className='pt-3 pb-2 hidden md:table-cell'>{item.hall}</td>
+      <td className='pt-3 pb-2 hidden lg:table-cell'>{item.balance}</td>
+      <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>
+      <td>
+        <div className='flex items-center gap-2'>
+          <Link href={`/booking/${item.id}`}>
+            <button className='w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky'>
+              <Image src='/view.png' alt='view' width={16} height={16} />
+            </button>
+          </Link>
+          {(role === 'ADMIN' || role === 'ROOT') && (
+            <FormModal table='booking' type='delete' id={item.id} />
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+
   const { page, ...queryParam } = await searchParams;
   const p = page ? parseInt(page) : 1;
 

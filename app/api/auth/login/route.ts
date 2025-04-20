@@ -32,9 +32,8 @@ export async function POST(request: Request) {
       password: validatedData.data.password,
       redirect: false,
     });
-    console.log(account);
 
-    return NextResponse.json('account');
+    return NextResponse.json(account);
   } catch (error) {
     return NextResponse.json(error);
   }

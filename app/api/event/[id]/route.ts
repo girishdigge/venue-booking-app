@@ -1,8 +1,33 @@
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-export async function GET() {
-  const data = await prisma.event.findFirst({
-    where: { id: 1 },
-  });
-  console.log(data);
-  return Response.json(data);
+// import { EventSchema } from '@/schema/schema';
+
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const awaitedParams = await params;
+    const eventId = Number(awaitedParams?.id);
+
+    if (isNaN(eventId)) {
+      return NextResponse.json({ error: 'Invalid event ID' }, { status: 400 });
+    }
+
+    const event = await prisma.event.findUnique({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      return NextResponse.json({ error: 'Event not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(event);
+  } catch (error) {
+    console.error('Error fetching event:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }
