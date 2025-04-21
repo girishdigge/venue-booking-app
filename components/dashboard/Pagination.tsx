@@ -13,7 +13,7 @@ const Pagination = ({ page, count }: { page: number; count: number }) => {
     router.push(`${window.location.pathname}?${params}`);
   };
   return (
-    <div className='p-4 flex items-center justify-between text-gray-500'>
+    <div className='p-4 flex items-center gap-2 justify-between text-gray-500'>
       <Button
         disabled={!hasPrev}
         className='bg-lamaPurple hover:bg-lamaSky'

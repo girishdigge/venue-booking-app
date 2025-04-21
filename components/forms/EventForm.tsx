@@ -4,7 +4,8 @@ import { EventSchema, eventSchema } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputField from './InputField';
-// import { useState } from 'react';
+import { createEvent } from '@/lib/actions';
+import SelectField from './selectField';
 
 const EventForm = ({
   type,
@@ -40,7 +41,7 @@ const EventForm = ({
   // const [formErrors, setFormErrors] = useState<string | null>(null);
 
   const onSubmit = handleSubmit((data) => {
-    console.log('Form submitted successfully:', data);
+    createEvent(data);
   });
 
   return (
@@ -109,12 +110,12 @@ const EventForm = ({
             required
             helperText='Select event date'
           />
-          <InputField
+          <SelectField
             label='Hall'
             name='hall'
             register={register}
             error={errors.hall}
-            placeholder='Select venue/hall'
+            placeholder='Select hall'
             required
           />
           <InputField
