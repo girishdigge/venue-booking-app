@@ -149,6 +149,10 @@
   padding: 0px 20px !important;
 }
 
+.rbc-btn-group:first-child {
+  font-size: 13px !important;
+}
+
 .rbc-btn-group:last-child {
   font-size: 13px !important;
 }
@@ -197,7 +201,7 @@
   color: black !important;
   padding: 10px !important;
   margin: 10px !important;
-  width: 99% !important;
+  width: 50% !important;
 }
 
 .rbc-event:nth-child(1) {

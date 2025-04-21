@@ -52,3 +52,39 @@ export const formatCurrency = (amount: number | undefined): string => {
     maximumFractionDigits: 0,
   });
 };
+
+export const convertBigCalendarDate = (
+  schedule: {
+    title: string;
+    date: Date;
+    startTime: string;
+    endTime: string;
+    hall: string;
+    client: string;
+  }[]
+): {
+  title: string;
+  start: Date;
+  end: Date;
+  hall: string;
+  client: string;
+}[] => {
+  return schedule.map((event) => {
+    const [startHour, startMinute] = event.startTime.split(':').map(Number);
+    const [endHour, endMinute] = event.endTime.split(':').map(Number);
+
+    const start = new Date(event.date);
+    start.setHours(startHour, startMinute, 0, 0);
+
+    const end = new Date(event.date);
+    end.setHours(endHour, endMinute, 0, 0);
+
+    return {
+      title: event.title,
+      start,
+      end,
+      hall: event.hall,
+      client: event.client,
+    };
+  });
+};
