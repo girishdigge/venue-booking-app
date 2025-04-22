@@ -4,8 +4,9 @@ import { EventSchema, eventSchema } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputField from './InputField';
-import { createEvent } from '@/lib/actions';
+import { createEvent, updateEvent } from '@/lib/actions';
 import SelectField from './selectField';
+import { toast } from 'react-toastify';
 
 const EventForm = ({
   type,
@@ -22,7 +23,8 @@ const EventForm = ({
   };
 
   // Set default values for the form
-  const initialValues: Partial<EventSchema> = {
+  const initialValues: Partial<EventSchema> & { id?: string } = {
+    id: data?.id,
     ...data,
     date: data?.date ? formatInitialDate(data.date) : '',
     amount: data?.amount ?? 0,
@@ -40,8 +42,23 @@ const EventForm = ({
 
   // const [formErrors, setFormErrors] = useState<string | null>(null);
 
-  const onSubmit = handleSubmit((data) => {
-    createEvent(data);
+  const onSubmit = handleSubmit(async (data) => {
+    let result;
+    if (type === 'create') {
+      result = await createEvent(data);
+    } else {
+      result = await updateEvent(data);
+    }
+
+    if (result) {
+      toast(`${result.message}`);
+    }
+    if (result.success) {
+      toast(`${result.message}`);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    }
   });
 
   return (
@@ -59,12 +76,6 @@ const EventForm = ({
           {type === 'create' ? 'schedule a new event' : 'modify your event'}.
         </p>
       </div>
-
-      {/* {formErrors && (
-        <div className='bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg'>
-          {formErrors}
-        </div>
-      )} */}
 
       {/* Event Basic Info */}
       <div className='space-y-6'>
@@ -125,6 +136,7 @@ const EventForm = ({
             register={register}
             error={errors.start_time}
             helperText='Format: HH:MM (24-hour)'
+            required
           />
           <InputField
             label='End Time'
@@ -133,6 +145,7 @@ const EventForm = ({
             register={register}
             error={errors.end_time}
             helperText='Format: HH:MM (24-hour)'
+            required
           />
         </div>
       </div>
@@ -160,6 +173,7 @@ const EventForm = ({
             register={register}
             error={errors.contact}
             placeholder='Phone number'
+            required
           />
         </div>
         <div className='sm:col-span-2'>
@@ -190,6 +204,7 @@ const EventForm = ({
             error={errors.amount}
             placeholder='0'
             valueAsNumber
+            required
           />
           <InputField
             label='Advance Payment'
@@ -199,6 +214,7 @@ const EventForm = ({
             error={errors.advance}
             placeholder='0'
             valueAsNumber
+            required
           />
         </div>
       </div>
@@ -226,6 +242,7 @@ const EventForm = ({
       <div className='pt-6 border-t'>
         <div className='flex justify-end gap-4'>
           <button
+            onClick={() => window.location.reload()}
             type='button'
             className='px-6 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition'
           >

@@ -34,17 +34,15 @@ export const eventSchema = z.object({
   date: z.coerce.date(),
   start_time: z
     .string()
-    .optional()
     .refine((val) => (val ? /^([01]\d|2[0-3]):([0-5]\d)$/.test(val) : true), {
       message: 'Invalid time format, expected HH:MM',
     }),
   end_time: z
     .string()
-    .optional()
     .refine((val) => (val ? /^([01]\d|2[0-3]):([0-5]\d)$/.test(val) : true), {
       message: 'Invalid time format, expected HH:MM',
     }),
-  contact: z.string().optional(),
+  contact: z.string(),
   address: z.string().optional(),
   event_name: z
     .string()

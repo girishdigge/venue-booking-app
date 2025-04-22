@@ -3,6 +3,9 @@
 import Image from 'next/image';
 import { JSX, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { deleteEvent } from '@/lib/actions';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const EventForm = dynamic(() => import('../forms/EventForm'), {
   loading: () => (
@@ -31,7 +34,7 @@ const FormModal = ({
   id?: number;
 }) => {
   const [open, setOpen] = useState(false);
-
+  const router = useRouter();
   const getButtonStyles = () => {
     const baseStyle =
       'flex items-center justify-center rounded-full shadow-md transition-all duration-200 hover:scale-105';
@@ -49,6 +52,14 @@ const FormModal = ({
   };
 
   const Form = () => {
+    const handleDelete = async (id: number) => {
+      const result = await deleteEvent(id);
+      if (result.success) {
+        toast(`${result.message}`);
+        router.refresh();
+      }
+    };
+
     if (type === 'delete' && id) {
       return (
         <div className='p-8 flex flex-col items-center'>
@@ -74,6 +85,7 @@ const FormModal = ({
             <button
               className='flex-1 py-3 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700'
               type='submit'
+              onClick={() => handleDelete(id)}
             >
               Yes, Delete
             </button>
@@ -91,13 +103,38 @@ const FormModal = ({
 
   return (
     <>
-      <button
-        className={getButtonStyles()}
-        onClick={() => setOpen(true)}
-        aria-label={`${type} item`}
-      >
-        <Image src={`/${type}.png`} alt={type} height={18} width={18} />
-      </button>
+      {type !== 'update' && (
+        <button
+          className={getButtonStyles()}
+          onClick={() => setOpen(true)}
+          aria-label={`${type} item`}
+        >
+          <Image src={`/${type}.png`} alt={type} height={18} width={18} />
+        </button>
+      )}
+      {type === 'update' && (
+        <button
+          className='bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out flex items-center'
+          onClick={() => setOpen(true)}
+          aria-label={`${type} item`}
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className='h-5 w-5 mr-2'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+            />
+          </svg>
+          Edit
+        </button>
+      )}
 
       {open && (
         <div className='fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity'>

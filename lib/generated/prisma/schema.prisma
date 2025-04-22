@@ -20,7 +20,7 @@ model User {
   firstName      String
   middleName     String?
   lastName       String
-  contact        String?   @unique
+  contact        String    @unique
   hashedPassword String
   image          String?
   role           Role      @default(USER)
@@ -33,10 +33,10 @@ model Event {
   id          Int      @id @default(autoincrement())
   client_name String
   date        DateTime
-  start_time  String?
-  end_time    String?
+  start_time  String
+  end_time    String
   email       String?
-  contact     String?
+  contact     String
   address     String?
   event_name  String
   hall        Hall

@@ -324,11 +324,8 @@ const EventView = () => {
   };
 
   const handleEdit = () => {
-    console.log(`Edit button clicked for event ID: ${data}`);
-    const a = (
-      <FormModal table='booking' type='update' data={data} id={data.id} />
-    );
-    console.log(a);
+    console.log(data.id);
+    <FormModal table='booking' type='create' />;
   };
 
   return (
@@ -376,7 +373,7 @@ const EventView = () => {
         {/* Watermark */}
         <div
           aria-hidden='true'
-          className='absolute inset-0  flex items-center justify-center z-100 pointer-events-none'
+          className='absolute inset-0  flex items-center justify-center z-12 pointer-events-none'
           style={{
             color: 'rgba(79, 70, 229, 0.03)',
             fontWeight: 'bold',
@@ -584,27 +581,7 @@ const EventView = () => {
         {/* Added print:hidden */}
         {/* Edit Button */}
         {(role === 'ADMIN' || role === 'ROOT') && (
-          <button
-            onClick={handleEdit}
-            className='bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out flex items-center'
-            aria-label={`Edit event ${data.id}`}
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-5 w-5 mr-2'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
-              />
-            </svg>
-            Edit Details
-          </button>
+          <FormModal table='booking' type='update' data={data} id={data.id} />
         )}
         {/* Print Button */}
         <button

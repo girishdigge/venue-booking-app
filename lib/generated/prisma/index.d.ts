@@ -1378,7 +1378,7 @@ export namespace Prisma {
     firstName: string
     middleName: string | null
     lastName: string
-    contact: string | null
+    contact: string
     hashedPassword: string
     image: string | null
     role: $Enums.Role
@@ -1480,7 +1480,7 @@ export namespace Prisma {
       firstName: string
       middleName: string | null
       lastName: string
-      contact: string | null
+      contact: string
       hashedPassword: string
       image: string | null
       role: $Enums.Role
@@ -2598,10 +2598,10 @@ export namespace Prisma {
     id: number
     client_name: string
     date: Date
-    start_time: string | null
-    end_time: string | null
+    start_time: string
+    end_time: string
     email: string | null
-    contact: string | null
+    contact: string
     address: string | null
     event_name: string
     hall: $Enums.Hall
@@ -2717,10 +2717,10 @@ export namespace Prisma {
       id: number
       client_name: string
       date: Date
-      start_time: string | null
-      end_time: string | null
+      start_time: string
+      end_time: string
       email: string | null
-      contact: string | null
+      contact: string
       address: string | null
       event_name: string
       hall: $Enums.Hall
@@ -5774,7 +5774,7 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     middleName?: StringNullableFilter<"User"> | string | null
     lastName?: StringFilter<"User"> | string
-    contact?: StringNullableFilter<"User"> | string | null
+    contact?: StringFilter<"User"> | string
     hashedPassword?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
@@ -5789,7 +5789,7 @@ export namespace Prisma {
     firstName?: SortOrder
     middleName?: SortOrderInput | SortOrder
     lastName?: SortOrder
-    contact?: SortOrderInput | SortOrder
+    contact?: SortOrder
     hashedPassword?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -5822,7 +5822,7 @@ export namespace Prisma {
     firstName?: SortOrder
     middleName?: SortOrderInput | SortOrder
     lastName?: SortOrder
-    contact?: SortOrderInput | SortOrder
+    contact?: SortOrder
     hashedPassword?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -5842,7 +5842,7 @@ export namespace Prisma {
     firstName?: StringWithAggregatesFilter<"User"> | string
     middleName?: StringNullableWithAggregatesFilter<"User"> | string | null
     lastName?: StringWithAggregatesFilter<"User"> | string
-    contact?: StringNullableWithAggregatesFilter<"User"> | string | null
+    contact?: StringWithAggregatesFilter<"User"> | string
     hashedPassword?: StringWithAggregatesFilter<"User"> | string
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
@@ -5857,10 +5857,10 @@ export namespace Prisma {
     id?: IntFilter<"Event"> | number
     client_name?: StringFilter<"Event"> | string
     date?: DateTimeFilter<"Event"> | Date | string
-    start_time?: StringNullableFilter<"Event"> | string | null
-    end_time?: StringNullableFilter<"Event"> | string | null
+    start_time?: StringFilter<"Event"> | string
+    end_time?: StringFilter<"Event"> | string
     email?: StringNullableFilter<"Event"> | string | null
-    contact?: StringNullableFilter<"Event"> | string | null
+    contact?: StringFilter<"Event"> | string
     address?: StringNullableFilter<"Event"> | string | null
     event_name?: StringFilter<"Event"> | string
     hall?: EnumHallFilter<"Event"> | $Enums.Hall
@@ -5876,10 +5876,10 @@ export namespace Prisma {
     id?: SortOrder
     client_name?: SortOrder
     date?: SortOrder
-    start_time?: SortOrderInput | SortOrder
-    end_time?: SortOrderInput | SortOrder
+    start_time?: SortOrder
+    end_time?: SortOrder
     email?: SortOrderInput | SortOrder
-    contact?: SortOrderInput | SortOrder
+    contact?: SortOrder
     address?: SortOrderInput | SortOrder
     event_name?: SortOrder
     hall?: SortOrder
@@ -5898,10 +5898,10 @@ export namespace Prisma {
     NOT?: EventWhereInput | EventWhereInput[]
     client_name?: StringFilter<"Event"> | string
     date?: DateTimeFilter<"Event"> | Date | string
-    start_time?: StringNullableFilter<"Event"> | string | null
-    end_time?: StringNullableFilter<"Event"> | string | null
+    start_time?: StringFilter<"Event"> | string
+    end_time?: StringFilter<"Event"> | string
     email?: StringNullableFilter<"Event"> | string | null
-    contact?: StringNullableFilter<"Event"> | string | null
+    contact?: StringFilter<"Event"> | string
     address?: StringNullableFilter<"Event"> | string | null
     event_name?: StringFilter<"Event"> | string
     hall?: EnumHallFilter<"Event"> | $Enums.Hall
@@ -5917,10 +5917,10 @@ export namespace Prisma {
     id?: SortOrder
     client_name?: SortOrder
     date?: SortOrder
-    start_time?: SortOrderInput | SortOrder
-    end_time?: SortOrderInput | SortOrder
+    start_time?: SortOrder
+    end_time?: SortOrder
     email?: SortOrderInput | SortOrder
-    contact?: SortOrderInput | SortOrder
+    contact?: SortOrder
     address?: SortOrderInput | SortOrder
     event_name?: SortOrder
     hall?: SortOrder
@@ -5944,10 +5944,10 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Event"> | number
     client_name?: StringWithAggregatesFilter<"Event"> | string
     date?: DateTimeWithAggregatesFilter<"Event"> | Date | string
-    start_time?: StringNullableWithAggregatesFilter<"Event"> | string | null
-    end_time?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    start_time?: StringWithAggregatesFilter<"Event"> | string
+    end_time?: StringWithAggregatesFilter<"Event"> | string
     email?: StringNullableWithAggregatesFilter<"Event"> | string | null
-    contact?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    contact?: StringWithAggregatesFilter<"Event"> | string
     address?: StringNullableWithAggregatesFilter<"Event"> | string | null
     event_name?: StringWithAggregatesFilter<"Event"> | string
     hall?: EnumHallWithAggregatesFilter<"Event"> | $Enums.Hall
@@ -6068,7 +6068,7 @@ export namespace Prisma {
     firstName: string
     middleName?: string | null
     lastName: string
-    contact?: string | null
+    contact: string
     hashedPassword: string
     image?: string | null
     role?: $Enums.Role
@@ -6083,7 +6083,7 @@ export namespace Prisma {
     firstName: string
     middleName?: string | null
     lastName: string
-    contact?: string | null
+    contact: string
     hashedPassword: string
     image?: string | null
     role?: $Enums.Role
@@ -6098,7 +6098,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     hashedPassword?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -6113,7 +6113,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     hashedPassword?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -6128,7 +6128,7 @@ export namespace Prisma {
     firstName: string
     middleName?: string | null
     lastName: string
-    contact?: string | null
+    contact: string
     hashedPassword: string
     image?: string | null
     role?: $Enums.Role
@@ -6142,7 +6142,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     hashedPassword?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -6156,7 +6156,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     hashedPassword?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -6167,10 +6167,10 @@ export namespace Prisma {
   export type EventCreateInput = {
     client_name: string
     date: Date | string
-    start_time?: string | null
-    end_time?: string | null
+    start_time: string
+    end_time: string
     email?: string | null
-    contact?: string | null
+    contact: string
     address?: string | null
     event_name: string
     hall: $Enums.Hall
@@ -6186,10 +6186,10 @@ export namespace Prisma {
     id?: number
     client_name: string
     date: Date | string
-    start_time?: string | null
-    end_time?: string | null
+    start_time: string
+    end_time: string
     email?: string | null
-    contact?: string | null
+    contact: string
     address?: string | null
     event_name: string
     hall: $Enums.Hall
@@ -6204,10 +6204,10 @@ export namespace Prisma {
   export type EventUpdateInput = {
     client_name?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    start_time?: NullableStringFieldUpdateOperationsInput | string | null
-    end_time?: NullableStringFieldUpdateOperationsInput | string | null
+    start_time?: StringFieldUpdateOperationsInput | string
+    end_time?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
@@ -6223,10 +6223,10 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     client_name?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    start_time?: NullableStringFieldUpdateOperationsInput | string | null
-    end_time?: NullableStringFieldUpdateOperationsInput | string | null
+    start_time?: StringFieldUpdateOperationsInput | string
+    end_time?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
@@ -6242,10 +6242,10 @@ export namespace Prisma {
     id?: number
     client_name: string
     date: Date | string
-    start_time?: string | null
-    end_time?: string | null
+    start_time: string
+    end_time: string
     email?: string | null
-    contact?: string | null
+    contact: string
     address?: string | null
     event_name: string
     hall: $Enums.Hall
@@ -6260,10 +6260,10 @@ export namespace Prisma {
   export type EventUpdateManyMutationInput = {
     client_name?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    start_time?: NullableStringFieldUpdateOperationsInput | string | null
-    end_time?: NullableStringFieldUpdateOperationsInput | string | null
+    start_time?: StringFieldUpdateOperationsInput | string
+    end_time?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
@@ -6279,10 +6279,10 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     client_name?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    start_time?: NullableStringFieldUpdateOperationsInput | string | null
-    end_time?: NullableStringFieldUpdateOperationsInput | string | null
+    start_time?: StringFieldUpdateOperationsInput | string
+    end_time?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
@@ -7047,7 +7047,7 @@ export namespace Prisma {
     firstName: string
     middleName?: string | null
     lastName: string
-    contact?: string | null
+    contact: string
     hashedPassword: string
     image?: string | null
     role?: $Enums.Role
@@ -7061,7 +7061,7 @@ export namespace Prisma {
     firstName: string
     middleName?: string | null
     lastName: string
-    contact?: string | null
+    contact: string
     hashedPassword: string
     image?: string | null
     role?: $Enums.Role
@@ -7091,7 +7091,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     hashedPassword?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -7105,7 +7105,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: StringFieldUpdateOperationsInput | string
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
+    contact?: StringFieldUpdateOperationsInput | string
     hashedPassword?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
