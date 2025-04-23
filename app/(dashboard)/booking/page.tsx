@@ -85,9 +85,14 @@ const page = async ({
       <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>
       <td>
         <div className='flex items-center gap-2'>
-          <Link href={`/booking/${item.id}`}>
-            <button className='w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky'>
-              <Image src='/view.png' alt='view' width={16} height={16} />
+          <Link className='hidden md:flex' href={`/booking/${item.id}`}>
+            <button className='w-7 h-7 flex items-center justify-center hover:scale-105'>
+              <Image src='/view.png' alt='view' width={24} height={24} />
+            </button>
+          </Link>
+          <Link className='flex md:hidden' href={`/booking/mobile/${item.id}`}>
+            <button className='w-7 h-7 flex items-center justify-center hover:scale-105'>
+              <Image src='/view.png' alt='view' width={24} height={24} />
             </button>
           </Link>
           {(role === 'ADMIN' || role === 'ROOT') && (

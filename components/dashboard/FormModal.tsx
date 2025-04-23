@@ -45,7 +45,7 @@ const FormModal = ({
       case 'update':
         return `${baseStyle} bg-lamaSky w-7 h-7`;
       case 'delete':
-        return `${baseStyle} bg-lamaPurple w-7 h-7`;
+        return `${baseStyle} bg-red-100 rounded-md w-7 h-7`;
       default:
         return baseStyle;
     }
@@ -109,7 +109,7 @@ const FormModal = ({
           onClick={() => setOpen(true)}
           aria-label={`${type} item`}
         >
-          <Image src={`/${type}.png`} alt={type} height={18} width={18} />
+          <Image src={`/${type}.png`} alt={type} height={22} width={22} />
         </button>
       )}
       {type === 'update' && (

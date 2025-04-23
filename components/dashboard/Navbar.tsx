@@ -1,6 +1,10 @@
 import Image from 'next/image';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+const Navbar = async () => {
+  const session = await getServerSession(authOptions);
+  console.log(session.user.name);
 
-const Navbar = () => {
   return (
     <div className='flex flex-center justify-between p-4'>
       <div className='hidden md:flex items-center  gap-2 text-xs rounded-full ring-[1.5px] ring-gray-500 px-2'>
@@ -12,11 +16,11 @@ const Navbar = () => {
         />
       </div>
 
-      <div className='flex items-center gap-6 justify-end w-full'>
-        <div className='bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer'>
+      <div className='flex items-center gap-4 justify-end w-full'>
+        {/* <div className='bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer'>
           <Image src='/message.png' alt='message' width={20} height={20} />
-        </div>
-        <div className='relative bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer'>
+        </div> 
+         <div className='relative bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer'>
           <Image
             src='/announcement.png'
             alt='announcement'
@@ -26,10 +30,14 @@ const Navbar = () => {
           <div className='absolute -top-3 -right-3 w-5 h-5 flex items-center justify-center bg-purple-500 text-white text-xs rounded-full'>
             1
           </div>
-        </div>
-        <div className='flex flex-col'>
-          <span className='text-xs leading-3 font-medium '>John Doe</span>
-          <span className='text-[10px] text-gray-500 text-right'>Admin</span>
+        </div> */}
+        <div className='flex flex-col gap-1'>
+          <span className='text-base leading-3 font-medium '>
+            {session.user.name}
+          </span>
+          <span className='text-xs text-gray-600 text-right'>
+            {session.user.role}
+          </span>
         </div>
         <Image
           src='/avatar.png'
