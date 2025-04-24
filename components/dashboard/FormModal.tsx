@@ -3,11 +3,18 @@
 import Image from 'next/image';
 import { JSX, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { deleteEvent } from '@/lib/actions';
+import { deleteEvent, deleteUser } from '@/lib/actions';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 const EventForm = dynamic(() => import('../forms/EventForm'), {
+  loading: () => (
+    <div className='flex items-center justify-center p-12'>
+      <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500'></div>
+    </div>
+  ),
+});
+const UserForm = dynamic(() => import('../forms/UserForm'), {
   loading: () => (
     <div className='flex items-center justify-center p-12'>
       <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500'></div>
@@ -19,7 +26,7 @@ const forms: {
   [key: string]: (type: 'create' | 'update', data?: any) => JSX.Element;
 } = {
   booking: (type, data) => <EventForm type={type} data={data} />,
-  // employee:(type,data)=><EmployeeForm type={type} data={data}/>
+  employee: (type, data) => <UserForm type={type} data={data} />,
 };
 
 const FormModal = ({
@@ -59,6 +66,13 @@ const FormModal = ({
         router.refresh();
       }
     };
+    const handleUserDelete = async (id: string) => {
+      const result = await deleteUser(id);
+      if (result.success) {
+        toast(`${result.message}`);
+        router.refresh();
+      }
+    };
 
     if (type === 'delete' && id) {
       return (
@@ -85,7 +99,9 @@ const FormModal = ({
             <button
               className='flex-1 py-3 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700'
               type='submit'
-              onClick={() => handleDelete(id)}
+              onClick={() =>
+                table === 'booking' ? handleDelete(id) : handleUserDelete(id)
+              }
             >
               Yes, Delete
             </button>

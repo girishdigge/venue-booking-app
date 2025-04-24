@@ -20,7 +20,7 @@ const columns = [
   {
     header: 'Name',
     accessor: 'client_name',
-    className: '',
+    className: 'pl-2',
   },
   {
     header: 'Date',
@@ -71,7 +71,7 @@ const page = async ({
       className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight'
     >
       <td className='pt-3 pb-2 '>{item.id}</td>
-      <td className='pt-3 pb-2 '>{item.client_name}</td>
+      <td className='pt-3 pb-2 pl-2'>{item.client_name}</td>
       <td className='pt-3 pb-2 '>
         {item.date.toLocaleDateString('en-IN', {
           day: 'numeric',
@@ -85,12 +85,7 @@ const page = async ({
       <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>
       <td>
         <div className='flex items-center gap-2'>
-          <Link className='hidden md:flex' href={`/booking/${item.id}`}>
-            <button className='w-7 h-7 flex items-center justify-center hover:scale-105'>
-              <Image src='/view.png' alt='view' width={24} height={24} />
-            </button>
-          </Link>
-          <Link className='flex md:hidden' href={`/booking/mobile/${item.id}`}>
+          <Link className=' flex' href={`/booking/${item.id}`}>
             <button className='w-7 h-7 flex items-center justify-center hover:scale-105'>
               <Image src='/view.png' alt='view' width={24} height={24} />
             </button>

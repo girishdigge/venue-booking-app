@@ -62,6 +62,7 @@ function ModernEventSnapshot({
       </div>
 
       {/* Event Details */}
+
       <div className='p-6 print:p-4'>
         {/* Date & Time - Redesigned with better visual elements */}
         <div className='flex flex-wrap md:flex-nowrap print:flex-nowrap gap-4 mb-6 '>
@@ -144,26 +145,95 @@ function ModernEventSnapshot({
             </div>
           </div>
         </div>
+        {/* Client Information Section - Enhanced with better spacing and layout */}
+        <div className='bg-gradient-to-r from-indigo-50 to-white rounded-xl p-6 border border-indigo-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300 print:bg-indigo-50 print:border print:border-gray-300 print:p-4 print:space-y-2 print:shadow-none'>
+          <div className='flex items-center border-b border-indigo-200 pb-3 print:pb-2 print:border-b print:border-gray-300'>
+            <div className='bg-indigo-100 p-2 rounded-lg mr-3 print:p-1.5'>
+              <svg
+                className='h-5 w-5 text-indigo-600 print:h-4 print:w-4'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+                />
+              </svg>
+            </div>
+            <h3 className='text-lg font-semibold text-indigo-900 print:text-base print:text-black'>
+              <span className='text-base font-medium text-gray-800 print:text-sm'>
+                {data.client_name.toUpperCase() || '—'}
+              </span>
+            </h3>
+          </div>
+
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 print:gap-4 print:grid-cols-2'>
+            <div className='space-y-5 print:space-y-2'>
+              <div>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                  Contact Number
+                </span>
+                <span className='text-gray-700 print:text-sm'>
+                  {data.contact || '—'}
+                </span>
+              </div>
+              <div>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                  Email Address
+                </span>
+                <span className='text-gray-700 print:text-sm'>
+                  {data.email || '—'}
+                </span>
+              </div>
+            </div>
+
+            <div className='space-y-5 print:space-y-2'>
+              <div>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                  Booking Date
+                </span>
+                <span className='text-gray-700 print:text-sm'>
+                  {new Date(data?.createdAt)?.toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    year: 'numeric',
+                    month: 'long',
+                  })}
+                </span>
+              </div>
+              <div>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                  Address
+                </span>
+                <span className='text-sm text-gray-700 print:text-xs'>
+                  {data.address || '—'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Details Section - Improved with more visual interest */}
-        <div className='mb-8 print:mb-4'>
-          <h4 className='text-base font-semibold text-gray-700 mb-3 flex items-center print:text-sm print:mb-2'>
-            <svg
-              className='h-5 w-5 mr-2 text-indigo-600 print:h-4 print:w-4'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-              />
-            </svg>
-            Event Details
-          </h4>
+        <div className='mt-4'>
           <div className='bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 hover:shadow-md transition-all duration-300 print:bg-gray-50 print:border print:border-gray-200 print:p-3'>
+            <h4 className='text-base font-semibold text-gray-700 mb-2 flex items-center print:text-sm '>
+              <svg
+                className='h-5 w-5 mr-2 text-indigo-600 print:h-4 print:w-4'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                />
+              </svg>
+              Event Details
+            </h4>
             <p className='text-gray-700 text-sm leading-relaxed print:text-xs print:leading-normal'>
               {data.details || 'No additional details provided.'}
             </p>
@@ -172,11 +242,12 @@ function ModernEventSnapshot({
 
         {/* Payment Summary - Enhanced with interactive elements */}
       </div>
-      <div className='bg-white w-full rounded-xl border border-gray-100 shadow-lg overflow-hidden print:border print:border-gray-300 print:shadow-none'>
-        <div className='bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 px-5 py-4 text-white print:bg-gradient-to-r print:from-emerald-600 print:to-teal-600'>
-          <h4 className='text-base font-bold flex items-center print:text-sm'>
+      <div className='bg-white p-2 shadow-md border border-gray-100 overflow-hidden print:shadow-none'>
+        {/* Header */}
+        <div className='bg-emerald-600 px-6 p-1.5   rounded-md text-white'>
+          <h4 className='text-lg font-semibold flex items-center'>
             <svg
-              className='h-5 w-5 mr-2 print:h-4 print:w-4'
+              className='h-5 w-5 mr-2'
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -188,54 +259,55 @@ function ModernEventSnapshot({
                 d='M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z'
               />
             </svg>
-            Payment Summary
+            Payment Details
           </h4>
         </div>
 
-        <div className='p-6 print:p-3'>
-          {/* Progress Bar - Enhanced with animation */}
-          <div className='mb-6 print:mb-3'>
-            <div className='flex justify-between items-center mb-2 print:mb-0.5'>
-              <span className='text-xs font-medium text-gray-600 print:text-2xs'>
+        {/* Content */}
+        <div className='p-5 print:p-3'>
+          {/* Progress Bar */}
+          <div className='mb-5 print:mb-2'>
+            <div className='flex justify-between items-center mb-1'>
+              <span className='text-xs font-medium text-gray-600'>
                 Payment Progress
               </span>
-              <span className='text-sm font-semibold text-emerald-600 print:text-2xs'>
+              <span className='text-sm font-semibold text-emerald-600'>
                 {percentPaid}% Paid
               </span>
             </div>
-            <div className='w-full bg-gray-200 rounded-full h-3 print:h-2 overflow-hidden'>
+            <div className='w-full bg-gray-200 rounded-full h-2.5 overflow-hidden'>
               <div
-                className='bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-500 h-3 rounded-full transition-all duration-700 ease-out print:bg-gradient-to-r print:from-emerald-500 print:to-teal-500 print:h-2'
+                className='bg-emerald-500 h-2.5 rounded-full transition-all duration-500'
                 style={{ width: `${percentPaid}%` }}
               ></div>
             </div>
           </div>
 
-          {/* Payment Details - Enhanced with hover effects */}
-          <div className='grid grid-cols-3 gap-4 print:gap-3'>
-            <div className='bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 border border-gray-100 transition-all duration-300 hover:shadow-md print:p-3 print:border print:border-gray-200'>
-              <p className='text-xs font-medium text-gray-500 mb-1 print:text-2xs print:mb-0.5'>
+          {/* Payment Cards */}
+          <div className='grid grid-cols-3 gap-3'>
+            <div className='bg-gray-50 rounded-lg p-4 border border-gray-100 print:p-2'>
+              <p className='text-xs font-medium text-gray-500 mb-1'>
                 Total Amount
               </p>
-              <p className='text-xl font-bold text-gray-800 print:text-base'>
+              <p className='text-lg font-bold text-gray-800 print:text-base'>
                 {totalAmount}
               </p>
             </div>
 
-            <div className='bg-gradient-to-br from-emerald-50 to-white rounded-xl p-5 border border-emerald-100 transition-all duration-300 hover:shadow-md print:p-3 print:border print:border-gray-200'>
-              <p className='text-xs font-medium text-emerald-600 mb-1 print:text-2xs print:mb-0.5'>
-                Advance Paid
+            <div className='bg-emerald-50 rounded-lg p-4 border border-emerald-100 print:p-2 print:border-gray-200'>
+              <p className='text-xs font-medium text-emerald-600 mb-1'>
+                Amount Paid
               </p>
-              <p className='text-xl font-bold text-emerald-600 print:text-base'>
+              <p className='text-lg font-bold text-emerald-600 print:text-base'>
                 {advancePaid}
               </p>
             </div>
 
-            <div className='bg-gradient-to-br from-amber-50 to-white rounded-xl p-5 border border-amber-100 transition-all duration-300 hover:shadow-md print:p-3 print:border print:border-gray-200'>
-              <p className='text-xs font-medium text-amber-600 mb-1 print:text-2xs print:mb-0.5'>
+            <div className='bg-amber-50 rounded-lg p-4 border border-amber-100 print:p-2 print:border-gray-200'>
+              <p className='text-xs font-medium text-amber-600 mb-1'>
                 Balance Due
               </p>
-              <p className='text-xl font-bold text-amber-600 print:text-base'>
+              <p className='text-lg font-bold text-amber-600 print:text-base'>
                 {balanceDue}
               </p>
               <p className='text-xs text-amber-500 mt-1'>Due before event</p>
@@ -323,10 +395,10 @@ const EventView = () => {
     window.print();
   };
 
-  const handleEdit = () => {
-    console.log(data.id);
-    <FormModal table='booking' type='create' />;
-  };
+  // const handleEdit = () => {
+  //   console.log(data.id);
+  //   <FormModal table='booking' type='create' />;
+  // };
 
   return (
     <div className='w-full max-w-4xl mx-auto p-4 md:p-6 space-y-6 print:p-0 print:m-0'>
@@ -373,7 +445,7 @@ const EventView = () => {
         {/* Watermark */}
         <div
           aria-hidden='true'
-          className='absolute inset-0  flex items-center justify-center z-12 pointer-events-none'
+          className='absolute inset-0 -translate-y-18 flex items-center justify-center z-12 pointer-events-none'
           style={{
             color: 'rgba(79, 70, 229, 0.03)',
             fontWeight: 'bold',
@@ -385,7 +457,7 @@ const EventView = () => {
             alt='logo watermark'
             height={400}
             width={600}
-            className='opacity-30'
+            className='opacity-15'
           />
         </div>
 
@@ -411,9 +483,9 @@ const EventView = () => {
                   <p className='text-amber-100 text-sm mt-1 print:text-xs'>
                     Mangal Karyalay & Open Lawn
                   </p>
-                  <p className='text-amber-200 text-xs mt-1 font-semibold print:text-2xs'>
+                  {/* <p className='text-amber-200 text-xs mt-1 font-semibold print:text-2xs'>
                     GST No: 27AALFK2963D1ZQ
-                  </p>
+                  </p> */}
                 </div>
               </div>
               <div className='text-right text-sm text-amber-100 print:text-xs bg-amber-900/40 p-3 rounded-lg backdrop-blur-sm'>
@@ -460,76 +532,6 @@ const EventView = () => {
             formatCurrency={formatCurrency}
           />
 
-          {/* Client Information Section - Enhanced with better spacing and layout */}
-          <div className='bg-gradient-to-r from-indigo-50 to-white rounded-xl p-6 border border-indigo-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300 print:bg-indigo-50 print:border print:border-gray-300 print:p-4 print:space-y-2 print:shadow-none'>
-            <div className='flex items-center border-b border-indigo-200 pb-3 print:pb-2 print:border-b print:border-gray-300'>
-              <div className='bg-indigo-100 p-2 rounded-lg mr-3 print:p-1.5'>
-                <svg
-                  className='h-5 w-5 text-indigo-600 print:h-4 print:w-4'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
-                  />
-                </svg>
-              </div>
-              <h3 className='text-lg font-semibold text-indigo-900 print:text-base print:text-black'>
-                <span className='text-base font-medium text-gray-800 print:text-sm'>
-                  {data.client_name.toUpperCase() || '—'}
-                </span>
-              </h3>
-            </div>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-8 print:gap-4 print:grid-cols-2'>
-              <div className='space-y-5 print:space-y-2'>
-                <div>
-                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
-                    Contact Number
-                  </span>
-                  <span className='text-gray-700 print:text-sm'>
-                    {data.contact || '—'}
-                  </span>
-                </div>
-                <div>
-                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
-                    Email Address
-                  </span>
-                  <span className='text-gray-700 print:text-sm'>
-                    {data.email || '—'}
-                  </span>
-                </div>
-              </div>
-
-              <div className='space-y-5 print:space-y-2'>
-                <div>
-                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
-                    Booking Date
-                  </span>
-                  <span className='text-gray-700 print:text-sm'>
-                    {new Date(data?.createdAt)?.toLocaleDateString('en-IN', {
-                      day: 'numeric',
-                      year: 'numeric',
-                      month: 'long',
-                    })}
-                  </span>
-                </div>
-                <div>
-                  <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
-                    Address
-                  </span>
-                  <span className='text-sm text-gray-700 print:text-xs'>
-                    {data.address || '—'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Footer with Signature */}
           <div className='flex flex-col md:flex-row justify-between items-end border-t border-gray-200 pt-4 print:pt-3 print:border-t print:border-gray-300 print:flex-row'>
             <div className='flex flex-col items-start mb-4 md:mb-0 print:mb-0'>
@@ -546,23 +548,89 @@ const EventView = () => {
                 </p>
               </div>
 
-              {/* Modern QR Code Placeholder */}
-              <div className='mt-2 bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
-                <svg
-                  className='h-10 w-10 text-gray-400 print:h-8 print:w-8'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={1.5}
-                    d='M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z'
-                  />
-                </svg>
+              {/* QR Codes Row */}
+              <div className='mt-2 flex flex-row space-x-4'>
+                {/* Google Maps QR */}
+                <div className='flex flex-col items-center'>
+                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
+                    <Image
+                      src='/map.png'
+                      alt='Google Maps'
+                      width={48}
+                      height={48}
+                      className='h-14 w-14 print:h-12 print:w-12'
+                    />
+                  </div>
+                  <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
+                    Location
+                  </span>
+                </div>
+
+                {/* WhatsApp QR */}
+                <div className='flex flex-col items-center'>
+                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
+                    <Image
+                      src='/whatsapp.png'
+                      alt='WhatsApp'
+                      width={48}
+                      height={48}
+                      className='h-14 w-14 print:h-12 print:w-12'
+                    />
+                  </div>
+                  <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
+                    WhatsApp
+                  </span>
+                </div>
+
+                {/* Instagram QR */}
+                <div className='flex flex-col items-center'>
+                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
+                    <Image
+                      src='/insta.png'
+                      alt='Instagram'
+                      width={48}
+                      height={48}
+                      className='h-14 w-14 print:h-12 print:w-12'
+                    />
+                  </div>
+                  <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
+                    Instagram
+                  </span>
+                </div>
+
+                {/* Scube Profile QR */}
+                <div className='flex flex-col items-center'>
+                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
+                    <Image
+                      src='/scube.png'
+                      alt='Scube Profile'
+                      width={48}
+                      height={48}
+                      className='h-14 w-14 print:h-12 print:w-12'
+                    />
+                  </div>
+                  <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
+                    Profile
+                  </span>
+                </div>
+                {/* Payment QR */}
+                <div className='flex flex-col items-center'>
+                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
+                    <Image
+                      src='/pay.png'
+                      alt='Payment'
+                      width={48}
+                      height={48}
+                      className='h-14 w-14 print:h-12 print:w-12'
+                    />
+                  </div>
+                  <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
+                    Payment
+                  </span>
+                </div>
               </div>
             </div>
+
             <div className='text-right'>
               <div className='border-t-2 border-black px-16 py-1 mb-1 print:border-t print:border-gray-600 print:px-12 print:pt-0 print:pb-1'>
                 <span className='block h-6 print:h-4'></span>
@@ -570,6 +638,106 @@ const EventView = () => {
               <span className='font-medium text-gray-600 text-sm print:text-xs print:text-black'>
                 Authorized Signature with Stamp
               </span>
+            </div>
+          </div>
+          <div className='hidden print:block bg-white rounded-lg  shadow-lg shadow-gray-400 border border-gray-100 overflow-hidden'>
+            {/* Header */}
+            <div className='bg-gradient-to-r from-amber-800 via-amber-700 to-amber-600 text-white p-3'>
+              <h4 className='font-semibold flex items-center text-lg'>
+                <svg
+                  className='h-4 w-4 mr-2 opacity-70'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                >
+                  <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7' />
+                  <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' />
+                </svg>
+                नियम व अटी
+              </h4>
+            </div>
+
+            {/* Content */}
+            <div className='p-5'>
+              <ol className='space-y-3'>
+                <li className='flex items-baseline'>
+                  <span className='text-md font-semibold text-gray-500 mr-3'>{`0१)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    बुकींग करताना आधार कार्ड अनिवार्य आहे.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline '>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`02)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    संपुर्ण रक्कम जमा केल्यावर कार्यक्रमासाठी हॉल ताब्यात
+                    देण्यात येईल.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0३)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    हॉल, लॉन व कंपाऊंड मध्ये डॉल्बी, डी. जे. व बॅन्जो लावू दिले
+                    जाणार नाही.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0४)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    मध्यपान व धुम्रपानास सक्त मनाई आहे.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0५)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    फटाके, दारूगोळा ई. हॉल, लॉन व कंपाऊंड मध्ये वापरण्यास मनाई
+                    आहे.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0६)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    तुमच्या मौल्यवान वस्तुंची पुर्ण जबाबदारी तुमच्या स्वतःची
+                    राहील.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0७)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    हॉल व लॉन कार्यक्रमाच्या दिवशी संध्या. ४.०० मि. पर्यंत
+                    रिकामा करून देणे बंधनकारक राहील.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0८)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    बुकींग कॅन्सल झाल्यास आगाऊ(Advance) रक्कम परत मिळणार नाही.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0९)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    तारीख बदलल्यास किंवा रद्द केल्यास ५००० रुपये
+                    आगाऊ(Advance)रक्कमेतून वजा केले जातील.
+                  </p>
+                </li>
+
+                <li className='flex items-baseline'>
+                  <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`१0)`}</span>
+                  <p className='text-md tracking-wider text-gray-900'>
+                    बुकिंग करताना ५००० रुपये ठेव अनिवार्य आहे,जर नुकसान झाले तर
+                    रक्कम वजा केली जाईल.
+                  </p>
+                </li>
+              </ol>
             </div>
           </div>
         </div>

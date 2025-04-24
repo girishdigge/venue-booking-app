@@ -6,10 +6,10 @@ export const signInSchema = z.object({
 });
 
 export const signUpSchema = z.object({
-  id: z.string().min(1, 'Id cannot be empty'),
+  id: z.string().optional(),
   username: z.string().min(3, 'Username must contain atleast 3 characters.'),
   password: z.string().min(4, 'Password must contain atleast 4 characters.'),
-  contact: z.string().optional(),
+  contact: z.string().min(6, 'min length 6 digits.'),
   firstName: z.string().min(1, 'Name must contain atleast 1 characters.'),
   middleName: z.string().optional(),
   lastName: z.string().min(1, 'Surname must contain atleast 1 characters.'),
@@ -68,3 +68,4 @@ export const eventSchema = z.object({
 
 export type SignInSchema = z.infer<typeof signInSchema>;
 export type EventSchema = z.infer<typeof eventSchema>;
+export type SignUpSchema = z.infer<typeof signUpSchema>;

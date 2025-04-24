@@ -9,6 +9,10 @@ const options = [
   { value: 'mainHall', label: 'Main Hall' },
   { value: 'secondHall', label: 'Second Hall' },
 ];
+const roleOptions = [
+  { value: 'ADMIN', label: 'ADMIN' },
+  { value: 'MANAGER', label: 'MANAGER' },
+];
 
 // Define the props for the SelectField component
 interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -32,6 +36,8 @@ const SelectField = ({
   className, // Allow passing additional classes
   ...rest // Pass any other standard select attributes
 }: SelectFieldProps) => {
+  const opt = name === 'role' ? roleOptions : options;
+
   return (
     <div className='flex flex-col gap-1.5'>
       {/* Label */}
@@ -73,7 +79,7 @@ const SelectField = ({
           )}
 
           {/* Map through the options array to create option elements */}
-          {options.map((option) => (
+          {opt.map((option) => (
             <option
               key={option.value}
               value={option.value}

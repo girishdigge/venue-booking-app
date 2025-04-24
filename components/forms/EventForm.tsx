@@ -27,6 +27,8 @@ const EventForm = ({
     id: data?.id,
     ...data,
     date: data?.date ? formatInitialDate(data.date) : '',
+    end_time: data?.end_time ? data.end_time : '16:00',
+    start_time: data?.start_time ? data.start_time : '06:00',
     amount: data?.amount ?? 0,
     advance: data?.advance ?? 0,
   };
