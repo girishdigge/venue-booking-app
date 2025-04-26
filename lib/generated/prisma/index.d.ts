@@ -2389,6 +2389,12 @@ export namespace Prisma {
     event_name: string | null
     hall: $Enums.Hall | null
     details: string | null
+    bookingBy: string | null
+    reference: string | null
+    secondHall: boolean | null
+    decoration: boolean | null
+    catering: boolean | null
+    kitchen: boolean | null
     amount: number | null
     advance: number | null
     balance: number | null
@@ -2408,6 +2414,12 @@ export namespace Prisma {
     event_name: string | null
     hall: $Enums.Hall | null
     details: string | null
+    bookingBy: string | null
+    reference: string | null
+    secondHall: boolean | null
+    decoration: boolean | null
+    catering: boolean | null
+    kitchen: boolean | null
     amount: number | null
     advance: number | null
     balance: number | null
@@ -2427,6 +2439,12 @@ export namespace Prisma {
     event_name: number
     hall: number
     details: number
+    bookingBy: number
+    reference: number
+    secondHall: number
+    decoration: number
+    catering: number
+    kitchen: number
     amount: number
     advance: number
     balance: number
@@ -2462,6 +2480,12 @@ export namespace Prisma {
     event_name?: true
     hall?: true
     details?: true
+    bookingBy?: true
+    reference?: true
+    secondHall?: true
+    decoration?: true
+    catering?: true
+    kitchen?: true
     amount?: true
     advance?: true
     balance?: true
@@ -2481,6 +2505,12 @@ export namespace Prisma {
     event_name?: true
     hall?: true
     details?: true
+    bookingBy?: true
+    reference?: true
+    secondHall?: true
+    decoration?: true
+    catering?: true
+    kitchen?: true
     amount?: true
     advance?: true
     balance?: true
@@ -2500,6 +2530,12 @@ export namespace Prisma {
     event_name?: true
     hall?: true
     details?: true
+    bookingBy?: true
+    reference?: true
+    secondHall?: true
+    decoration?: true
+    catering?: true
+    kitchen?: true
     amount?: true
     advance?: true
     balance?: true
@@ -2606,6 +2642,12 @@ export namespace Prisma {
     event_name: string
     hall: $Enums.Hall
     details: string | null
+    bookingBy: string | null
+    reference: string | null
+    secondHall: boolean
+    decoration: boolean
+    catering: boolean
+    kitchen: boolean
     amount: number
     advance: number
     balance: number
@@ -2644,6 +2686,12 @@ export namespace Prisma {
     event_name?: boolean
     hall?: boolean
     details?: boolean
+    bookingBy?: boolean
+    reference?: boolean
+    secondHall?: boolean
+    decoration?: boolean
+    catering?: boolean
+    kitchen?: boolean
     amount?: boolean
     advance?: boolean
     balance?: boolean
@@ -2663,6 +2711,12 @@ export namespace Prisma {
     event_name?: boolean
     hall?: boolean
     details?: boolean
+    bookingBy?: boolean
+    reference?: boolean
+    secondHall?: boolean
+    decoration?: boolean
+    catering?: boolean
+    kitchen?: boolean
     amount?: boolean
     advance?: boolean
     balance?: boolean
@@ -2682,6 +2736,12 @@ export namespace Prisma {
     event_name?: boolean
     hall?: boolean
     details?: boolean
+    bookingBy?: boolean
+    reference?: boolean
+    secondHall?: boolean
+    decoration?: boolean
+    catering?: boolean
+    kitchen?: boolean
     amount?: boolean
     advance?: boolean
     balance?: boolean
@@ -2701,6 +2761,12 @@ export namespace Prisma {
     event_name?: boolean
     hall?: boolean
     details?: boolean
+    bookingBy?: boolean
+    reference?: boolean
+    secondHall?: boolean
+    decoration?: boolean
+    catering?: boolean
+    kitchen?: boolean
     amount?: boolean
     advance?: boolean
     balance?: boolean
@@ -2708,7 +2774,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "client_name" | "date" | "start_time" | "end_time" | "email" | "contact" | "address" | "event_name" | "hall" | "details" | "amount" | "advance" | "balance" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "client_name" | "date" | "start_time" | "end_time" | "email" | "contact" | "address" | "event_name" | "hall" | "details" | "bookingBy" | "reference" | "secondHall" | "decoration" | "catering" | "kitchen" | "amount" | "advance" | "balance" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 
   export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Event"
@@ -2725,6 +2791,12 @@ export namespace Prisma {
       event_name: string
       hall: $Enums.Hall
       details: string | null
+      bookingBy: string | null
+      reference: string | null
+      secondHall: boolean
+      decoration: boolean
+      catering: boolean
+      kitchen: boolean
       amount: number
       advance: number
       balance: number
@@ -3164,6 +3236,12 @@ export namespace Prisma {
     readonly event_name: FieldRef<"Event", 'String'>
     readonly hall: FieldRef<"Event", 'Hall'>
     readonly details: FieldRef<"Event", 'String'>
+    readonly bookingBy: FieldRef<"Event", 'String'>
+    readonly reference: FieldRef<"Event", 'String'>
+    readonly secondHall: FieldRef<"Event", 'Boolean'>
+    readonly decoration: FieldRef<"Event", 'Boolean'>
+    readonly catering: FieldRef<"Event", 'Boolean'>
+    readonly kitchen: FieldRef<"Event", 'Boolean'>
     readonly amount: FieldRef<"Event", 'Int'>
     readonly advance: FieldRef<"Event", 'Int'>
     readonly balance: FieldRef<"Event", 'Int'>
@@ -5618,6 +5696,12 @@ export namespace Prisma {
     event_name: 'event_name',
     hall: 'hall',
     details: 'details',
+    bookingBy: 'bookingBy',
+    reference: 'reference',
+    secondHall: 'secondHall',
+    decoration: 'decoration',
+    catering: 'catering',
+    kitchen: 'kitchen',
     amount: 'amount',
     advance: 'advance',
     balance: 'balance',
@@ -5749,6 +5833,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -5865,6 +5956,12 @@ export namespace Prisma {
     event_name?: StringFilter<"Event"> | string
     hall?: EnumHallFilter<"Event"> | $Enums.Hall
     details?: StringNullableFilter<"Event"> | string | null
+    bookingBy?: StringNullableFilter<"Event"> | string | null
+    reference?: StringNullableFilter<"Event"> | string | null
+    secondHall?: BoolFilter<"Event"> | boolean
+    decoration?: BoolFilter<"Event"> | boolean
+    catering?: BoolFilter<"Event"> | boolean
+    kitchen?: BoolFilter<"Event"> | boolean
     amount?: IntFilter<"Event"> | number
     advance?: IntFilter<"Event"> | number
     balance?: IntFilter<"Event"> | number
@@ -5884,6 +5981,12 @@ export namespace Prisma {
     event_name?: SortOrder
     hall?: SortOrder
     details?: SortOrderInput | SortOrder
+    bookingBy?: SortOrderInput | SortOrder
+    reference?: SortOrderInput | SortOrder
+    secondHall?: SortOrder
+    decoration?: SortOrder
+    catering?: SortOrder
+    kitchen?: SortOrder
     amount?: SortOrder
     advance?: SortOrder
     balance?: SortOrder
@@ -5906,6 +6009,12 @@ export namespace Prisma {
     event_name?: StringFilter<"Event"> | string
     hall?: EnumHallFilter<"Event"> | $Enums.Hall
     details?: StringNullableFilter<"Event"> | string | null
+    bookingBy?: StringNullableFilter<"Event"> | string | null
+    reference?: StringNullableFilter<"Event"> | string | null
+    secondHall?: BoolFilter<"Event"> | boolean
+    decoration?: BoolFilter<"Event"> | boolean
+    catering?: BoolFilter<"Event"> | boolean
+    kitchen?: BoolFilter<"Event"> | boolean
     amount?: IntFilter<"Event"> | number
     advance?: IntFilter<"Event"> | number
     balance?: IntFilter<"Event"> | number
@@ -5925,6 +6034,12 @@ export namespace Prisma {
     event_name?: SortOrder
     hall?: SortOrder
     details?: SortOrderInput | SortOrder
+    bookingBy?: SortOrderInput | SortOrder
+    reference?: SortOrderInput | SortOrder
+    secondHall?: SortOrder
+    decoration?: SortOrder
+    catering?: SortOrder
+    kitchen?: SortOrder
     amount?: SortOrder
     advance?: SortOrder
     balance?: SortOrder
@@ -5952,6 +6067,12 @@ export namespace Prisma {
     event_name?: StringWithAggregatesFilter<"Event"> | string
     hall?: EnumHallWithAggregatesFilter<"Event"> | $Enums.Hall
     details?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    bookingBy?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    reference?: StringNullableWithAggregatesFilter<"Event"> | string | null
+    secondHall?: BoolWithAggregatesFilter<"Event"> | boolean
+    decoration?: BoolWithAggregatesFilter<"Event"> | boolean
+    catering?: BoolWithAggregatesFilter<"Event"> | boolean
+    kitchen?: BoolWithAggregatesFilter<"Event"> | boolean
     amount?: IntWithAggregatesFilter<"Event"> | number
     advance?: IntWithAggregatesFilter<"Event"> | number
     balance?: IntWithAggregatesFilter<"Event"> | number
@@ -6175,6 +6296,12 @@ export namespace Prisma {
     event_name: string
     hall: $Enums.Hall
     details?: string | null
+    bookingBy?: string | null
+    reference?: string | null
+    secondHall?: boolean
+    decoration?: boolean
+    catering?: boolean
+    kitchen?: boolean
     amount?: number
     advance?: number
     balance?: number
@@ -6194,6 +6321,12 @@ export namespace Prisma {
     event_name: string
     hall: $Enums.Hall
     details?: string | null
+    bookingBy?: string | null
+    reference?: string | null
+    secondHall?: boolean
+    decoration?: boolean
+    catering?: boolean
+    kitchen?: boolean
     amount?: number
     advance?: number
     balance?: number
@@ -6212,6 +6345,12 @@ export namespace Prisma {
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
     details?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    decoration?: BoolFieldUpdateOperationsInput | boolean
+    catering?: BoolFieldUpdateOperationsInput | boolean
+    kitchen?: BoolFieldUpdateOperationsInput | boolean
     amount?: IntFieldUpdateOperationsInput | number
     advance?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
@@ -6231,6 +6370,12 @@ export namespace Prisma {
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
     details?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    decoration?: BoolFieldUpdateOperationsInput | boolean
+    catering?: BoolFieldUpdateOperationsInput | boolean
+    kitchen?: BoolFieldUpdateOperationsInput | boolean
     amount?: IntFieldUpdateOperationsInput | number
     advance?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
@@ -6250,6 +6395,12 @@ export namespace Prisma {
     event_name: string
     hall: $Enums.Hall
     details?: string | null
+    bookingBy?: string | null
+    reference?: string | null
+    secondHall?: boolean
+    decoration?: boolean
+    catering?: boolean
+    kitchen?: boolean
     amount?: number
     advance?: number
     balance?: number
@@ -6268,6 +6419,12 @@ export namespace Prisma {
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
     details?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    decoration?: BoolFieldUpdateOperationsInput | boolean
+    catering?: BoolFieldUpdateOperationsInput | boolean
+    kitchen?: BoolFieldUpdateOperationsInput | boolean
     amount?: IntFieldUpdateOperationsInput | number
     advance?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
@@ -6287,6 +6444,12 @@ export namespace Prisma {
     event_name?: StringFieldUpdateOperationsInput | string
     hall?: EnumHallFieldUpdateOperationsInput | $Enums.Hall
     details?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reference?: NullableStringFieldUpdateOperationsInput | string | null
+    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    decoration?: BoolFieldUpdateOperationsInput | boolean
+    catering?: BoolFieldUpdateOperationsInput | boolean
+    kitchen?: BoolFieldUpdateOperationsInput | boolean
     amount?: IntFieldUpdateOperationsInput | number
     advance?: IntFieldUpdateOperationsInput | number
     balance?: IntFieldUpdateOperationsInput | number
@@ -6581,6 +6744,11 @@ export namespace Prisma {
     not?: NestedEnumHallFilter<$PrismaModel> | $Enums.Hall
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type EventCountOrderByAggregateInput = {
     id?: SortOrder
     client_name?: SortOrder
@@ -6593,6 +6761,12 @@ export namespace Prisma {
     event_name?: SortOrder
     hall?: SortOrder
     details?: SortOrder
+    bookingBy?: SortOrder
+    reference?: SortOrder
+    secondHall?: SortOrder
+    decoration?: SortOrder
+    catering?: SortOrder
+    kitchen?: SortOrder
     amount?: SortOrder
     advance?: SortOrder
     balance?: SortOrder
@@ -6619,6 +6793,12 @@ export namespace Prisma {
     event_name?: SortOrder
     hall?: SortOrder
     details?: SortOrder
+    bookingBy?: SortOrder
+    reference?: SortOrder
+    secondHall?: SortOrder
+    decoration?: SortOrder
+    catering?: SortOrder
+    kitchen?: SortOrder
     amount?: SortOrder
     advance?: SortOrder
     balance?: SortOrder
@@ -6638,6 +6818,12 @@ export namespace Prisma {
     event_name?: SortOrder
     hall?: SortOrder
     details?: SortOrder
+    bookingBy?: SortOrder
+    reference?: SortOrder
+    secondHall?: SortOrder
+    decoration?: SortOrder
+    catering?: SortOrder
+    kitchen?: SortOrder
     amount?: SortOrder
     advance?: SortOrder
     balance?: SortOrder
@@ -6676,6 +6862,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumHallFilter<$PrismaModel>
     _max?: NestedEnumHallFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -6793,6 +6987,10 @@ export namespace Prisma {
 
   export type EnumHallFieldUpdateOperationsInput = {
     set?: $Enums.Hall
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -6950,6 +7148,11 @@ export namespace Prisma {
     not?: NestedEnumHallFilter<$PrismaModel> | $Enums.Hall
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -6985,6 +7188,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumHallFilter<$PrismaModel>
     _max?: NestedEnumHallFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type SessionCreateWithoutUserInput = {

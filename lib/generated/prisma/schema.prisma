@@ -41,6 +41,12 @@ model Event {
   event_name  String
   hall        Hall
   details     String?
+  bookingBy   String?
+  reference   String?
+  secondHall  Boolean  @default(false)
+  decoration  Boolean  @default(false)
+  catering    Boolean  @default(false)
+  kitchen     Boolean  @default(false)
   amount      Int      @default(0)
   advance     Int      @default(0)
   balance     Int      @default(0)

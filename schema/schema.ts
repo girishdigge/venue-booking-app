@@ -48,6 +48,12 @@ export const eventSchema = z.object({
     .string()
     .min(1, 'Event type is required (e.g., Wedding, Birthday)'),
   hall: z.string().min(1, 'Hall/Venue name is required'),
+  bookingBy: z.string().optional(),
+  reference: z.string().optional(),
+  hallHandover: z.boolean(),
+  decoration: z.boolean(),
+  catering: z.boolean(),
+  kitchen: z.boolean(),
   details: z.string().optional(),
   amount: z.preprocess(
     (val) => Number(val),
