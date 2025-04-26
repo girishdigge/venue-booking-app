@@ -80,7 +80,9 @@ const page = async ({
         })}
       </td>
       <td className='pt-3 pb-2 hidden md:table-cell'>{item.event_name}</td>
-      <td className='pt-3 pb-2 hidden md:table-cell'>{item.hall}</td>
+      <td className='pt-3 pb-2 hidden md:table-cell'>
+        {item.hall === 'mainHall' ? 'Main Hall' : 'Open Party Hall'}
+      </td>
       <td className='pt-3 pb-2 hidden lg:table-cell'>{item.balance}</td>
       <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>
       <td>

@@ -20,7 +20,9 @@ const EventList = async ({ dateParam }: { dateParam: string | undefined }) => {
       <div className='flex items-top justify-between'>
         <div className='flex flex-col'>
           <h1>{event.client_name}</h1>
-          <span className='text-green-500 text-sm'>{event.hall}</span>
+          <span className='text-green-500 text-sm'>
+            {event.hall === 'mainHall' ? 'Main Hall' : 'Open Party Hall'}
+          </span>
         </div>
         <div className='flex flex-col'>
           {event.date.toLocaleDateString('en-IN', {

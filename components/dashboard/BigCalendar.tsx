@@ -108,13 +108,17 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
 
   // Custom event component
   const EventComponent = ({ event }: EventProps<EventItem>) => (
-    <div className={`flex flex-col`}>
+    <div className={`flex flex-col text-3xl`}>
       <div className='event-title'>{event.title}</div>
-      <div className='event-detail'>
-        <span>🏛️</span> {event.hall}
+      <div className='event-detail '>
+        <span>🏛️</span>{' '}
+        <h1 className='text-xl'>
+          {event.hall === 'mainHall' ? 'Main Hall' : 'Open Party Hall'}
+        </h1>
       </div>
       <div className='event-detail'>
-        <span>👤</span> {event.client}
+        <span>👤</span>
+        <h1 className='text-xl'>{event.client}</h1>
       </div>
     </div>
   );
@@ -233,7 +237,10 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
             {moment(tooltip.event.end).format('h:mm A')}
           </p>
           <p className='mb-1'>
-            <strong>Hall:</strong> {tooltip.event.hall}
+            <strong>Hall:</strong>{' '}
+            {tooltip.event.hall === 'mainHall'
+              ? 'Main Hall'
+              : 'Open Party Hall'}
           </p>
           <p className='mb-1'>
             <strong>Client:</strong> {tooltip.event.client}
