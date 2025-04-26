@@ -7,7 +7,7 @@ import { UseFormRegister, FieldError } from 'react-hook-form';
 // Define the structure for each option in the select dropdown
 const options = [
   { value: 'mainHall', label: 'Main Hall' },
-  { value: 'secondHall', label: 'Second Hall' },
+  { value: 'secondHall', label: 'Open Party Hall' },
 ];
 const roleOptions = [
   { value: 'ADMIN', label: 'ADMIN' },

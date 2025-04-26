@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session.user.name);
 
   return (
     <div className='flex flex-center justify-between p-4'>

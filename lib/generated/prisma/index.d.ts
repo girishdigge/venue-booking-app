@@ -2391,7 +2391,7 @@ export namespace Prisma {
     details: string | null
     bookingBy: string | null
     reference: string | null
-    secondHall: boolean | null
+    hallHandover: boolean | null
     decoration: boolean | null
     catering: boolean | null
     kitchen: boolean | null
@@ -2416,7 +2416,7 @@ export namespace Prisma {
     details: string | null
     bookingBy: string | null
     reference: string | null
-    secondHall: boolean | null
+    hallHandover: boolean | null
     decoration: boolean | null
     catering: boolean | null
     kitchen: boolean | null
@@ -2441,7 +2441,7 @@ export namespace Prisma {
     details: number
     bookingBy: number
     reference: number
-    secondHall: number
+    hallHandover: number
     decoration: number
     catering: number
     kitchen: number
@@ -2482,7 +2482,7 @@ export namespace Prisma {
     details?: true
     bookingBy?: true
     reference?: true
-    secondHall?: true
+    hallHandover?: true
     decoration?: true
     catering?: true
     kitchen?: true
@@ -2507,7 +2507,7 @@ export namespace Prisma {
     details?: true
     bookingBy?: true
     reference?: true
-    secondHall?: true
+    hallHandover?: true
     decoration?: true
     catering?: true
     kitchen?: true
@@ -2532,7 +2532,7 @@ export namespace Prisma {
     details?: true
     bookingBy?: true
     reference?: true
-    secondHall?: true
+    hallHandover?: true
     decoration?: true
     catering?: true
     kitchen?: true
@@ -2644,7 +2644,7 @@ export namespace Prisma {
     details: string | null
     bookingBy: string | null
     reference: string | null
-    secondHall: boolean
+    hallHandover: boolean
     decoration: boolean
     catering: boolean
     kitchen: boolean
@@ -2688,7 +2688,7 @@ export namespace Prisma {
     details?: boolean
     bookingBy?: boolean
     reference?: boolean
-    secondHall?: boolean
+    hallHandover?: boolean
     decoration?: boolean
     catering?: boolean
     kitchen?: boolean
@@ -2713,7 +2713,7 @@ export namespace Prisma {
     details?: boolean
     bookingBy?: boolean
     reference?: boolean
-    secondHall?: boolean
+    hallHandover?: boolean
     decoration?: boolean
     catering?: boolean
     kitchen?: boolean
@@ -2738,7 +2738,7 @@ export namespace Prisma {
     details?: boolean
     bookingBy?: boolean
     reference?: boolean
-    secondHall?: boolean
+    hallHandover?: boolean
     decoration?: boolean
     catering?: boolean
     kitchen?: boolean
@@ -2763,7 +2763,7 @@ export namespace Prisma {
     details?: boolean
     bookingBy?: boolean
     reference?: boolean
-    secondHall?: boolean
+    hallHandover?: boolean
     decoration?: boolean
     catering?: boolean
     kitchen?: boolean
@@ -2774,7 +2774,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "client_name" | "date" | "start_time" | "end_time" | "email" | "contact" | "address" | "event_name" | "hall" | "details" | "bookingBy" | "reference" | "secondHall" | "decoration" | "catering" | "kitchen" | "amount" | "advance" | "balance" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "client_name" | "date" | "start_time" | "end_time" | "email" | "contact" | "address" | "event_name" | "hall" | "details" | "bookingBy" | "reference" | "hallHandover" | "decoration" | "catering" | "kitchen" | "amount" | "advance" | "balance" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 
   export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Event"
@@ -2793,7 +2793,7 @@ export namespace Prisma {
       details: string | null
       bookingBy: string | null
       reference: string | null
-      secondHall: boolean
+      hallHandover: boolean
       decoration: boolean
       catering: boolean
       kitchen: boolean
@@ -3238,7 +3238,7 @@ export namespace Prisma {
     readonly details: FieldRef<"Event", 'String'>
     readonly bookingBy: FieldRef<"Event", 'String'>
     readonly reference: FieldRef<"Event", 'String'>
-    readonly secondHall: FieldRef<"Event", 'Boolean'>
+    readonly hallHandover: FieldRef<"Event", 'Boolean'>
     readonly decoration: FieldRef<"Event", 'Boolean'>
     readonly catering: FieldRef<"Event", 'Boolean'>
     readonly kitchen: FieldRef<"Event", 'Boolean'>
@@ -5698,7 +5698,7 @@ export namespace Prisma {
     details: 'details',
     bookingBy: 'bookingBy',
     reference: 'reference',
-    secondHall: 'secondHall',
+    hallHandover: 'hallHandover',
     decoration: 'decoration',
     catering: 'catering',
     kitchen: 'kitchen',
@@ -5958,7 +5958,7 @@ export namespace Prisma {
     details?: StringNullableFilter<"Event"> | string | null
     bookingBy?: StringNullableFilter<"Event"> | string | null
     reference?: StringNullableFilter<"Event"> | string | null
-    secondHall?: BoolFilter<"Event"> | boolean
+    hallHandover?: BoolFilter<"Event"> | boolean
     decoration?: BoolFilter<"Event"> | boolean
     catering?: BoolFilter<"Event"> | boolean
     kitchen?: BoolFilter<"Event"> | boolean
@@ -5983,7 +5983,7 @@ export namespace Prisma {
     details?: SortOrderInput | SortOrder
     bookingBy?: SortOrderInput | SortOrder
     reference?: SortOrderInput | SortOrder
-    secondHall?: SortOrder
+    hallHandover?: SortOrder
     decoration?: SortOrder
     catering?: SortOrder
     kitchen?: SortOrder
@@ -6011,7 +6011,7 @@ export namespace Prisma {
     details?: StringNullableFilter<"Event"> | string | null
     bookingBy?: StringNullableFilter<"Event"> | string | null
     reference?: StringNullableFilter<"Event"> | string | null
-    secondHall?: BoolFilter<"Event"> | boolean
+    hallHandover?: BoolFilter<"Event"> | boolean
     decoration?: BoolFilter<"Event"> | boolean
     catering?: BoolFilter<"Event"> | boolean
     kitchen?: BoolFilter<"Event"> | boolean
@@ -6036,7 +6036,7 @@ export namespace Prisma {
     details?: SortOrderInput | SortOrder
     bookingBy?: SortOrderInput | SortOrder
     reference?: SortOrderInput | SortOrder
-    secondHall?: SortOrder
+    hallHandover?: SortOrder
     decoration?: SortOrder
     catering?: SortOrder
     kitchen?: SortOrder
@@ -6069,7 +6069,7 @@ export namespace Prisma {
     details?: StringNullableWithAggregatesFilter<"Event"> | string | null
     bookingBy?: StringNullableWithAggregatesFilter<"Event"> | string | null
     reference?: StringNullableWithAggregatesFilter<"Event"> | string | null
-    secondHall?: BoolWithAggregatesFilter<"Event"> | boolean
+    hallHandover?: BoolWithAggregatesFilter<"Event"> | boolean
     decoration?: BoolWithAggregatesFilter<"Event"> | boolean
     catering?: BoolWithAggregatesFilter<"Event"> | boolean
     kitchen?: BoolWithAggregatesFilter<"Event"> | boolean
@@ -6298,7 +6298,7 @@ export namespace Prisma {
     details?: string | null
     bookingBy?: string | null
     reference?: string | null
-    secondHall?: boolean
+    hallHandover?: boolean
     decoration?: boolean
     catering?: boolean
     kitchen?: boolean
@@ -6323,7 +6323,7 @@ export namespace Prisma {
     details?: string | null
     bookingBy?: string | null
     reference?: string | null
-    secondHall?: boolean
+    hallHandover?: boolean
     decoration?: boolean
     catering?: boolean
     kitchen?: boolean
@@ -6347,7 +6347,7 @@ export namespace Prisma {
     details?: NullableStringFieldUpdateOperationsInput | string | null
     bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
     reference?: NullableStringFieldUpdateOperationsInput | string | null
-    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    hallHandover?: BoolFieldUpdateOperationsInput | boolean
     decoration?: BoolFieldUpdateOperationsInput | boolean
     catering?: BoolFieldUpdateOperationsInput | boolean
     kitchen?: BoolFieldUpdateOperationsInput | boolean
@@ -6372,7 +6372,7 @@ export namespace Prisma {
     details?: NullableStringFieldUpdateOperationsInput | string | null
     bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
     reference?: NullableStringFieldUpdateOperationsInput | string | null
-    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    hallHandover?: BoolFieldUpdateOperationsInput | boolean
     decoration?: BoolFieldUpdateOperationsInput | boolean
     catering?: BoolFieldUpdateOperationsInput | boolean
     kitchen?: BoolFieldUpdateOperationsInput | boolean
@@ -6397,7 +6397,7 @@ export namespace Prisma {
     details?: string | null
     bookingBy?: string | null
     reference?: string | null
-    secondHall?: boolean
+    hallHandover?: boolean
     decoration?: boolean
     catering?: boolean
     kitchen?: boolean
@@ -6421,7 +6421,7 @@ export namespace Prisma {
     details?: NullableStringFieldUpdateOperationsInput | string | null
     bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
     reference?: NullableStringFieldUpdateOperationsInput | string | null
-    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    hallHandover?: BoolFieldUpdateOperationsInput | boolean
     decoration?: BoolFieldUpdateOperationsInput | boolean
     catering?: BoolFieldUpdateOperationsInput | boolean
     kitchen?: BoolFieldUpdateOperationsInput | boolean
@@ -6446,7 +6446,7 @@ export namespace Prisma {
     details?: NullableStringFieldUpdateOperationsInput | string | null
     bookingBy?: NullableStringFieldUpdateOperationsInput | string | null
     reference?: NullableStringFieldUpdateOperationsInput | string | null
-    secondHall?: BoolFieldUpdateOperationsInput | boolean
+    hallHandover?: BoolFieldUpdateOperationsInput | boolean
     decoration?: BoolFieldUpdateOperationsInput | boolean
     catering?: BoolFieldUpdateOperationsInput | boolean
     kitchen?: BoolFieldUpdateOperationsInput | boolean
@@ -6763,7 +6763,7 @@ export namespace Prisma {
     details?: SortOrder
     bookingBy?: SortOrder
     reference?: SortOrder
-    secondHall?: SortOrder
+    hallHandover?: SortOrder
     decoration?: SortOrder
     catering?: SortOrder
     kitchen?: SortOrder
@@ -6795,7 +6795,7 @@ export namespace Prisma {
     details?: SortOrder
     bookingBy?: SortOrder
     reference?: SortOrder
-    secondHall?: SortOrder
+    hallHandover?: SortOrder
     decoration?: SortOrder
     catering?: SortOrder
     kitchen?: SortOrder
@@ -6820,7 +6820,7 @@ export namespace Prisma {
     details?: SortOrder
     bookingBy?: SortOrder
     reference?: SortOrder
-    secondHall?: SortOrder
+    hallHandover?: SortOrder
     decoration?: SortOrder
     catering?: SortOrder
     kitchen?: SortOrder

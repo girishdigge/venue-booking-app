@@ -16,7 +16,7 @@ interface ModernEventSnapshotProps {
 
 function ModernEventSnapshot({
   data,
-  formatTime12hr,
+  // formatTime12hr,
   formatCurrency,
 }: ModernEventSnapshotProps) {
   if (!data) return null;
@@ -31,8 +31,8 @@ function ModernEventSnapshot({
     weekday: 'long',
   });
 
-  const startTime = data.start_time ? formatTime12hr(data.start_time) : '-';
-  const endTime = data.end_time ? formatTime12hr(data.end_time) : '-';
+  // const startTime = data.start_time ? formatTime12hr(data.start_time) : '-';
+  // const endTime = data.end_time ? formatTime12hr(data.end_time) : '-';
 
   // Format payment data
   const totalAmount = formatCurrency(data.amount);
@@ -41,7 +41,8 @@ function ModernEventSnapshot({
 
   // Calculate percentage paid
   const percentPaid = Math.round((data.advance / data.amount) * 100);
-
+  const hall =
+    data.hall === 'mainHall' ? 'Main Hall' : 'Open Party Hall (Hall No.2)';
   return (
     <div className='bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 mb-8 print:shadow-none print:border print:border-gray-300 print:rounded-none print:mb-4'>
       {/* Event Type Banner - Improved with more elegant gradient */}
@@ -56,20 +57,20 @@ function ModernEventSnapshot({
             <span className='flex items-center justify-center rounded-full w-2 h-2'>
               <span className='border-2 border-amber-900 bg-amber-900 rounded-full w-2 h-2'></span>
             </span>
-            {data.hall || 'Main Hall'}
+            {hall}
           </div>
         </div>
       </div>
 
       {/* Event Details */}
 
-      <div className='p-6 print:p-4'>
+      <div className='p-4'>
         {/* Date & Time - Redesigned with better visual elements */}
-        <div className='flex flex-wrap md:flex-nowrap print:flex-nowrap gap-4 mb-6 '>
-          <div className='w-full md:w-1/3 print:w-3/5 bg-indigo-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300'>
-            <div className='h-12 w-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4 '>
+        <div className='flex w-full gap-4 mb-4'>
+          <div className='w-1/3 bg-indigo-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300'>
+            <div className='h-14 w-14 bg-indigo-100 rounded-lg flex items-center justify-center mr-4 '>
               <svg
-                className='h-6 w-6 text-indigo-600 '
+                className='h-8 w-8 text-indigo-600 '
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -91,60 +92,35 @@ function ModernEventSnapshot({
             </div>
           </div>
 
-          <div className='w-full md:w-2/3 flex gap-4'>
-            <div className='flex-1 bg-purple-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300 print:bg-purple-50 print:p-3'>
-              <div className='h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4 print:h-10 print:w-10'>
-                <svg
-                  className='h-6 w-6 text-purple-600 print:h-5 print:w-5'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
-                  />
-                </svg>
-              </div>
-              <div>
-                <p className='text-xs font-medium text-purple-600 mb-1 print:text-xs'>
-                  Start Time
-                </p>
-                <p className='font-semibold text-gray-800 print:text-sm'>
-                  {startTime}
-                </p>
-              </div>
-            </div>
+          <div className='w-2/3 flex flex-col justify-around  p-1 pl-2 bg-indigo-50 rounded-xl items-start hover:shadow-md transition-all duration-300'>
+            {data.hallHandover && (
+              <ul className='font-medium  pr-1 text-yellow-600 '>
+                Hall No.2 cum dining hall will be provided for Engagement /
+                Haldi / Small function, 1 day before the event after 7 PM.
+              </ul>
+            )}
 
-            <div className='flex-1 bg-pink-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300 print:bg-pink-50 print:p-3'>
-              <div className='h-12 w-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4 print:h-10 print:w-10'>
-                <svg
-                  className='h-6 w-6 text-pink-600 print:h-5 print:w-5'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4'
-                  />
-                </svg>
-              </div>
-              <div>
-                <p className='text-xs font-medium text-pink-600 mb-1 print:text-xs'>
-                  End Time
-                </p>
-                <p className='font-semibold text-gray-800 print:text-sm'>
-                  {endTime}
-                </p>
-              </div>
-            </div>
+            {data.decoration && (
+              <ul className='font-medium text-orange-600 '>
+                Decoration Included.
+              </ul>
+            )}
+
+            {/* Catering Block - Renders only if catering is true */}
+
+            {data.catering && (
+              <ul className='font-medium text-gray-600 '>Catering Included</ul>
+            )}
+
+            {/* Kitchen Block - Renders only if kitchen is true */}
+            {data.kitchen && (
+              <ul className=' font-medium text-yellow-600 '>
+                Only kitchen will be provided one day before of event after 7pm.
+              </ul>
+            )}
           </div>
         </div>
+
         {/* Client Information Section - Enhanced with better spacing and layout */}
         <div className='bg-gradient-to-r from-indigo-50 to-white rounded-xl p-6 border border-indigo-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300 print:bg-indigo-50 print:border print:border-gray-300 print:p-4 print:space-y-2 print:shadow-none'>
           <div className='flex items-center border-b border-indigo-200 pb-3 print:pb-2 print:border-b print:border-gray-300'>
@@ -170,10 +146,10 @@ function ModernEventSnapshot({
             </h3>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 print:gap-4 print:grid-cols-2'>
+          <div className='grid grid-cols-1 md:grid-cols-2 print:grid-cols-2'>
             <div className='space-y-5 print:space-y-2'>
               <div>
-                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block  print:text-2xs print:mb-0.5'>
                   Contact Number
                 </span>
                 <span className='text-gray-700 print:text-sm'>
@@ -181,18 +157,26 @@ function ModernEventSnapshot({
                 </span>
               </div>
               <div>
-                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block print:text-2xs print:mb-0.5'>
                   Email Address
                 </span>
                 <span className='text-gray-700 print:text-sm'>
                   {data.email || '—'}
                 </span>
               </div>
+              <div className='block print:hidden'>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block '>
+                  Reference By
+                </span>
+                <span className='text-sm text-gray-700 print:text-xs'>
+                  {data.reference || '—'}
+                </span>
+              </div>
             </div>
 
             <div className='space-y-5 print:space-y-2'>
               <div>
-                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block  print:text-2xs print:mb-0.5'>
                   Booking Date
                 </span>
                 <span className='text-gray-700 print:text-sm'>
@@ -204,11 +188,19 @@ function ModernEventSnapshot({
                 </span>
               </div>
               <div>
-                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block mb-1.5 print:text-2xs print:mb-0.5'>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block print:text-2xs print:mb-0.5'>
                   Address
                 </span>
                 <span className='text-sm text-gray-700 print:text-xs'>
                   {data.address || '—'}
+                </span>
+              </div>
+              <div className='block print:hidden'>
+                <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block '>
+                  Booking Taken By
+                </span>
+                <span className='text-sm text-gray-700 print:text-xs'>
+                  {data.bookingBy || '—'}
                 </span>
               </div>
             </div>
@@ -244,33 +236,28 @@ function ModernEventSnapshot({
       </div>
       <div className='bg-white p-2 shadow-md border border-gray-100 overflow-hidden print:shadow-none'>
         {/* Header */}
-        <div className='bg-emerald-600 px-6 p-1.5   rounded-md text-white'>
-          <h4 className='text-lg font-semibold flex items-center'>
-            <svg
-              className='h-5 w-5 mr-2'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z'
-              />
-            </svg>
-            Payment Details
-          </h4>
-        </div>
 
         {/* Content */}
         <div className='p-5 print:p-3'>
           {/* Progress Bar */}
           <div className='mb-5 print:mb-2'>
-            <div className='flex justify-between items-center mb-1'>
-              <span className='text-xs font-medium text-gray-600'>
-                Payment Progress
-              </span>
+            <div className='flex  justify-between items-center mb-1'>
+              <h4 className='text-lg text-emerald-600 font-semibold flex items-center'>
+                <svg
+                  className='h-5 w-5 mr-2'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z'
+                  />
+                </svg>
+                Payment Details
+              </h4>
               <span className='text-sm font-semibold text-emerald-600'>
                 {percentPaid}% Paid
               </span>
@@ -549,9 +536,25 @@ const EventView = () => {
               </div>
 
               {/* QR Codes Row */}
-              <div className='mt-2 flex flex-row space-x-4'>
-                {/* Google Maps QR */}
+              <div className='mt-2 flex flex-row gap-8 space-x-4'>
+                {/* Payment QR */}
                 <div className='flex flex-col items-center'>
+                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200  print:bg-gray-100'>
+                    <Image
+                      src='/pay.png'
+                      alt='Payment'
+                      width={48}
+                      height={48}
+                      className='h-14 w-14 print:h-12 print:w-12'
+                    />
+                  </div>
+                  <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
+                    Payment
+                  </span>
+                </div>
+
+                {/* Google Maps QR */}
+                {/* <div className='flex flex-col items-center'>
                   <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
                     <Image
                       src='/map.png'
@@ -564,10 +567,10 @@ const EventView = () => {
                   <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
                     Location
                   </span>
-                </div>
+                </div> */}
 
                 {/* WhatsApp QR */}
-                <div className='flex flex-col items-center'>
+                {/* <div className='flex flex-col items-center'>
                   <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
                     <Image
                       src='/whatsapp.png'
@@ -580,11 +583,11 @@ const EventView = () => {
                   <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
                     WhatsApp
                   </span>
-                </div>
+                </div> */}
 
                 {/* Instagram QR */}
                 <div className='flex flex-col items-center'>
-                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
+                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200  print:bg-gray-100'>
                     <Image
                       src='/insta.png'
                       alt='Instagram'
@@ -599,7 +602,7 @@ const EventView = () => {
                 </div>
 
                 {/* Scube Profile QR */}
-                <div className='flex flex-col items-center'>
+                {/* <div className='flex flex-col items-center'>
                   <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
                     <Image
                       src='/scube.png'
@@ -612,25 +615,13 @@ const EventView = () => {
                   <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
                     Profile
                   </span>
-                </div>
-                {/* Payment QR */}
-                <div className='flex flex-col items-center'>
-                  <div className='bg-gradient-to-br from-gray-100 to-gray-50 h-16 w-16 flex items-center justify-center rounded-lg border border-gray-200 print:h-12 print:w-12 print:bg-gray-100'>
-                    <Image
-                      src='/pay.png'
-                      alt='Payment'
-                      width={48}
-                      height={48}
-                      className='h-14 w-14 print:h-12 print:w-12'
-                    />
-                  </div>
-                  <span className='text-2xs text-gray-600 mt-1 print:text-3xs'>
-                    Payment
-                  </span>
-                </div>
+                </div> */}
               </div>
             </div>
-
+            <div className='text-xs font-semibold text-blue-500'>
+              <span className='text-red-500  text-lg'>*</span> नियम व अटी कृपया
+              पान उलटा.
+            </div>
             <div className='text-right'>
               <div className='border-t-2 border-black px-16 py-1 mb-1 print:border-t print:border-gray-600 print:px-12 print:pt-0 print:pb-1'>
                 <span className='block h-6 print:h-4'></span>
@@ -718,15 +709,15 @@ const EventView = () => {
                 <li className='flex items-baseline'>
                   <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0८)`}</span>
                   <p className='text-md tracking-wider text-gray-900'>
-                    बुकींग कॅन्सल झाल्यास आगाऊ(Advance) रक्कम परत मिळणार नाही.
+                    बुकींग कॅन्सल झाल्यास अॅडव्हान्स रक्कम परत मिळणार नाही.
                   </p>
                 </li>
 
                 <li className='flex items-baseline'>
                   <span className='text-md tracking-wider font-semibold text-gray-500 mr-3'>{`0९)`}</span>
                   <p className='text-md tracking-wider text-gray-900'>
-                    तारीख बदलल्यास किंवा रद्द केल्यास ५००० रुपये
-                    आगाऊ(Advance)रक्कमेतून वजा केले जातील.
+                    तारीख बदलल्यास किंवा रद्द केल्यास ५००० रुपये अॅडव्हान्स
+                    रक्कमेतून वजा केले जातील.
                   </p>
                 </li>
 

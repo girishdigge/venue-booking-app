@@ -1,13 +1,15 @@
 'use client';
 
-import { EventSchema, eventSchema } from '@/schema/schema';
+import { EventSchema, eventSchema, SignUpSchema } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputField from './InputField';
 import { createEvent, updateEvent } from '@/lib/actions';
 import SelectField from './selectField';
 import { toast } from 'react-toastify';
-
+import { Checkbox } from '../ui/checkbox';
+import { useSession } from 'next-auth/react';
+import CheckField from './CheckField';
 const EventForm = ({
   type,
   data,
@@ -15,6 +17,9 @@ const EventForm = ({
   type: 'create' | 'update';
   data?: Partial<EventSchema>;
 }) => {
+  const { data: session } = useSession();
+  console.log(session?.user.name);
+
   // Format a Date or string to an ISO date string (YYYY-MM-DD)
   const formatInitialDate = (date: Date | string | undefined) => {
     if (!date) return '';
@@ -31,6 +36,7 @@ const EventForm = ({
     start_time: data?.start_time ? data.start_time : '06:00',
     amount: data?.amount ?? 0,
     advance: data?.advance ?? 0,
+    bookingBy: data?.bookingBy ? data.bookingBy : session?.user.name,
   };
 
   const {
@@ -44,7 +50,10 @@ const EventForm = ({
 
   // const [formErrors, setFormErrors] = useState<string | null>(null);
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = async (data: SignUpSchema) => {
+    console.log('✅ onValidSubmit triggered');
+    console.log(data);
+
     let result;
     if (type === 'create') {
       result = await createEvent(data);
@@ -61,11 +70,13 @@ const EventForm = ({
         window.location.reload();
       }, 2500);
     }
+  };
+  const onSubmitHandler = handleSubmit(onSubmit, (errors) => {
+    console.log('🚨 Validation Errors:', errors);
   });
-
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={onSubmitHandler}
       className='w-full max-w-4xl bg-white shadow-xl rounded-2xl p-8 space-y-8'
     >
       {/* Header */}
@@ -93,7 +104,7 @@ const EventForm = ({
             name='client_name'
             register={register}
             error={errors.client_name}
-            placeholder='Enter client name'
+            placeholder='Enter Client Name'
             required
           />
           <InputField
@@ -104,6 +115,48 @@ const EventForm = ({
             placeholder='Wedding, Birthday, etc.'
             required
           />
+        </div>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-6 border-1 rounded-md p-4 border-lamaPurple'>
+          <div className='flex items-center space-x-2'>
+            <CheckField
+              id='hallHandover'
+              label='Hand Over Hall 1 day before?'
+              name='hallHandover'
+              register={register}
+              error={errors.hallHandover}
+              className='h-6 w-6'
+            />
+          </div>
+          <div className='flex items-center space-x-2'>
+            <CheckField
+              id='decoration'
+              label='Decoration'
+              name='decoration'
+              register={register}
+              error={errors.decoration}
+              className='h-6 w-6'
+            />
+          </div>
+          <div className='flex items-center space-x-2'>
+            <CheckField
+              id='catering'
+              label='Catering'
+              name='catering'
+              register={register}
+              error={errors.catering}
+              className='h-6 w-6'
+            />
+          </div>
+          <div className='flex items-center space-x-2'>
+            <CheckField
+              id='kitchen'
+              label='Only Kitchen'
+              name='kitchen'
+              register={register}
+              error={errors.kitchen}
+              className='h-6 w-6'
+            />
+          </div>
         </div>
       </div>
 
@@ -185,6 +238,15 @@ const EventForm = ({
             register={register}
             error={errors.address}
             placeholder='Client address'
+          />
+        </div>
+        <div className='sm:col-span-2'>
+          <InputField
+            label='Reference'
+            name='reference'
+            register={register}
+            error={errors.reference}
+            placeholder='Referenced By'
           />
         </div>
       </div>

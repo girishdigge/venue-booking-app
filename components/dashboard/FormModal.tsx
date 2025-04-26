@@ -155,7 +155,7 @@ const FormModal = ({
       {open && (
         <div className='fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity'>
           <div
-            className='bg-white rounded-2xl relative max-h-[90vh] w-full md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] overflow-auto animate-slideIn shadow-2xl'
+            className='bg-white rounded-2xl relative max-h-[90vh] w-full md:w-[70%] lg:w-[60%] overflow-auto animate-slideIn shadow-2xl'
             style={{ animation: 'slideIn 0.3s ease-out' }}
           >
             <div className='sticky top-0 right-0 pt-4 pr-4 flex justify-end z-10'>
