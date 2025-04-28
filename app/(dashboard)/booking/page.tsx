@@ -11,6 +11,7 @@ import { Hall, Prisma } from '@/lib/generated/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import FilterSortModal from '@/components/dashboard/FilterSortModal';
 
 const columns = [
   {
@@ -100,11 +101,25 @@ const page = async ({
     </tr>
   );
 
-  const { page, ...queryParam } = await searchParams;
+  const { page, sortField, sortOrder, ...queryParam } = await searchParams;
   const p = page ? parseInt(page) : 1;
 
+  const today = new Date();
+
+  today.setHours(0, 0, 0, 0);
+  console.log(today);
+
   const query: Prisma.EventWhereInput = {};
+  query.date = {
+    gte: today,
+  };
   if (queryParam) {
+    if (queryParam.startDate && queryParam.endDate) {
+      query.date = {
+        gte: new Date(queryParam.startDate),
+        lte: new Date(queryParam.endDate),
+      };
+    }
     for (const [key, value] of Object.entries(queryParam)) {
       if (value !== undefined) {
         switch (key) {
@@ -114,9 +129,9 @@ const page = async ({
           case 'client_name':
             query.client_name = value;
             break;
-          case 'date':
-            query.date = new Date(value);
-            break;
+          // case 'date':
+          //   query.date = new Date(value);
+          //   break;
           case 'start_time':
             query.start_time = value;
             break;
@@ -157,6 +172,7 @@ const page = async ({
             query.OR = [
               { client_name: { contains: value, mode: 'insensitive' } },
               { event_name: { contains: value, mode: 'insensitive' } },
+
               { email: { contains: value, mode: 'insensitive' } },
               { contact: { contains: value, mode: 'insensitive' } },
               { address: { contains: value, mode: 'insensitive' } },
@@ -176,12 +192,17 @@ const page = async ({
 
   const whereClause = query.OR ? { OR: query.OR } : query;
 
+  const orderBy: Prisma.Enumerable<Prisma.EventOrderByWithRelationInput> =
+    sortField
+      ? { [sortField]: sortOrder === 'asc' ? 'asc' : 'desc' }
+      : { id: 'desc' }; // Default sort by id desc
+
   const [bookings, count] = await prisma.$transaction([
     prisma.event.findMany({
       where: whereClause,
       take: ITEM_PER_PAGE,
       skip: ITEM_PER_PAGE * (p - 1),
-      orderBy: { id: 'desc' },
+      orderBy,
     }),
     prisma.event.count({ where: whereClause }),
   ]);
@@ -193,12 +214,8 @@ const page = async ({
         <div className='flex flex-col md:flex-row items-center gap-4 w-full md:w-auto'>
           <TableSearch />
           <div className='flex items-center gap-4 self-end'>
-            <button className='w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow'>
-              <Image src='/filter.png' alt='filter' width={14} height={14} />
-            </button>
-            <button className='w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow'>
-              <Image src='/sort.png' alt='sort' width={14} height={14} />
-            </button>
+            <FilterSortModal type='filter' />
+            <FilterSortModal type='sort' />
             <FormModal table='booking' type='create' />
           </div>
         </div>
