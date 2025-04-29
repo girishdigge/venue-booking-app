@@ -1,40 +1,16 @@
-'use client';
-
-import { SignUpSchema } from '@/schema/schema';
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import React from 'react';
 import { Phone, Calendar, Award, User } from 'lucide-react';
 
 import Image from 'next/image';
-import FormModal from '@/components/dashboard/FormModal';
-
-const EmployeeView = () => {
-  const [data, setData] = useState<SignUpSchema>();
-  const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-  const { id } = useParams();
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    setRole(session?.user?.role || '');
-    setLoading(true);
-    fetch(`/api/user/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch user data');
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching user:', err);
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [id]);
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import prisma from '@/lib/db';
+const EmployeeView = async () => {
+  const session = await getServerSession(authOptions);
+  console.log(session);
+  const data = await prisma.user.findUnique({
+    where: { username: session.user.username },
+  });
 
   const formatDate = (dateString: string | Date) => {
     if (!dateString) return 'N/A';
@@ -46,53 +22,9 @@ const EmployeeView = () => {
     });
   };
 
-  if (loading) {
-    return (
-      <div className='flex items-center justify-center min-h-96'>
-        <div className='animate-pulse flex flex-col items-center'>
-          <div className='h-16 w-16 bg-amber-200 rounded-full mb-4'></div>
-          <div className='h-4 w-48 bg-gray-200 rounded mb-2'></div>
-          <div className='h-3 w-36 bg-gray-200 rounded'></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !data) {
-    return (
-      <div className='text-center p-10 bg-red-50 rounded-xl border border-red-100 shadow-md'>
-        <svg
-          className='h-12 w-12 text-red-500 mx-auto mb-4'
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth={2}
-            d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
-          />
-        </svg>
-        <h3 className='text-xl font-bold text-red-700 mb-2'>
-          User Data Not Found
-        </h3>
-        <p className='text-red-600 mb-4'>
-          {error || 'Unable to load user information.'}
-        </p>
-        <button
-          onClick={() => window.location.reload()}
-          className='bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-lg shadow transition duration-150'
-        >
-          Try Again
-        </button>
-      </div>
-    );
-  }
-
-  const fullName = `${data.firstName || ''} ${
-    data.middleName ? data.middleName + ' ' : ''
-  }${data.lastName || ''}`.trim();
+  const fullName = `${data?.firstName || ''} ${
+    data?.middleName ? data?.middleName + ' ' : ''
+  }${data?.lastName || ''}`.trim();
 
   return (
     <div className='max-w-4xl mx-auto p-6'>
@@ -114,17 +46,9 @@ const EmployeeView = () => {
             </svg>
           </div>
           <div className='ml-3'>
-            <h2 className='font-semibold text-gray-800'>{data.username}</h2>
-            <p className='text-sm text-gray-500'>Manage user details</p>
+            <h2 className='font-semibold text-gray-800'>{data?.username}</h2>
+            <p className='text-sm text-gray-500'>Profile</p>
           </div>
-        </div>
-        <div className='flex space-x-2'>
-          <button
-            onClick={() => window.history.back()}
-            className='bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition duration-150'
-          >
-            Back
-          </button>
         </div>
       </div>
 
@@ -136,7 +60,7 @@ const EmployeeView = () => {
         <div className='px-8 pb-8 relative'>
           <div className='flex flex-col sm:flex-row items-center sm:items-end -mt-16 mb-6'>
             <div className='w-24 h-24 rounded-full bg-gray-100 border-4 border-white flex items-center justify-center shadow-md overflow-hidden'>
-              {data.image ? (
+              {data?.image ? (
                 <Image
                   src={'/avatar.png'}
                   alt={fullName}
@@ -153,34 +77,20 @@ const EmployeeView = () => {
               <div className='flex items-center justify-center sm:justify-start mt-1'>
                 <span
                   className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    data.role === 'ADMIN'
+                    data?.role === 'ADMIN'
                       ? 'bg-amber-100 text-amber-800'
-                      : data.role === 'MANAGER'
+                      : data?.role === 'MANAGER'
                       ? 'bg-blue-100 text-blue-800'
                       : 'bg-green-100 text-green-800'
                   }`}
                 >
-                  {data.role}
+                  {data?.role}
                 </span>
                 <span className='text-gray-500 text-sm ml-3'>
-                  @{data.username}
+                  @{data?.username}
                 </span>
               </div>
             </div>
-
-            {session?.user?.role === 'ADMIN' ||
-              (session?.user?.role === 'ROOT' && (
-                <div className='ml-auto mt-4 sm:mt-0'>
-                  {(role === 'ADMIN' || role === 'ROOT') && (
-                    <FormModal
-                      table='employee'
-                      type='update'
-                      data={data}
-                      id={data.id}
-                    />
-                  )}
-                </div>
-              ))}
           </div>
 
           {/* Information cards */}
@@ -200,17 +110,17 @@ const EmployeeView = () => {
 
                 <div>
                   <p className='text-sm text-gray-500'>Username</p>
-                  <p className='font-medium'>{data.username}</p>
+                  <p className='font-medium'>{data?.username}</p>
                 </div>
 
                 <div className='flex items-center'>
                   <Phone className='text-gray-400 w-4 h-4 mr-2' />
-                  <span>{data.contact || 'No contact information'}</span>
+                  <span>{data?.contact || 'No contact information'}</span>
                 </div>
 
                 <div className='flex items-center'>
                   <Award className='text-gray-400 w-4 h-4 mr-2' />
-                  <span>{data.role}</span>
+                  <span>{data?.role}</span>
                 </div>
               </div>
             </div>
@@ -226,7 +136,7 @@ const EmployeeView = () => {
                 <div>
                   <p className='text-sm text-gray-500'>User ID</p>
                   <p className='font-medium text-sm text-gray-700 break-all'>
-                    {data.id}
+                    {data?.id}
                   </p>
                 </div>
 

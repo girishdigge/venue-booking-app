@@ -7,9 +7,9 @@ import InputField from './InputField';
 import { createEvent, updateEvent } from '@/lib/actions';
 import SelectField from './selectField';
 import { toast } from 'react-toastify';
-import { Checkbox } from '../ui/checkbox';
 import { useSession } from 'next-auth/react';
 import CheckField from './CheckField';
+import emailjs from '@emailjs/browser';
 const EventForm = ({
   type,
   data,
@@ -66,9 +66,26 @@ const EventForm = ({
     }
     if (result.success) {
       toast(`${result.message}`);
+      emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          client_Name: result?.data?.client_name,
+          event_Date: result?.data?.date,
+          event_Time: `${result?.data?.start_time} - ${result?.data?.end_time}`,
+          hall: result?.data?.hall,
+          email: result?.data?.email,
+          contact: result.data?.contact,
+          booking_Date: result?.data?.createdAt,
+          total_Amount: result?.data?.amount,
+          Advance_Paid: result?.data?.advance,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
+
       setTimeout(() => {
         window.location.reload();
-      }, 2500);
+      }, 2000);
     }
   };
   const onSubmitHandler = handleSubmit(onSubmit, (errors) => {

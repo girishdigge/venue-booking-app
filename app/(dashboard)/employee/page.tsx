@@ -128,7 +128,18 @@ const page = async ({
     }
   }
 
-  const whereClause = query.OR ? { OR: query.OR } : query;
+  // const whereClause = query.OR ? { OR: query.OR } : query;
+
+  const whereClause: Prisma.UserWhereInput = {
+    ...query, // Spread any existing conditions
+    role: {
+      notIn: ['ROOT'],
+    },
+  };
+
+  if (query.OR) {
+    whereClause.OR = query.OR; // If there's an OR condition, add it back
+  }
 
   const [employees, count] = await prisma.$transaction([
     prisma.user.findMany({

@@ -7,11 +7,7 @@ export const MenuItems = [
         label: 'Home',
         href: '/dashboard',
       },
-      // {
-      //   icon: '/admin.png',
-      //   label: 'Admin',
-      //   href: '/admin',
-      // },
+
       {
         icon: '/book.png',
         label: 'Booking',
@@ -37,11 +33,7 @@ export const MenuItems = [
         label: 'Employee',
         href: '/employee',
       },
-      {
-        icon: '/settings.png',
-        label: 'Settings',
-        href: '/settings',
-      },
+
       {
         icon: '/logout.png',
         label: 'Logout',

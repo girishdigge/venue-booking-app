@@ -44,19 +44,24 @@ function ModernEventSnapshot({
   const hall =
     data.hall === 'mainHall' ? 'Main Hall' : 'Open Party Hall (Hall No.2)';
   return (
-    <div className='bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 mb-8 print:shadow-none print:border print:border-gray-300 print:rounded-none print:mb-4'>
+    <div className='bg-white rounded-2xl overflow-hidden border border-gray-100  '>
       {/* Event Type Banner - Improved with more elegant gradient */}
-      <div className='bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 px-6 py-5'>
-        <div className='flex justify-between items-center'>
+      <div className='bg-[#f9fafb] border border-[#d1d5db] p-3 rounded-md ml-4 mr-4'>
+        <div className='flex justify-between items-start'>
           <div>
-            <h3 className='text-xl font-bold text-white print:text-lg'>
+            <h3 className='text-lg font-semibold text-[#1f2937]'>
               {data.event_name || 'Event'}
             </h3>
+            <div>
+              <p className='text-2xl font-bold text-purple-700'>{eventDate}</p>
+              <p className='text-lg text-gray-600 font-medium tracking-wide'>
+                {weekday}
+              </p>
+            </div>
           </div>
-          <div className='flex items-center justify-center gap-2 border-2 border-amber-900 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold tracking-widest px-4 py-2 rounded-lg text-md shadow-md backdrop-blur-sm'>
-            <span className='flex items-center justify-center rounded-full w-2 h-2'>
-              <span className='border-2 border-amber-900 bg-amber-900 rounded-full w-2 h-2'></span>
-            </span>
+
+          <div className='flex items-center gap-2 bg-[#e0e7ff] text-[#3730a3] font-medium px-3 py-1 rounded-md border border-[#c7d2fe] text-xl'>
+            <span className='w-2 h-2 rounded-full bg-[#4ade80]'></span>
             {hall}
           </div>
         </div>
@@ -66,60 +71,6 @@ function ModernEventSnapshot({
 
       <div className='p-4'>
         {/* Date & Time - Redesigned with better visual elements */}
-        <div className='flex w-full gap-4 mb-4'>
-          <div className='w-1/3 bg-indigo-50 rounded-xl p-4 flex items-center hover:shadow-md transition-all duration-300'>
-            <div className='h-14 w-14 bg-indigo-100 rounded-lg flex items-center justify-center mr-4 '>
-              <svg
-                className='h-8 w-8 text-indigo-600 '
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
-                />
-              </svg>
-            </div>
-            <div>
-              <p className='text-md font-medium text-indigo-600 mb-1 '>Date</p>
-              <p className='font-bold text-gray-900 text-lg'>{eventDate}</p>
-              <p className='text-gray-800 text-sm  font-semibold tracking-wider'>
-                {weekday}
-              </p>
-            </div>
-          </div>
-
-          <div className='w-2/3 flex flex-col justify-around  p-1 pl-2 bg-indigo-50 rounded-xl items-start hover:shadow-md transition-all duration-300'>
-            {data.hallHandover && (
-              <ul className='font-medium  pr-1 text-yellow-600 '>
-                Hall No.2 cum dining hall will be provided for Engagement /
-                Haldi / Small function, 1 day before the event after 7 PM.
-              </ul>
-            )}
-
-            {data.decoration && (
-              <ul className='font-medium text-orange-600 '>
-                Decoration Included.
-              </ul>
-            )}
-
-            {/* Catering Block - Renders only if catering is true */}
-
-            {data.catering && (
-              <ul className='font-medium text-gray-600 '>Catering Included</ul>
-            )}
-
-            {/* Kitchen Block - Renders only if kitchen is true */}
-            {data.kitchen && (
-              <ul className=' font-medium text-yellow-600 '>
-                Only kitchen will be provided one day before of event after 7pm.
-              </ul>
-            )}
-          </div>
-        </div>
 
         {/* Client Information Section - Enhanced with better spacing and layout */}
         <div className='bg-gradient-to-r from-indigo-50 to-white rounded-xl p-6 border border-indigo-100 shadow-sm space-y-4 hover:shadow-md transition-all duration-300 print:bg-indigo-50 print:border print:border-gray-300 print:p-4 print:space-y-2 print:shadow-none'>
@@ -209,7 +160,7 @@ function ModernEventSnapshot({
 
         {/* Details Section - Improved with more visual interest */}
         <div className='mt-4'>
-          <div className='bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-100 hover:shadow-md transition-all duration-300 print:bg-gray-50 print:border print:border-gray-200 print:p-3'>
+          <div className='bg-gradient-to-br from-indigo-50 to-white p-5 rounded-xl border border-gray-100 hover:shadow-md transition-all duration-300 print:bg-gray-50 print:border print:border-gray-200 print:p-3'>
             <h4 className='text-base font-semibold text-gray-700 mb-2 flex items-center print:text-sm '>
               <svg
                 className='h-5 w-5 mr-2 text-indigo-600 print:h-4 print:w-4'
@@ -224,11 +175,23 @@ function ModernEventSnapshot({
                   d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
                 />
               </svg>
-              Event Details
+              Services Included
             </h4>
-            <p className='text-gray-700 text-sm leading-relaxed print:text-xs print:leading-normal'>
-              {data.details || 'No additional details provided.'}
-            </p>
+            <ul className='space-y-2 list-disc list-inside text-gray-700'>
+              {data.hallHandover && (
+                <li>
+                  Hall No.2 cum dining hall for Engagement/Haldi (1 day before
+                  after 7 PM)
+                </li>
+              )}
+              {data.decoration && <li>Decoration Included</li>}
+              {data.catering && <li>Catering Included</li>}
+              {data.kitchen && (
+                <li>Kitchen access one day before event after 7pm</li>
+              )}
+
+              <li> {data.details || 'No additional details provided.'}</li>
+            </ul>
           </div>
         </div>
 
@@ -432,7 +395,7 @@ const EventView = () => {
         {/* Watermark */}
         <div
           aria-hidden='true'
-          className='absolute inset-0 -translate-y-18 flex items-center justify-center z-12 pointer-events-none'
+          className='absolute inset-0 -translate-y-30 flex items-center justify-center z-12 pointer-events-none'
           style={{
             color: 'rgba(79, 70, 229, 0.03)',
             fontWeight: 'bold',
@@ -440,47 +403,62 @@ const EventView = () => {
           }}
         >
           <Image
-            src='/logo_water.png'
+            src='/logo1.png'
             alt='logo watermark'
-            height={400}
-            width={600}
-            className='opacity-15'
+            height={300}
+            width={300}
+            className='opacity-10'
           />
         </div>
 
         {/* Receipt Content */}
         <div className='relative z-10 space-y-6 print:space-y-3'>
           {/* Modern Header with Gradient */}
-          <div className='bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white p-2 rounded-xl shadow-lg'>
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center'>
-                <div className='w-32 h-32 flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-xl shadow-inner mr-4 border border-amber-600'>
+
+          <div className='bg-gradient-to-r from-rose-50 via-purple-100 to-pink-50 rounded-xl border border-teal-200 shadow-md'>
+            <div className='grid grid-cols-2 items-center py-1'>
+              {/* Left Side - Logo & Title */}
+              <div className='flex flex-col justify-start'>
+                <div className='relative'>
+                  <div className='absolute inset-0  rounded-full blur-sm opacity-60'></div>
                   <Image
-                    src='/logo.jpg'
+                    src='/logo_water.png'
                     alt='logo'
-                    height={120}
-                    width={120}
-                    className='transform rounded-xl hover:scale-105 transition-transform duration-300'
+                    height={90}
+                    width={250}
+                    className='relative rounded-full pl-2'
                   />
                 </div>
-                <div>
-                  <h1 className='text-3xl font-bold text-white print:text-2xl'>
-                    KOHINOOR
-                  </h1>
-                  <p className='text-amber-100 text-sm mt-1 print:text-xs'>
-                    Mangal Karyalay & Open Lawn
+                <div className='pl-2'>
+                  <p className='text-lg text-teal-700 font-medium mt-1'>
+                    Mangal Karyalay & Open Party Hall
                   </p>
-                  {/* <p className='text-amber-200 text-xs mt-1 font-semibold print:text-2xs'>
-                    GST No: 27AALFK2963D1ZQ
-                  </p> */}
                 </div>
               </div>
-              <div className='text-right text-sm text-amber-100 print:text-xs bg-amber-900/40 p-3 rounded-lg backdrop-blur-sm'>
-                <p className='font-semibold'>Ph: 7588203811</p>
-                <p>Bastegav Road, Akkalkot Dist.</p>
-                <p>Solapur, Maharashtra 413216</p>
+
+              {/* Right Side - Contact Info */}
+              <div className='flex items-end justify-center gap-3'>
+                <div className='hidden md:block h-16 w-px bg-gradient-to-b from-transparent via-teal-300 to-transparent'></div>
+
+                <div className='text-right'>
+                  <div className='flex items-center justify-end gap-2 mb-2'>
+                    <span className='text-teal-700 text-lg font-semibold'>
+                      Ph: 7588203811
+                    </span>
+                  </div>
+                  <p className='text-base text-teal-600'>
+                    Bastegav Road, Akkalkot Dist.
+                  </p>
+                  <p className='text-base text-teal-600'>
+                    Solapur, Maharashtra 413216
+                  </p>
+                </div>
               </div>
             </div>
+
+            {/* Optional decorative elements */}
+            <div className='absolute top-0 right-0 h-16 w-16 bg-gradient-to-br from-pink-100 to-purple-100 rounded-bl-xl opacity-40 -z-10'></div>
+            <div className='absolute bottom-0 left-0 h-12 w-12 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-tr-xl opacity-40 -z-10'></div>
           </div>
 
           {/* Enhanced Receipt Title with Ornamental Design */}
@@ -633,7 +611,7 @@ const EventView = () => {
           </div>
           <div className='hidden print:block bg-white rounded-lg  shadow-lg shadow-gray-400 border border-gray-100 overflow-hidden'>
             {/* Header */}
-            <div className='bg-gradient-to-r from-amber-800 via-amber-700 to-amber-600 text-white p-3'>
+            <div className='bg-gradient-to-r from-yellow-100 via-orange-100 to-amber-100 text-amber-900 p-3'>
               <h4 className='font-semibold flex items-center text-lg'>
                 <svg
                   className='h-4 w-4 mr-2 opacity-70'
