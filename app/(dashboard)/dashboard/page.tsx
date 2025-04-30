@@ -5,11 +5,7 @@ import MonthlyCountChartContainer from '@/components/dashboard/MonthlyCountChart
 import UserCard from '@/components/dashboard/UserCard';
 import prisma from '@/lib/db';
 
-const AdminPage = async ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) => {
+const AdminPage = async ({ searchParams }: any) => {
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
   const bookings = (await prisma?.event.count()) || 0;

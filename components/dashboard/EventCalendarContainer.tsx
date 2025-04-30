@@ -1,11 +1,7 @@
 import EventList from './EventList';
 import EventCalendar from './EventCalendar';
 
-const EventCalendarContainer = async ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) => {
+const EventCalendarContainer = async ({ searchParams }: any) => {
   const { date } = await searchParams;
 
   return (
