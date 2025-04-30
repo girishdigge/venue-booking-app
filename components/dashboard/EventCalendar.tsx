@@ -13,8 +13,21 @@ const EventCalendar = () => {
 
   useEffect(() => {
     if (value instanceof Date) {
-      const localDate = value.toLocaleDateString('en-IN');
-      router.push(`?date=${localDate}`);
+      const istFormatter = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Kolkata',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      const parts = istFormatter.formatToParts(value);
+      const year = parts.find((p) => p.type === 'year')?.value;
+      const month = parts.find((p) => p.type === 'month')?.value;
+      const day = parts.find((p) => p.type === 'day')?.value;
+
+      const istDate = `${year}-${month}-${day}`;
+      console.log(istDate, '..............');
+
+      router.push(`?date=${istDate}`);
     }
   }, [value, router]);
   return <Calendar onChange={onChange} value={value} />;
