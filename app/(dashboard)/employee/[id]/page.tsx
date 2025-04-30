@@ -232,12 +232,16 @@ const EmployeeView = () => {
 
                 <div>
                   <p className='text-sm text-gray-500'>Created On</p>
-                  <p className='font-medium'>{formatDate(data?.createdAt)}</p>
+                  <p className='font-medium'>
+                    {data?.createdAt ? formatDate(data.createdAt) : 'N/A'}
+                  </p>
                 </div>
 
                 <div>
                   <p className='text-sm text-gray-500'>Last Updated</p>
-                  <p className='font-medium'>{formatDate(data?.updatedAt)}</p>
+                  <p className='font-medium'>
+                    {data?.updatedAt ? formatDate(data.updatedAt) : 'N/A'}
+                  </p>
                 </div>
               </div>
             </div>

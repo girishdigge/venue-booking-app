@@ -15,6 +15,8 @@ export const signUpSchema = z.object({
   lastName: z.string().min(1, 'Surname must contain atleast 1 characters.'),
   role: z.enum(['ROOT', 'ADMIN', 'MANAGER', 'USER']),
   image: z.string().optional(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
 });
 
 export const eventSchema = z.object({
