@@ -28,15 +28,14 @@ const EventForm = ({
   };
 
   // Set default values for the form
-  const initialValues: Partial<EventSchema> & { id?: string } = {
-    id: data?.id,
+  const initialValues: Partial<EventSchema> = {
     ...data,
     date: data?.date ? formatInitialDate(data.date) : '',
-    end_time: data?.end_time ? data.end_time : '16:00',
-    start_time: data?.start_time ? data.start_time : '06:00',
+    end_time: data?.end_time ?? '16:00',
+    start_time: data?.start_time ?? '06:00',
     amount: data?.amount ?? 0,
     advance: data?.advance ?? 0,
-    bookingBy: data?.bookingBy ? data.bookingBy : session?.user.name,
+    bookingBy: data?.bookingBy ?? session?.user.name ?? '',
   };
 
   const {
