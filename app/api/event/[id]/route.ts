@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-// import { EventSchema } from '@/schema/schema';
+import type { NextRequest } from 'next/server';
 
-export async function GET(request: Request, { params }: any) {
+export async function GET(request: NextRequest) {
   try {
-    const eventId = Number(params.id);
+    const url = new URL(request.url);
+    const segments = url.pathname.split('/');
+    const idStr = segments[segments.length - 1];
 
+    const eventId = Number(idStr);
     if (isNaN(eventId)) {
       return NextResponse.json({ error: 'Invalid event ID' }, { status: 400 });
     }
