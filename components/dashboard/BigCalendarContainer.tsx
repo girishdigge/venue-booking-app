@@ -5,7 +5,7 @@ import { convertBigCalendarDate } from '@/lib/validate';
 const BigCalendarContainer = async () => {
   const dataRes = await prisma.event.findMany({});
 
-  const schedule = dataRes.map((event) => ({
+  const schedule = dataRes.map((event: any) => ({
     title: event.event_name,
     date: event.date,
     startTime: event.start_time,

@@ -7,6 +7,7 @@ import {
   signUpSchema,
 } from '@/schema/schema';
 import bcrypt from 'bcryptjs';
+import prisma from './db';
 
 export const createEvent = async (data: EventSchema) => {
   try {

@@ -28,7 +28,7 @@ const MonthlyCountChartContainer = async () => {
     }
   );
 
-  events.forEach((event) => {
+  events.forEach((event: any) => {
     const month = new Date(event.date).getMonth(); // 0 for January, 11 for December
     const hall = event.hall; // Get the hall value
 
