@@ -21,16 +21,16 @@ const EventForm = ({
   console.log(session?.user.name);
 
   // Format a Date or string to an ISO date string (YYYY-MM-DD)
-  const formatInitialDate = (date: Date | string | undefined) => {
-    if (!date) return '';
-    const d = date instanceof Date ? date : new Date(date);
-    return d.toISOString().split('T')[0];
-  };
+  // const formatInitialDate = (date: Date | string | undefined) => {
+  //   if (!date) return '';
+  //   const d = date instanceof Date ? date : new Date(date);
+  //   return d.toISOString().split('T')[0];
+  // };
 
   // Set default values for the form
   const initialValues: Partial<EventSchema> = {
     ...data,
-    date: data?.date ? formatInitialDate(data.date) : '',
+    date: data?.date ? new Date(data.date) : undefined,
     end_time: data?.end_time ?? '16:00',
     start_time: data?.start_time ?? '06:00',
     amount: data?.amount ?? 0,
