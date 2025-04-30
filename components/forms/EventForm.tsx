@@ -1,6 +1,6 @@
 'use client';
 
-import { EventSchema, eventSchema, SignUpSchema } from '@/schema/schema';
+import { EventSchema, eventSchema } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputField from './InputField';
@@ -35,7 +35,12 @@ const EventForm = ({
     start_time: data?.start_time ?? '06:00',
     amount: data?.amount ?? 0,
     advance: data?.advance ?? 0,
+    balance: (data?.amount ?? 0) - (data?.advance ?? 0),
     bookingBy: data?.bookingBy ?? session?.user.name ?? '',
+    hallHandover: data?.hallHandover ?? false,
+    decoration: data?.decoration ?? false,
+    catering: data?.catering ?? false,
+    kitchen: data?.kitchen ?? false,
   };
 
   const {
@@ -44,12 +49,12 @@ const EventForm = ({
     formState: { errors, isSubmitting },
   } = useForm<EventSchema>({
     resolver: zodResolver(eventSchema),
-    defaultValues: initialValues,
+    defaultValues: initialValues as EventSchema,
   });
 
   // const [formErrors, setFormErrors] = useState<string | null>(null);
 
-  const onSubmit = async (data: SignUpSchema) => {
+  const onSubmit = async (data: EventSchema) => {
     console.log('✅ onValidSubmit triggered');
     console.log(data);
 
