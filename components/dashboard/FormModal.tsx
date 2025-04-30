@@ -38,7 +38,7 @@ const FormModal = ({
   table: 'booking' | 'employee';
   type: 'create' | 'update' | 'delete';
   data?: any;
-  id?: number;
+  id?: any;
 }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
