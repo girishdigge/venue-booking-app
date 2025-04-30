@@ -430,7 +430,7 @@ const EventView = () => {
                   />
                 </div>
                 <div className='pl-2'>
-                  <p className='text-lg text-teal-700 font-medium mt-1'>
+                  <p className='text-lg text-black font-medium mt-1'>
                     Mangal Karyalay & Open Party Hall
                   </p>
                 </div>
@@ -438,18 +438,18 @@ const EventView = () => {
 
               {/* Right Side - Contact Info */}
               <div className='flex items-end justify-center gap-3'>
-                <div className='hidden md:block h-16 w-px bg-gradient-to-b from-transparent via-teal-300 to-transparent'></div>
+                <div className='hidden md:block h-16 w-px bg-gradient-to-b from-transparent via-black to-transparent'></div>
 
                 <div className='text-right'>
                   <div className='flex items-center justify-end gap-2 mb-2'>
-                    <span className='text-teal-700 text-lg font-semibold'>
+                    <span className='text-black text-lg font-semibold'>
                       Ph: 7588203811
                     </span>
                   </div>
-                  <p className='text-base text-teal-600'>
+                  <p className='text-base text-black'>
                     Bastegav Road, Akkalkot Dist.
                   </p>
-                  <p className='text-base text-teal-600'>
+                  <p className='text-base text-black'>
                     Solapur, Maharashtra 413216
                   </p>
                 </div>

@@ -71,6 +71,7 @@ const EventForm = ({
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
           client_Name: result?.data?.client_name,
+          event_name: result?.data?.event_name,
           event_Date: result?.data?.date,
           event_Time: `${result?.data?.start_time} - ${result?.data?.end_time}`,
           hall: result?.data?.hall,
