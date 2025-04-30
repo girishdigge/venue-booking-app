@@ -2,10 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 // import { EventSchema } from '@/schema/schema';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, { params }: any) {
   try {
     const eventId = Number(params.id);
 
