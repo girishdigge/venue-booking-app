@@ -7,7 +7,7 @@ import Link from 'next/link';
 import prisma from '@/lib/db';
 import { EventSchema } from '@/schema/schema';
 import { ITEM_PER_PAGE } from '@/lib/settings';
-import { Hall, Prisma } from '@/lib/generated/prisma';
+import { Hall, Prisma } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';

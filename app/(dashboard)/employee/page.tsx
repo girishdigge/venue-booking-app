@@ -7,7 +7,7 @@ import Link from 'next/link';
 import prisma from '@/lib/db';
 import { SignUpSchema } from '@/schema/schema';
 import { ITEM_PER_PAGE } from '@/lib/settings';
-import { Prisma, Role } from '@/lib/generated/prisma';
+import { Prisma, Role } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
