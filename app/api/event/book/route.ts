@@ -1,1 +1,1 @@
-export async function POST(params: type) {}
+export async function POST(params: any) {}
