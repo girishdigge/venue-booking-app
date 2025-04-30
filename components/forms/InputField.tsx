@@ -3,13 +3,18 @@
 
 import Image from 'next/image';
 import { InputHTMLAttributes } from 'react';
-import { UseFormRegister, FieldError } from 'react-hook-form';
+import {
+  UseFormRegister,
+  FieldError,
+  FieldErrorsImpl,
+  Merge,
+} from 'react-hook-form';
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
   register: UseFormRegister<any>;
-  error?: FieldError;
+  error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
   helperText?: string;
   valueAsNumber?: boolean;
   required?: boolean;
@@ -69,7 +74,7 @@ const InputField = ({
         <span className='text-xs text-gray-500 pl-1'>{helperText}</span>
       )}
 
-      {error && (
+      {typeof error?.message === 'string' && (
         <span className='text-xs text-red-500 font-medium pl-1 flex items-center gap-1'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -83,7 +88,7 @@ const InputField = ({
               clipRule='evenodd'
             />
           </svg>
-          {error.message}
+          {error?.message}
         </span>
       )}
     </div>

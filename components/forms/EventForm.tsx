@@ -1,6 +1,6 @@
 'use client';
 
-import { EventSchema, eventSchema } from '@/schema/schema';
+import { eventSchema, EventSchema } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputField from './InputField';
@@ -10,6 +10,11 @@ import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import CheckField from './CheckField';
 import emailjs from '@emailjs/browser';
+
+import { z } from 'zod';
+
+type Input = z.input<typeof eventSchema>; // the “raw” inputs before defaults/transforms
+type Output = z.output<typeof eventSchema>; // the parsed result, your EventSchema
 const EventForm = ({
   type,
   data,
@@ -56,7 +61,12 @@ const EventForm = ({
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<EventSchema>({
+  } = useForm<
+    Input, // <-- raw form-input type
+    any, // <-- resolver context (almost always `any`)
+    Output
+  >({
+    // <-- parsed/output type
     resolver: zodResolver(eventSchema),
     defaultValues: initialValues,
   });
