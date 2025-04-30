@@ -1,7 +1,7 @@
 'use client';
 
 import { SignUpSchema, signUpSchema } from '@/schema/schema';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputField from './InputField';
 import { createUser, updateUser } from '@/lib/actions';
@@ -30,35 +30,31 @@ const UserForm = ({
     defaultValues: initialValues,
   });
 
-  // const [formErrors, setFormErrors] = useState<string | null>(null);
-
-  const onValidSubmit = handleSubmit(async (data, errors) => {
-    console.log('✅ onValidSubmit triggered');
-    console.log(data);
+  // Valid submit handler receives the parsed form data
+  const onValidSubmit: SubmitHandler<SignUpSchema> = async (formData) => {
+    console.log('✅ onValidSubmit triggered', formData);
 
     let result;
     if (type === 'create') {
-      result = await createUser(data);
+      result = await createUser(formData);
     } else {
-      result = await updateUser(data);
+      result = await updateUser(formData);
     }
 
-    if (result) {
-      toast(`${result.message}`);
+    if (result) toast(result.message);
+    if (result?.success) {
+      setTimeout(() => window.location.reload(), 2500);
     }
-    if (result.success) {
-      toast(`${result.message}`);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
-    }
-  });
-  const onSubmit = handleSubmit(onValidSubmit, (errors) => {
-    console.log('🚨 Validation Errors:', errors);
-  });
+  };
+
+  // Invalid submit handler receives validation errors
+  const onInvalidSubmit: SubmitErrorHandler<SignUpSchema> = (formErrors) => {
+    console.log('🚨 Validation Errors:', formErrors);
+  };
+
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}
       className='w-full max-w-4xl bg-white shadow-xl rounded-2xl p-8 space-y-8'
     >
       {/* Header */}
