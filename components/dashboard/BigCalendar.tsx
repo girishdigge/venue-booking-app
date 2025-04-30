@@ -94,9 +94,9 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
   };
 
   // Handle clicking on the background to hide tooltip
-  const handleClickOutside = () => {
-    setTooltip((prev) => ({ ...prev, visible: false }));
-  };
+  // const handleClickOutside = () => {
+  //   setTooltip((prev) => ({ ...prev, visible: false }));
+  // };
 
   // Get the appropriate CSS class for an event based on hall
   const getEventClass = (event: EventItem) => {
@@ -214,7 +214,6 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
           setCurrentDate(date);
           setView(Views.DAY);
         }}
-        onClick={handleClickOutside}
       />
 
       {/* Event Tooltip */}
