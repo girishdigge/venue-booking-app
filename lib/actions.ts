@@ -19,7 +19,8 @@ export const createEvent = async (data: EventSchema) => {
         message: 'Invalid data provided.',
       };
     }
-    const validatedData = validationResult.data;
+    const createDataPayload = validationResult.data;
+    const { id, ...validatedData } = createDataPayload;
     const hallname: any = validatedData.hall;
     const timeValidation = validatedData.start_time < validatedData.end_time;
 

@@ -49,7 +49,11 @@ export const eventSchema = z.object({
   event_name: z
     .string()
     .min(1, 'Event type is required (e.g., Wedding, Birthday)'),
-  hall: z.string().min(1, 'Hall/Venue name is required'),
+
+  hall: z.enum(['mainHall', 'secondHall'], {
+    required_error: 'Hall/Venue name is required',
+    invalid_type_error: 'Invalid Hall value provided',
+  }),
   bookingBy: z.string().optional(),
   reference: z.string().optional(),
   hallHandover: z.boolean().optional(),
