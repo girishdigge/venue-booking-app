@@ -33,9 +33,18 @@ const EventForm = ({
     date: data?.date ? new Date(data.date) : undefined,
     end_time: data?.end_time ?? '16:00',
     start_time: data?.start_time ?? '06:00',
+    contact: data?.contact ?? '',
+    event_name: data?.event_name ?? '',
+    hall: data?.hall ?? '',
     amount: data?.amount ?? 0,
     advance: data?.advance ?? 0,
     balance: (data?.amount ?? 0) - (data?.advance ?? 0),
+
+    email: data?.email ?? '',
+    address: data?.address ?? '',
+    createdAt: data?.createdAt ? new Date(data.createdAt) : new Date(),
+    updatedAt: data?.updatedAt ? new Date(data.updatedAt) : new Date(),
+
     bookingBy: data?.bookingBy ?? session?.user.name ?? '',
     hallHandover: data?.hallHandover ?? false,
     decoration: data?.decoration ?? false,
@@ -49,7 +58,7 @@ const EventForm = ({
     formState: { errors, isSubmitting },
   } = useForm<EventSchema>({
     resolver: zodResolver(eventSchema),
-    defaultValues: initialValues as EventSchema,
+    defaultValues: initialValues,
   });
 
   // const [formErrors, setFormErrors] = useState<string | null>(null);
