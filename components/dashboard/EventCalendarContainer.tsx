@@ -4,7 +4,7 @@ import EventCalendar from './EventCalendar';
 const EventCalendarContainer = async ({
   searchParams,
 }: {
-  searchParams: { [keys: string]: string | undefined };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const { date } = await searchParams;
 
