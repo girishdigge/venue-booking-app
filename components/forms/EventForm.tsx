@@ -40,7 +40,7 @@ const EventForm = ({
     start_time: data?.start_time ?? '06:00',
     contact: data?.contact ?? '',
     event_name: data?.event_name ?? '',
-    hall: data?.hall ?? '',
+    hall: data?.hall ?? 'mainHall',
     amount: data?.amount ?? 0,
     advance: data?.advance ?? 0,
     balance: (data?.amount ?? 0) - (data?.advance ?? 0),
