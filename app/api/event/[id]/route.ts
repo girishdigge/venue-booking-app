@@ -7,8 +7,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const awaitedParams = await params;
-    const eventId = Number(awaitedParams?.id);
+    const eventId = Number(params.id);
 
     if (isNaN(eventId)) {
       return NextResponse.json({ error: 'Invalid event ID' }, { status: 400 });
