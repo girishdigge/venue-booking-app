@@ -131,11 +131,13 @@ function ModernEventSnapshot({
                   Booking Date
                 </span>
                 <span className='text-gray-700 print:text-sm'>
-                  {new Date(data?.createdAt)?.toLocaleDateString('en-IN', {
-                    day: 'numeric',
-                    year: 'numeric',
-                    month: 'long',
-                  })}
+                  {data?.createdAt
+                    ? new Date(data.createdAt).toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        year: 'numeric',
+                        month: 'long',
+                      })
+                    : 'N/A'}
                 </span>
               </div>
               <div>
