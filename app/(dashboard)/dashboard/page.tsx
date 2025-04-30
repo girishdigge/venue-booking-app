@@ -8,7 +8,7 @@ import prisma from '@/lib/db';
 const AdminPage = async ({
   searchParams,
 }: {
-  searchParams: { [keys: string]: string | undefined };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
