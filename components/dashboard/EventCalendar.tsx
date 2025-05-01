@@ -25,8 +25,6 @@ const EventCalendar = () => {
       const day = parts.find((p) => p.type === 'day')?.value;
 
       const istDate = `${year}-${month}-${day}`;
-      console.log(istDate, '..............');
-
       router.push(`?date=${istDate}`);
     }
   }, [value, router]);
