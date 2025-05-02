@@ -7,7 +7,7 @@ import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/db';
 const EmployeeView = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
+
   const data = await prisma.user.findUnique({
     where: { username: session.user.username },
   });

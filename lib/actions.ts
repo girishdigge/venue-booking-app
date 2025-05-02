@@ -63,8 +63,6 @@ export const createEvent = async (data: EventSchema) => {
       data: { ...validatedData, balance },
     });
 
-    console.log('Event created successfully:', eventCreated);
-
     // 4. Return success response
     return {
       success: true,
@@ -92,7 +90,6 @@ export const updateEvent = async (data: EventSchema) => {
         message: 'Event ID is required for update.',
       };
     }
-    console.log(data);
 
     const eventIdToUpdate = data.id;
     const validationResult = eventSchema.safeParse(data);
@@ -152,8 +149,6 @@ export const updateEvent = async (data: EventSchema) => {
       data: { ...updateDataPayload, balance },
     });
 
-    console.log('Event updated successfully:', eventUpdated);
-
     // 4. Return success response
     return {
       success: true,
@@ -185,10 +180,10 @@ export const updateEvent = async (data: EventSchema) => {
 
 export const deleteEvent = async (id: number) => {
   try {
-    const deleteEvent = await prisma?.event.delete({
+    await prisma?.event.delete({
       where: { id },
     });
-    console.log(deleteEvent);
+
     return {
       success: true,
       error: false,
@@ -249,8 +244,6 @@ export const createUser = async (data: SignUpSchema) => {
     const userCreated = await prisma?.user.create({
       data: { ...creteUser, hashedPassword, image: '' },
     });
-
-    console.log('User created successfully:', userCreated);
 
     // 4. Return success response
     return {
@@ -321,8 +314,6 @@ export const updateUser = async (data: SignUpSchema) => {
       data: { ...updateDataPayload, hashedPassword },
     });
 
-    console.log('User updated successfully:', userUpdated);
-
     // 4. Return success response
     return {
       success: true,
@@ -370,11 +361,10 @@ export const deleteUser = async (id: string) => {
         };
     }
 
-    const deleteUser = await prisma?.user.delete({
+    await prisma?.user.delete({
       where: { id },
     });
 
-    console.log(deleteUser);
     return {
       success: true,
       error: false,

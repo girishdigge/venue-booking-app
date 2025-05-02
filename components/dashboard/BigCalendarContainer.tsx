@@ -40,7 +40,6 @@ const BigCalendarContainer = async () => {
       });
     }
   }
-  console.log(additionalEvents);
 
   const finalData = [...dataRes, ...additionalEvents];
 

@@ -21,13 +21,12 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json('No user found', { status: 404 });
     }
-    console.log(validatedData.data.password, user.hashedPassword);
+
     const compare = await bcrypt.compare(
       validatedData.data.password,
       user.hashedPassword
     );
 
-    console.log(compare, '............');
     if (!compare) {
       return NextResponse.json('Incorrct Password1', { status: 401 });
     }
