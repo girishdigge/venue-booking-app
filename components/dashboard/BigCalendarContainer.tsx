@@ -5,25 +5,47 @@ import { convertBigCalendarDate } from '@/lib/validate';
 const BigCalendarContainer = async () => {
   const dataRes = await prisma.event.findMany({});
 
-  dataRes.forEach((ele) => {
-    if (ele.hallHandover) {
-      const dataCopy = { ...ele };
-      dataCopy.start_time = '06:00';
-      dataCopy.end_time = '16:00';
-      dataCopy.hall = 'secondHall';
-      dataRes.push(dataCopy);
-      const dataCopy2 = { ...ele };
-      const currentDate = new Date(dataCopy2.date);
-      currentDate.setDate(currentDate.getDate() - 1);
-      dataCopy2.date = currentDate;
-      dataCopy2.hall = 'secondHall';
-      dataCopy2.start_time = '19:00';
-      dataCopy2.end_time = '23:59';
-      dataRes.push(dataCopy2);
-    }
-  });
+  const additionalEvents = [];
 
-  const schedule = dataRes.map((event: any) => ({
+  for (const ele of dataRes) {
+    if (ele.hallHandover) {
+      // First additional event
+      additionalEvents.push({
+        ...ele,
+        start_time: '06:00',
+        end_time: '16:00',
+        hall: 'secondHall',
+      });
+
+      // Second additional event (day before)
+      const originalDate = new Date(ele.date);
+
+      const previousDateUTC = new Date(
+        Date.UTC(
+          originalDate.getUTCFullYear(),
+          originalDate.getUTCMonth(),
+          originalDate.getUTCDate() - 1,
+          0, // Set time to 00:00:00 UTC explicitly
+          0,
+          0
+        )
+      );
+
+      additionalEvents.push({
+        ...ele,
+        start_time: '13:30',
+        end_time: '18:29',
+        // start_time: '19:00',
+        // end_time: '23:59',
+        date: previousDateUTC,
+        hall: 'secondHall',
+      });
+    }
+  }
+
+  const finalData = [...dataRes, ...additionalEvents];
+
+  const schedule = finalData.map((event: any) => ({
     title: event.event_name,
     date: event.date,
     startTime: event.start_time,
