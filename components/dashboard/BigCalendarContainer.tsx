@@ -12,8 +12,6 @@ const BigCalendarContainer = async () => {
       // First additional event
       additionalEvents.push({
         ...ele,
-        start_time: '06:00',
-        end_time: '16:00',
         hall: 'secondHall',
       });
 
@@ -33,15 +31,16 @@ const BigCalendarContainer = async () => {
 
       additionalEvents.push({
         ...ele,
-        start_time: '13:30',
-        end_time: '18:29',
-        // start_time: '19:00',
-        // end_time: '23:59',
+        // start_time: '13:30',
+        // end_time: '18:29',
+        start_time: '19:00',
+        end_time: '23:59',
         date: previousDateUTC,
         hall: 'secondHall',
       });
     }
   }
+  console.log(additionalEvents);
 
   const finalData = [...dataRes, ...additionalEvents];
 
