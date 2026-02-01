@@ -78,8 +78,8 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
       visible: true,
       event,
       position: {
-        x: rect.left + window.scrollX,
-        y: rect.bottom + window.scrollY,
+        x: rect.left + (typeof window !== 'undefined' ? window.scrollX : 0),
+        y: rect.bottom + (typeof window !== 'undefined' ? window.scrollY : 0),
       },
     });
 
@@ -209,7 +209,7 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
         eventPropGetter={eventPropGetter}
         style={{
           height:
-            window.innerWidth <= 768
+            typeof window !== 'undefined' && window.innerWidth <= 768
               ? 'calc(100vh - 200px)'
               : 'calc(100vh - 160px)',
         }}
@@ -219,7 +219,7 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
           setCurrentDate(date);
           setView(Views.DAY);
         }}
-        popup={window.innerWidth <= 768}
+        popup={typeof window !== 'undefined' ? window.innerWidth <= 768 : false}
         popupOffset={{ x: 10, y: 10 }}
       />
 
@@ -228,7 +228,10 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
         <div
           className='event-tooltip'
           style={{
-            left: Math.min(tooltip.position.x, window.innerWidth - 320),
+            left: Math.min(
+              tooltip.position.x,
+              typeof window !== 'undefined' ? window.innerWidth - 320 : 0,
+            ),
             top: tooltip.position.y,
             position: 'fixed',
             zIndex: 1000,
