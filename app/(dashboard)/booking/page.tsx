@@ -1,9 +1,8 @@
 import FormModal from '@/components/dashboard/FormModal';
 import Pagination from '@/components/dashboard/Pagination';
-import Table from '@/components/dashboard/Table';
+import BookingTable from '@/components/dashboard/BookingTable';
 import TableSearch from '@/components/dashboard/TableSearch';
-import Image from 'next/image';
-import Link from 'next/link';
+
 import prisma from '@/lib/db';
 import { EventSchema } from '@/schema/schema';
 import { ITEM_PER_PAGE } from '@/lib/settings';
@@ -66,47 +65,13 @@ const page = async ({
   }
   const role = session.user.role;
 
-  const renderRow = (item: EventSchema) => (
-    <tr
-      key={item.id}
-      className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight'
-    >
-      <td className='pt-3 pb-2 '>{item.id}</td>
-      <td className='pt-3 pb-2 pl-2'>{item.client_name}</td>
-      <td className='pt-3 pb-2 '>
-        {item.date.toLocaleDateString('en-IN', {
-          day: 'numeric',
-          year: 'numeric',
-          month: 'long',
-        })}
-      </td>
-      <td className='pt-3 pb-2 hidden md:table-cell'>{item.event_name}</td>
-      <td className='pt-3 pb-2 hidden md:table-cell'>
-        {item.hall === 'mainHall' ? 'Main Hall' : 'Open Party Hall'}
-      </td>
-      <td className='pt-3 pb-2 hidden lg:table-cell'>{item.balance}</td>
-      <td className='pt-3 pb-2 hidden md:table-cell'>{item.amount}</td>
-      <td>
-        <div className='flex items-center gap-2'>
-          <Link className=' flex' href={`/booking/${item.id}`}>
-            <button className='w-7 h-7 flex items-center justify-center hover:scale-105'>
-              <Image src='/view.png' alt='view' width={24} height={24} />
-            </button>
-          </Link>
-          {(role === 'ADMIN' || role === 'ROOT') && (
-            <FormModal table='booking' type='delete' id={item.id} />
-          )}
-        </div>
-      </td>
-    </tr>
-  );
-
   const { page, sortField, sortOrder, ...queryParam } = await searchParams;
   const p = page ? parseInt(page) : 1;
 
   const today = new Date();
 
   today.setHours(0, 0, 0, 0);
+  console.log(today);
 
   const query: Prisma.EventWhereInput = {};
   query.date = {
@@ -219,7 +184,7 @@ const page = async ({
           </div>
         </div>
       </div>
-      <Table columns={columns} renderRow={renderRow} data={bookings} />
+      <BookingTable columns={columns} data={bookings} userRole={role} />
       <Pagination page={p} count={count} />
     </div>
   );

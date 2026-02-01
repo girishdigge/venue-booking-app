@@ -41,7 +41,7 @@ export const createEvent = async (data: EventSchema) => {
     }
     const balance = validatedData.amount - validatedData.advance;
 
-    const inputDate = new Date(validatedData.date);
+     const inputDate = new Date(validatedData.date);
     inputDate.setHours(0, 0, 0, 0);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -52,7 +52,6 @@ export const createEvent = async (data: EventSchema) => {
         message: 'Date is invaild, Date cannot be in past.',
       };
     }
-
     const existingEvent = await prisma?.event.findFirst({
       where: {
         AND: [
@@ -75,6 +74,8 @@ export const createEvent = async (data: EventSchema) => {
     const eventCreated = await prisma?.event.create({
       data: { ...validatedData, balance },
     });
+
+    console.log('Event created successfully:', eventCreated);
 
     // 4. Return success response
     return {
@@ -103,6 +104,7 @@ export const updateEvent = async (data: EventSchema) => {
         message: 'Event ID is required for update.',
       };
     }
+    console.log(data);
 
     const eventIdToUpdate = data.id;
     const validationResult = eventSchema.safeParse(data);
@@ -162,6 +164,8 @@ export const updateEvent = async (data: EventSchema) => {
       data: { ...updateDataPayload, balance },
     });
 
+    console.log('Event updated successfully:', eventUpdated);
+
     // 4. Return success response
     return {
       success: true,
@@ -193,10 +197,10 @@ export const updateEvent = async (data: EventSchema) => {
 
 export const deleteEvent = async (id: number) => {
   try {
-    await prisma?.event.delete({
+    const deleteEvent = await prisma?.event.delete({
       where: { id },
     });
-
+    console.log(deleteEvent);
     return {
       success: true,
       error: false,
@@ -257,6 +261,8 @@ export const createUser = async (data: SignUpSchema) => {
     const userCreated = await prisma?.user.create({
       data: { ...creteUser, hashedPassword, image: '' },
     });
+
+    console.log('User created successfully:', userCreated);
 
     // 4. Return success response
     return {
@@ -327,6 +333,8 @@ export const updateUser = async (data: SignUpSchema) => {
       data: { ...updateDataPayload, hashedPassword },
     });
 
+    console.log('User updated successfully:', userUpdated);
+
     // 4. Return success response
     return {
       success: true,
@@ -358,7 +366,7 @@ export const updateUser = async (data: SignUpSchema) => {
 
 export const deleteUser = async (id: string) => {
   try {
-    const user = await prisma?.user.findUnique({
+     const user = await prisma?.user.findUnique({
       where: { id },
     });
 
@@ -373,11 +381,10 @@ export const deleteUser = async (id: string) => {
           message: 'Last Admin, Atleast one admin must be present.',
         };
     }
-
-    await prisma?.user.delete({
+    const deleteUser = await prisma?.user.delete({
       where: { id },
     });
-
+    console.log(deleteUser);
     return {
       success: true,
       error: false,

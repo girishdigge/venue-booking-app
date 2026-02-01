@@ -1,9 +1,8 @@
 import FormModal from '@/components/dashboard/FormModal';
 import Pagination from '@/components/dashboard/Pagination';
-import Table from '@/components/dashboard/Table';
+import EmployeeTable from '@/components/dashboard/EmployeeTable';
 import TableSearch from '@/components/dashboard/TableSearch';
-import Image from 'next/image';
-import Link from 'next/link';
+
 import prisma from '@/lib/db';
 import { SignUpSchema } from '@/schema/schema';
 import { ITEM_PER_PAGE } from '@/lib/settings';
@@ -55,33 +54,6 @@ const page = async ({
   if (role !== 'ROOT' && role !== 'ADMIN') {
     redirect('/login');
   }
-
-  const renderRow = (item: SignUpSchema) => (
-    <tr
-      key={item.id}
-      className='border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight'
-    >
-      <td className='pt-3 pb-2 '>{item.username}</td>
-
-      <td className='pt-3 pb-2  md:table-cell'>{item.role}</td>
-      <td className='pt-3 pb-2 hidden md:table-cell'>{`${item.firstName} ${item.middleName} ${item.lastName}`}</td>
-      <td className='pt-3 pb-2 hidden lg:table-cell'>{item.contact}</td>
-
-      <td>
-        <div className='flex items-center gap-2'>
-          <Link href={`/employee/${item.id}`}>
-            <button className='w-7 h-7 flex items-center justify-center hover:scale-105'>
-              <Image src='/view.png' alt='view' width={24} height={24} />
-            </button>
-          </Link>
-
-          {(role === 'ADMIN' || role === 'ROOT') && (
-            <FormModal table='employee' type='delete' id={item.id} />
-          )}
-        </div>
-      </td>
-    </tr>
-  );
 
   const { page, ...queryParam } = await searchParams;
   const p = page ? parseInt(page) : 1;
@@ -168,7 +140,7 @@ const page = async ({
           </div>
         </div>
       </div>
-      <Table columns={columns} renderRow={renderRow} data={employees} />
+      <EmployeeTable columns={columns} data={employees} userRole={role} />
       <Pagination page={p} count={count} />
     </div>
   );
