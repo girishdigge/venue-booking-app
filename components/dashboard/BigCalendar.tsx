@@ -101,7 +101,7 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
   // Get the appropriate CSS class for an event based on hall
   const getEventClass = (event: EventItem) => {
     const hallType = hallTypes.find((h) =>
-      event.hall.toLowerCase().includes(h.name.toLowerCase())
+      event.hall.toLowerCase().includes(h.name.toLowerCase()),
     );
     return hallType ? hallType.className : 'hall-default';
   };
@@ -146,11 +146,11 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
   return (
     <div className='relative' ref={calendarRef}>
       {/* Calendar Legend */}
-      <div className='calendar-legend'>
+      <div className='calendar-legend flex-wrap'>
         {hallTypes.map((hall) => (
           <div
             key={hall.name}
-            className='legend-item cursor-pointer'
+            className='legend-item cursor-pointer touch-manipulation'
             onClick={() =>
               setFilterHall(filterHall === hall.name ? '' : hall.name)
             }
@@ -159,10 +159,10 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
               className={`legend-color ${hall.className.replace('hall-', '')}`}
               style={{
                 backgroundColor: hall.className.includes('exhibition-hall')
-                  ? '#00DFA2'
+                  ? '#0072B2'
                   : hall.className.includes('banquet-hall')
-                  ? '#ff0060'
-                  : '#f1f5f9',
+                    ? '#E69F00'
+                    : '#f1f5f9',
               }}
             />
             <span
@@ -177,7 +177,7 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
         {filterHall && (
           <button
             onClick={() => setFilterHall('')}
-            className='text-sm text-blue-600 hover:text-blue-800'
+            className='text-sm text-blue-600 hover:text-blue-800 btn-mobile'
           >
             Clear Filter
           </button>
@@ -207,13 +207,20 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
         eventPropGetter={eventPropGetter}
-        style={{ height: 'calc(100vh - 160px)' }}
+        style={{
+          height:
+            window.innerWidth <= 768
+              ? 'calc(100vh - 200px)'
+              : 'calc(100vh - 160px)',
+        }}
         min={new Date(2025, 1, 0, 6, 0, 0)}
         max={new Date(2050, 1, 0, 23, 59, 59)}
         onDrillDown={(date) => {
           setCurrentDate(date);
           setView(Views.DAY);
         }}
+        popup={window.innerWidth <= 768}
+        popupOffset={{ x: 10, y: 10 }}
       />
 
       {/* Event Tooltip */}
@@ -221,27 +228,31 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
         <div
           className='event-tooltip'
           style={{
-            left: `${tooltip.position.x}px`,
-            top: `${tooltip.position.y}px`,
+            left: Math.min(tooltip.position.x, window.innerWidth - 320),
+            top: tooltip.position.y,
+            position: 'fixed',
+            zIndex: 1000,
           }}
         >
-          <h3 className='font-semibold text-lg mb-2'>{tooltip.event.title}</h3>
-          <p className='mb-1'>
+          <h3 className='font-semibold text-base md:text-lg mb-2'>
+            {tooltip.event.title}
+          </h3>
+          <p className='mb-1 text-sm'>
             <strong>Date:</strong>{' '}
             {moment(tooltip.event.start).format('MMM DD, YYYY')}
           </p>
-          <p className='mb-1'>
+          <p className='mb-1 text-sm'>
             <strong>Time:</strong>{' '}
             {moment(tooltip.event.start).format('h:mm A')} -{' '}
             {moment(tooltip.event.end).format('h:mm A')}
           </p>
-          <p className='mb-1'>
+          <p className='mb-1 text-sm'>
             <strong>Hall:</strong>{' '}
             {tooltip.event.hall === 'mainHall'
               ? 'Main Hall'
               : 'Open Party Hall'}
           </p>
-          <p className='mb-1'>
+          <p className='mb-1 text-sm'>
             <strong>Client:</strong> {tooltip.event.client}
           </p>
         </div>
