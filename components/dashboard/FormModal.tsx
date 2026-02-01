@@ -38,7 +38,7 @@ const FormModal = ({
   table: 'booking' | 'employee';
   type: 'create' | 'update' | 'delete';
   data?: any;
-  id?: unknown;
+  id?: string | number;
 }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -99,9 +99,13 @@ const FormModal = ({
             <button
               className='flex-1 py-3 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700'
               type='submit'
-              onClick={() =>
-                table === 'booking' ? handleDelete(id) : handleUserDelete(id)
-              }
+              onClick={() => {
+                if (table === 'booking' && typeof id === 'number') {
+                  handleDelete(id);
+                } else if (table === 'employee' && typeof id === 'string') {
+                  handleUserDelete(id);
+                }
+              }}
             >
               Yes, Delete
             </button>

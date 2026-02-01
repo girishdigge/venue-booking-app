@@ -131,7 +131,7 @@ const page = async ({
           //   break;
           case 'search':
             const hallMatches: string[] = ['mainHall', 'secondHall'].filter(
-              (h) => h.toLowerCase().includes(value.toLowerCase())
+              (h) => h.toLowerCase().includes(value.toLowerCase()),
             );
             query.OR = [
               { client_name: { contains: value, mode: 'insensitive' } },
@@ -171,6 +171,20 @@ const page = async ({
     prisma.event.count({ where: whereClause }),
   ]);
 
+  // Convert null to undefined for optional fields to match EventSchema type
+  const mappedBookings = bookings.map((booking) => ({
+    ...booking,
+    email: booking.email ?? undefined,
+    address: booking.address ?? undefined,
+    details: booking.details ?? undefined,
+    bookingBy: booking.bookingBy ?? undefined,
+    reference: booking.reference ?? undefined,
+    hallHandover: booking.hallHandover ?? undefined,
+    decoration: booking.decoration ?? undefined,
+    catering: booking.catering ?? undefined,
+    kitchen: booking.kitchen ?? undefined,
+  }));
+
   return (
     <div className='flex-1  bg-white p-4 rounded-md m-4 mt-0'>
       <div className='flex items-center justify-between'>
@@ -184,7 +198,7 @@ const page = async ({
           </div>
         </div>
       </div>
-      <BookingTable columns={columns} data={bookings} userRole={role} />
+      <BookingTable columns={columns} data={mappedBookings} userRole={role} />
       <Pagination page={p} count={count} />
     </div>
   );

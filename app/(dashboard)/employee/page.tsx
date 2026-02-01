@@ -80,7 +80,7 @@ const page = async ({
             break;
           case 'search':
             const rollMatches: string[] = ['ADMIN', 'MANAGER'].filter((h) =>
-              h.toUpperCase().includes(value.toUpperCase())
+              h.toUpperCase().includes(value.toUpperCase()),
             );
             query.OR = [
               { firstName: { contains: value, mode: 'insensitive' } },
@@ -113,7 +113,7 @@ const page = async ({
     whereClause.OR = query.OR; // If there's an OR condition, add it back
   }
 
-  const [employees, count] = await prisma.$transaction([
+  const [employeesRaw, count] = await prisma.$transaction([
     prisma.user.findMany({
       where: whereClause,
       take: ITEM_PER_PAGE,
@@ -122,6 +122,14 @@ const page = async ({
     }),
     prisma.user.count({ where: whereClause }),
   ]);
+
+  // Map database result to match SignUpSchema type
+  const employees = employeesRaw.map((emp) => ({
+    ...emp,
+    password: emp.hashedPassword,
+    middleName: emp.middleName ?? undefined,
+    image: emp.image ?? undefined,
+  }));
 
   return (
     <div className='flex-1  bg-white p-4 rounded-md m-4 mt-0'>
