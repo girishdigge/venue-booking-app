@@ -253,7 +253,7 @@
 /* Event styling - Base */
 .rbc-event {
   border: none !important;
-  color: #334155 !important;
+  color: #000 !important;
   padding: 10px !important;
   margin: 5px !important;
   border-radius: 6px !important;
@@ -288,13 +288,14 @@
 }
 
 .hall-exhibition-hall {
-  background-color: #0072b2 !important; /* Light green */
+  background-color: #1aff1a !important; /* Light green */
   border-left: 3px solid #ef4444 !important;
 }
 
 .hall-banquet-hall {
-  background-color: #e69f00 !important; /* Light red */
-  border-left: 3px solid #0072b2 !important;
+  background-color: #4b0092 !important; /* Light red */
+  border-left: 3px solid #1aff1a !important;
+  color: #fff !important;
 }
 
 .hall-seminar-room {

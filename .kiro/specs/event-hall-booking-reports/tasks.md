@@ -1,0 +1,261 @@
+# Implementation Plan: Event Hall Booking Reports
+
+## Overview
+
+This implementation plan breaks down the Event Hall Booking Reports feature into discrete, incremental coding tasks. Each task builds on previous work, with testing integrated throughout to catch errors early. The implementation follows a bottom-up approach: utilities first, then services, then API routes, and finally UI components.
+
+## Tasks
+
+- [ ] 1. Set up utility functions and formatters
+  - [x] 1.1 Create currency formatter utility
+    - Implement `formatINR()` function using Intl.NumberFormat with 'en-IN' locale and 'INR' currency
+    - Export function from `lib/utils/currencyFormatter.ts`
+    - _Requirements: 5.1, 5.2, 5.3_
+  - [ ]\* 1.2 Write property test for currency formatter
+    - **Property 5: Currency Formatting Consistency**
+    - **Validates: Requirements 5.1, 5.2, 5.3**
+    - Generate random amounts and verify all contain ₹ symbol with consistent format
+  - [x] 1.3 Create event status calculator utility
+    - Implement `calculateEventStatus()` function that compares event date with current date
+    - Use timezone-safe comparison (UTC)
+    - Return "Complete" for past dates, "Upcoming" for today and future dates
+    - Export function from `lib/utils/eventStatus.ts`
+    - _Requirements: 6.1, 6.2, 6.3, 6.4_
+  - [ ]\* 1.4 Write property test for event status calculator
+    - **Property 6: Event Status Calculation**
+    - **Validates: Requirements 6.1, 6.3**
+    - Generate random past and future dates, verify status is correct
+  - [x] 1.5 Create file name generator utility
+    - Implement `generateReportFileName()` function that formats dates as YYYY-MM-DD
+    - Support both 'pdf' and 'xlsx' extensions
+    - Export function from `lib/utils/fileNameGenerator.ts`
+    - _Requirements: 9.4, 10.4_
+  - [ ]\* 1.6 Write property test for file name generator
+    - **Property 12: PDF Filename Format**
+    - **Property 14: Excel Filename Format**
+    - **Validates: Requirements 9.4, 10.4**
+    - Generate random date ranges, verify filename format is correct
+
+- [ ] 2. Implement data transformation and calculation utilities
+  - [x] 2.1 Create summary calculator utility
+    - Implement `calculateSummary()` function that computes total bookings and total turnover
+    - Accept array of Event objects
+    - Return ReportSummary object with totalBookings and totalTurnover
+    - Export function from `lib/utils/summaryCalculator.ts`
+    - _Requirements: 7.1, 7.2, 7.3, 7.4_
+  - [ ]\* 2.2 Write property tests for summary calculator
+    - **Property 7: Total Bookings Accuracy**
+    - **Property 8: Total Turnover Accuracy**
+    - **Validates: Requirements 7.1, 7.2, 7.3, 7.4**
+    - Generate random event lists, verify count and sum are correct
+  - [x] 2.3 Create report data transformer utility
+    - Implement `transformEventsToReportRows()` function
+    - Generate sequential Sr No starting from 1
+    - Map Event fields to ReportRow fields (client_name → name, event_name → eventType, etc.)
+    - Calculate event status for each row
+    - Format amount using currency formatter
+    - Export function from `lib/utils/reportTransformer.ts`
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
+  - [ ]\* 2.4 Write property tests for report transformer
+    - **Property 2: Sequential Serial Numbers**
+    - **Property 3: Report Data Mapping**
+    - **Validates: Requirements 4.1, 4.2, 4.3, 4.4**
+    - Generate random events, verify Sr No is sequential and data mapping is correct
+
+- [ ] 3. Implement data access layer
+  - [x] 3.1 Create report service for data fetching
+    - Implement `fetchEventsByDateRange()` function in `lib/services/reportService.ts`
+    - Use Prisma to query Event table with date filters (gte and lte)
+    - Sort results by date ascending
+    - Return filtered events and count
+    - _Requirements: 3.1, 3.2, 3.3, 8.1_
+  - [ ]\* 3.2 Write property tests for date filtering
+    - **Property 1: Date Range Filtering**
+    - **Property 10: Date-Based Sorting**
+    - **Validates: Requirements 3.2, 3.3, 8.1, 8.2**
+    - Generate random date ranges and events, verify filtering and sorting are correct
+  - [ ]\* 3.3 Write unit tests for report service
+    - Test with empty results
+    - Test with events on boundary dates
+    - Test error handling for database failures
+    - _Requirements: 3.1, 3.2, 3.3, 11.1_
+
+- [x] 4. Checkpoint - Ensure core utilities and services work
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [x] 5. Implement file generators
+  - [x] 5.1 Create PDF generator
+    - Install `pdfkit` or `jspdf` library
+    - Implement `generatePDF()` function in `lib/generators/pdfGenerator.ts`
+    - Create PDF with title "Event Booking Report"
+    - Add date range subtitle
+    - Create table with 5 columns in specified order
+    - Add all report rows
+    - Add summary section at bottom
+    - Return PDF buffer
+    - _Requirements: 9.1, 9.2, 9.3, 4.6, 7.5_
+  - [ ]\* 5.2 Write property tests for PDF generator
+    - **Property 4: Column Order Consistency**
+    - **Property 9: Summary Section Positioning**
+    - **Property 11: PDF File Structure**
+    - **Validates: Requirements 4.6, 7.5, 9.2, 9.3**
+    - Generate random report data, verify PDF structure is correct
+  - [x] 5.3 Create Excel generator
+    - Install `xlsx` or `exceljs` library
+    - Implement `generateExcel()` function in `lib/generators/excelGenerator.ts`
+    - Create worksheet named "Event Report"
+    - Add header row with column names
+    - Add all report rows
+    - Add empty row
+    - Add summary rows (Total Bookings, Total Turnover)
+    - Return Excel buffer
+    - _Requirements: 10.1, 10.2, 10.3, 4.6, 7.5_
+  - [ ]\* 5.4 Write property tests for Excel generator
+    - **Property 4: Column Order Consistency**
+    - **Property 9: Summary Section Positioning**
+    - **Property 13: Excel File Structure**
+    - **Validates: Requirements 4.6, 7.5, 10.2, 10.3**
+    - Generate random report data, verify Excel structure is correct
+
+- [x] 6. Create TypeScript type definitions
+  - [x] 6.1 Define shared types and interfaces
+    - Create `lib/types/report.ts` file
+    - Define DateRange, ReportRow, ReportSummary interfaces
+    - Define ReportDataRequest, DownloadReportRequest interfaces
+    - Define ReportDataResponse, ErrorResponse interfaces
+    - Export all types
+    - _Requirements: All requirements (type safety)_
+
+- [ ] 7. Implement API routes
+  - [x] 7.1 Create API route for fetching report data
+    - Create `app/api/reports/data/route.ts`
+    - Implement POST handler
+    - Parse and validate request body (startDate, endDate)
+    - Call report service to fetch filtered events
+    - Transform events to report rows
+    - Calculate summary
+    - Return JSON response with rows, summary, and count
+    - Handle errors with appropriate status codes (400, 500)
+    - _Requirements: 3.1, 3.2, 3.3, 12.4_
+  - [ ]\* 7.2 Write unit tests for data API route
+    - Test successful requests with valid date ranges
+    - Test invalid date formats (400 error)
+    - Test missing parameters (400 error)
+    - Test database errors (500 error)
+    - _Requirements: 12.4_
+  - [x] 7.3 Create API route for downloading reports
+    - Create `app/api/reports/download/route.ts`
+    - Implement POST handler
+    - Parse and validate request body (startDate, endDate, format)
+    - Call report service to fetch filtered events
+    - Transform events to report rows
+    - Calculate summary
+    - Generate PDF or Excel based on format parameter
+    - Generate filename using file name generator
+    - Set appropriate Content-Type and Content-Disposition headers
+    - Return file buffer
+    - Handle errors with appropriate status codes (400, 500)
+    - _Requirements: 9.1, 9.4, 9.5, 10.1, 10.4, 10.5, 12.4_
+  - [ ]\* 7.4 Write unit tests for download API route
+    - Test PDF download with valid data
+    - Test Excel download with valid data
+    - Test invalid format parameter (400 error)
+    - Test file generation errors (500 error)
+    - _Requirements: 9.1, 10.1, 12.4_
+  - [ ]\* 7.5 Write property test for error handling
+    - **Property 15: Error Handling Robustness**
+    - **Validates: Requirements 12.4**
+    - Generate various error conditions, verify system handles them gracefully
+
+- [x] 8. Checkpoint - Ensure API routes work correctly
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [x] 9. Implement Reports page UI
+  - [x] 9.1 Create Reports page component
+    - Create `app/reports/page.tsx`
+    - Set up component state for startDate, endDate, isLoading, error
+    - Import and use existing date picker components from components/ui
+    - Add Start Date picker
+    - Add End Date picker
+    - Add "Download as PDF" button
+    - Add "Download as Excel" button
+    - Implement date validation (end date >= start date)
+    - Disable buttons when dates are invalid or missing
+    - Display loading state during download
+    - Display error messages when errors occur
+    - Display "No records found for the selected date range" when results are empty
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 11.1, 11.2_
+  - [x] 9.2 Implement download handlers
+    - Create async function to call `/api/reports/download` endpoint
+    - Pass startDate, endDate, and format in request body
+    - Handle response as blob
+    - Trigger browser download using URL.createObjectURL
+    - Handle errors and display error messages
+    - Show loading state during download
+    - _Requirements: 9.5, 10.5_
+  - [ ]\* 9.3 Write unit tests for Reports page
+    - Test that all UI elements render correctly
+    - Test date picker interactions
+    - Test button click handlers
+    - Test validation logic
+    - Test error display
+    - Test empty results message
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 11.1_
+
+- [x] 10. Update navigation to include Reports tab
+  - [x] 10.1 Add Reports navigation item
+    - Locate existing navigation component (navbar or sidebar)
+    - Add "Reports" navigation item
+    - Set href to "/reports"
+    - Position after "Employee" tab
+    - Position before "Logout" option
+    - _Requirements: 1.1, 1.2, 1.3, 1.4_
+  - [ ]\* 10.2 Write unit tests for navigation
+    - Test that Reports tab is present
+    - Test that Reports tab is positioned correctly
+    - Test that clicking Reports tab navigates to /reports
+    - _Requirements: 1.1, 1.2, 1.3, 1.4_
+
+- [x] 11. Add styling and polish
+  - [x] 11.1 Style Reports page with Tailwind CSS
+    - Apply consistent spacing and layout
+    - Style date pickers to match existing UI
+    - Style buttons to match existing UI
+    - Add responsive design for mobile devices
+    - Style loading states and error messages
+    - Ensure accessibility (labels, ARIA attributes)
+    - _Requirements: 12.3_
+
+- [ ] 12. Final checkpoint and integration testing
+  - [ ]\* 12.1 Write integration tests
+    - Test complete flow from date selection to PDF download
+    - Test complete flow from date selection to Excel download
+    - Test with various date ranges
+    - Test with empty results
+    - Test error scenarios
+    - _Requirements: All requirements_
+  - [ ] 12.2 Manual testing and verification
+    - Ensure all tests pass, ask the user if questions arise.
+    - Verify Reports tab appears in navigation
+    - Verify Reports page loads correctly
+    - Test date picker functionality
+    - Test PDF download with various date ranges
+    - Test Excel download with various date ranges
+    - Test empty results handling
+    - Test error handling
+    - Verify file names are correct
+    - Verify report data is accurate
+    - Verify summary calculations are correct
+
+## Notes
+
+- Tasks marked with `*` are optional and can be skipped for faster MVP
+- Each task references specific requirements for traceability
+- Checkpoints ensure incremental validation
+- Property tests validate universal correctness properties (minimum 100 iterations each)
+- Unit tests validate specific examples and edge cases
+- Integration tests verify end-to-end functionality
+- The implementation uses TypeScript for type safety throughout
+- Existing UI components from components/ui directory should be reused where possible
+- All monetary values must be formatted using Indian Rupee (₹) symbol
+- All date comparisons must be timezone-safe

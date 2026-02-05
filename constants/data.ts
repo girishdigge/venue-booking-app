@@ -33,7 +33,11 @@ export const MenuItems = [
         label: 'Employee',
         href: '/employee',
       },
-
+      {
+        icon: '/finance.png',
+        label: 'Reports',
+        href: '/reports',
+      },
       {
         icon: '/logout.png',
         label: 'Logout',

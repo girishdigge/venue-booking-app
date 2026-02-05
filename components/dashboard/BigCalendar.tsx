@@ -108,7 +108,11 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
 
   // Custom event component
   const EventComponent = ({ event }: EventProps<EventItem>) => (
-    <div className={`flex flex-col text-3xl`}>
+    <div
+      className={`flex flex-col text-3xl ${
+        event.hall === 'Open Party Hall' ? 'secondHall' : ''
+      }`}
+    >
       <div className='event-title'>{event.title}</div>
       <div className='event-detail '>
         <span>🏛️</span>{' '}
@@ -159,9 +163,9 @@ const BigCalendar = ({ data, isLoading = false }: BigCalendarProps) => {
               className={`legend-color ${hall.className.replace('hall-', '')}`}
               style={{
                 backgroundColor: hall.className.includes('exhibition-hall')
-                  ? '#0072B2'
+                  ? '#1AFF1A'
                   : hall.className.includes('banquet-hall')
-                    ? '#E69F00'
+                    ? '#4B0092'
                     : '#f1f5f9',
               }}
             />
