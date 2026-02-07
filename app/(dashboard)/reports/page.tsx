@@ -376,7 +376,7 @@ const ReportsPage = () => {
           </div>
 
           {/* Additional Information */}
-          <div className='bg-muted/30 border border-border/50 rounded-lg p-4'>
+          {/* <div className='bg-muted/30 border border-border/50 rounded-lg p-4'>
             <h4 className='text-sm font-medium text-foreground mb-2 flex items-center gap-2'>
               <Info className='w-4 h-4' />
               Report Information
@@ -396,7 +396,7 @@ const ReportsPage = () => {
               </p>
               <p>• All monetary values are displayed in Indian Rupees (₹)</p>
             </div>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>
