@@ -117,18 +117,18 @@ function ModernEventSnapshot({
               </div>
               <div>
                 <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block print:text-2xs print:mb-0.5'>
-                  Email Address
+                  Reference By
                 </span>
                 <span className='text-gray-700 print:text-sm'>
-                  {data.email || '—'}
+                  {data.reference || '—'}
                 </span>
               </div>
               <div className='block print:hidden'>
                 <span className='text-xs font-semibold text-violet-600 uppercase tracking-wider block '>
-                  Reference By
+                  Email Address
                 </span>
                 <span className='text-sm text-gray-700 print:text-xs'>
-                  {data.reference || '—'}
+                  {data.email || '—'}
                 </span>
               </div>
             </div>
